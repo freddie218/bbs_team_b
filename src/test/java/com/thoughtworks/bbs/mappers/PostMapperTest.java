@@ -32,16 +32,6 @@ public class PostMapperTest extends MapperTestBase{
     }
 
     @Test
-    public void shouldUpdateAPost() {
-        postMapper.insert(post);
-        post.setPostId(1L).setAuthorName("longkai");
-
-        postMapper.update(post);
-
-        assertThat(postMapper.get(1L).getAuthorName(), is("longkai"));
-    }
-
-    @Test
     public void shouldFindMainPostByAuthorName() {
         int before = postMapper.findMainPostByAuthorName("longkai").size();
 
