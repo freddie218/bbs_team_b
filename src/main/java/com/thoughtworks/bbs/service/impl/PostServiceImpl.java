@@ -49,13 +49,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> findAllPostByAllName() {
+    public List<Post> findAllPost() {
         SqlSession session = factory.openSession();
         List<Post> posts = new LinkedList<Post>();
 
         try {
             PostMapper postMapper = session.getMapper(PostMapper.class);
-            posts = postMapper.findAllPostByAllName();
+            posts = postMapper.findAllPost();
         } finally {
             session.close();
         }

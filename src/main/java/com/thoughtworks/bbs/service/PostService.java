@@ -16,5 +16,5 @@ public interface PostService {
 
     List<Post> findAllPostByMainPost(Long postId);
 
-    List<Post> findAllPostByAllName();
+    List<Post> findAllPost();
 }
