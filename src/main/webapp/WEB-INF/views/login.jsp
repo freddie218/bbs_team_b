@@ -35,7 +35,6 @@
                 <button type="submit" class="btn">Sign in</button>
             </div>
         </div>
-
         Don't have an account? <a href='<c:url value="/user/create" />'>Click here to register one!</a>
 	</form>
 

@@ -16,7 +16,7 @@ public interface UserMapper {
 
     @Update(
         "UPDATE users " +
-        "SET username=#{userName}, password=#{passwordHash}, enabled=#{enabled}" +
+        "SET username=#{userName}, password=#{passwordHash}, enabled=#{enabled} " +
         "WHERE id=#{id}"
         )
     void update(User user);

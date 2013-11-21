@@ -23,7 +23,8 @@ public class HomeController {
             return "login";
         }
 
-        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        //model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        model.addAttribute("posts", postService.findAllPostByAllName());
         return "home";
     }
 }

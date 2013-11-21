@@ -15,4 +15,6 @@ public interface PostService {
     void delete(Post post);
 
     List<Post> findAllPostByMainPost(Long postId);
+
+    List<Post> findAllPostByAllName();
 }

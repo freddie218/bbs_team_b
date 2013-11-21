@@ -49,6 +49,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> findAllPostByAllName() {
+        SqlSession session = factory.openSession();
+        List<Post> posts = new LinkedList<Post>();
+
+        try {
+            PostMapper postMapper = session.getMapper(PostMapper.class);
+            posts = postMapper.findAllPostByAllName();
+        } finally {
+            session.close();
+        }
+
+        return posts;
+    }
+
+    @Override
     public ServiceResult<Post> save(Post post) {
         Map<String,String> errors = new PostValidator().validate(post);
 

@@ -3,6 +3,11 @@
 
 <%@ include file="../header.jsp" %>
 
+<div class="alter-success" id="message">
+    <a class="close" data-dismiss="alter" href="#">&times;</a>
+    $(message)
+</div>
+
 <div id="userInformation">
     <table class="table">
         <tr>
@@ -16,5 +21,7 @@
     </table>
 
 </div>
+
+<a href="./ChangePassword">Change Password</a>
 
 <%@ include file="../footer.jsp" %>

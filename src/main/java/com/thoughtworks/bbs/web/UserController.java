@@ -52,4 +52,38 @@ public class UserController {
 
         return new ModelAndView("user/createSuccess", map);
     }
+
+    @RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.GET)
+    public ModelAndView ChangePassword(ModelMap model, Principal principal) {
+        User user = userService.getByUsername(principal.getName());
+        Map<String, User> map = new HashMap<String, User>();
+        map.put("user", user);
+
+        return new ModelAndView("user/ChangePassword", map);
+    }
+
+    @RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.POST)
+    public ModelAndView ChangePassword(HttpServletRequest request,Principal principal) throws IOException {
+        User user = userService.getByUsername(principal.getName());
+        String password = request.getParameter("password");
+        String newPassword = request.getParameter("confirmPassword");
+
+        if(user.getPasswordHash().equals(password))
+        {
+            if (!user.getPasswordHash().equals(newPassword))
+            {
+                user.setPasswordHash(newPassword);
+                userService.update(user);
+                Map<String,User>map=new HashMap<String, User>();
+                map.put("user",user);
+                return new ModelAndView("user/profile",null).addObject("user",user).addObject("message","Password has been changed successfully!");
+            }else {
+                return new ModelAndView("user/ChangePassword",null).addObject("user",user).addObject("message","New password is the same with the old one! ");
+            }
+
+        } else {
+              return  new ModelAndView("user/ChangePassword",null).addObject("user",user).addObject("message","Wrong Password!<a href='#'><strong>Can't change!</strong></a>");
+        }
+
+    }
 }

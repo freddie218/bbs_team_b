@@ -78,4 +78,18 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
+    @Override
+    public void update(User user) {
+        SqlSession session = factory.openSession();
+        String userName=user.getUserName();
+        try {
+            UserMapper mapper=session.getMapper(UserMapper.class);
+            mapper.update(user);
+            session.commit();
+        }finally {
+            session.close();
+        }
+
+    }
 }
