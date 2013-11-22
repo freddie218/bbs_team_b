@@ -40,6 +40,15 @@ public interface PostMapper {
     )
     List<Post> findMainPostByAuthorName(String authorName);
 
+    @Select(
+            "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
+                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId " +
+                    "FROM post " +
+                    "WHERE parent_id = 0 " +
+                    "ORDER BY create_time desc"
+    )
+    List<Post> findAllPost();
+
     @Update(
         "UPDATE post " +
         "SET parent_id=#{parentId}, author_name=#{authorName}, title=#{title}, content=#{content}, create_time=#{createTime}," +

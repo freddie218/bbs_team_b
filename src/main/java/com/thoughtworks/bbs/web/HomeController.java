@@ -23,7 +23,12 @@ public class HomeController {
             return "login";
         }
 
-        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        //model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        model.addAttribute("posts", postService.findAllPost());
         return "home";
+    }
+
+    public void fakePostService(PostService service){
+        postService = service;
     }
 }

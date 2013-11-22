@@ -47,3 +47,9 @@
 </table>
 
 
+<<<<<<< HEAD
+=======
+<a href="./ChangePassword">Change Password</a>
+
+<%@ include file="../footer.jsp" %>
+>>>>>>> f674c6e2680012b48512fe5d9fc161c628a2c5a8

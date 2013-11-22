@@ -54,6 +54,29 @@ public class PostMapperTest extends MapperTestBase{
     }
 
     @Test
+    public void shouldFindAllPostByAllName() {
+        int before = postMapper.findAllPost().size();
+
+        Post post1 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(11);
+        Post post2 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0);
+        Post post3 = new Post().setAuthorName("juner").setTitle("I am a post").setContent("content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(22);
+        Post post4 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0);
+        postMapper.insert(post1);
+        postMapper.insert(post2);
+        postMapper.insert(post3);
+        postMapper.insert(post4);
+
+        List<Post> resultList = postMapper.findAllPost();
+
+        assertThat(resultList.size(), is(before + 2));
+    }
+
+
+    @Test
     public void shouldFindAllPostByMainPost() {
         int before = postMapper.findAllPostByMainPost(3L).size();
 

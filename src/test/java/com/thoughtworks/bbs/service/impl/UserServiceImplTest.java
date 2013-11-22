@@ -44,4 +44,12 @@ public class UserServiceImplTest {
         verify(userMapper).insert(user);
     }
 
+    @Test
+    public void shouldGetUserWhenChangePassword(){
+        userService.update(user);
+
+        verify(userMapper).update(user);
+    }
+
+
 }
