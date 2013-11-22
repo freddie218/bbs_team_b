@@ -1,7 +1,9 @@
 package com.thoughtworks.bbs.web;
 
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.service.PostService;
 import com.thoughtworks.bbs.service.UserService;
+import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import com.thoughtworks.bbs.util.MyBatisUtil;
 import com.thoughtworks.bbs.util.UserBuilder;
@@ -21,6 +23,13 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private UserService userService = new UserServiceImpl(MyBatisUtil.getSqlSessionFactory());
+    private PostService postService = new PostServiceImpl(MyBatisUtil.getSqlSessionFactory());
+
+    public void srtUserService(UserService userService) {
+
+        this.userService=new UserServiceImpl(MyBatisUtil.getSqlSessionFactory());
+
+    }
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
     public ModelAndView registerUser(ModelMap model) {
@@ -32,6 +41,7 @@ public class UserController {
         User user = userService.getByUsername(principal.getName());
         Map<String, User> map = new HashMap<String, User>();
         map.put("user", user);
+        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
 
         return new ModelAndView("user/profile", map);
     }
