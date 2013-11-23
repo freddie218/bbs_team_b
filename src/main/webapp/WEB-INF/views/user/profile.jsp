@@ -5,7 +5,7 @@
 
 <div class="alter-success" id="message">
     <a class="close" data-dismiss="alter" href="#">&times;</a>
-    $(message)
+
 </div>
 
 <div id="userInformation">
@@ -21,7 +21,7 @@
     </table>
 
 </div>
- <H2> Mypost </H2>
+ <H2> My posts </H2>
 <table class="table table-striped">
     <thead>
     <tr>
