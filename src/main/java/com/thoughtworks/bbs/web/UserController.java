@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -27,15 +28,6 @@ public class UserController {
         return new ModelAndView("user/register");
     }
 
-    @RequestMapping(value = {"/profile"}, method = RequestMethod.GET)
-    public ModelAndView userProfile(ModelMap model, Principal principal) {
-        User user = userService.getByUsername(principal.getName());
-        Map<String, User> map = new HashMap<String, User>();
-        map.put("user", user);
-
-        return new ModelAndView("user/profile", map);
-    }
-
     @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
     public ModelAndView processCreate(HttpServletRequest request) throws IOException {
         String username = request.getParameter("username");
@@ -51,5 +43,33 @@ public class UserController {
         map.put("user", user);
 
         return new ModelAndView("user/createSuccess", map);
+    }
+
+    @RequestMapping(value = {"/profile"}, method = RequestMethod.GET)
+    public ModelAndView userProfile(ModelMap model, Principal principal) {
+        User user = userService.getByUsername(principal.getName());
+        Map<String, User> map = new HashMap<String, User>();
+        map.put("user", user);
+
+        return new ModelAndView("user/profile", map);
+    }
+
+    @RequestMapping(value = {"/changePassword"}, method = RequestMethod.GET)
+    public ModelAndView changePassword(ModelMap model) {
+        return new ModelAndView("user/changePassword");
+    }
+
+    @RequestMapping(value = {"/changePassword"}, method = RequestMethod.POST)
+   // public ModelAndView processChangePassword(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
+    public String processChangePassword(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
+        User user = userService.getByUsername(principal.getName());
+
+        String oldPassword = request.getParameter("old password");
+        String newPassword = request.getParameter("new password");
+        String confirmPassword = request.getParameter("confirm password");
+
+        model.addAttribute(userService.changePassword(user, oldPassword, newPassword, confirmPassword), "true");
+
+        return "user/profile";
     }
 }

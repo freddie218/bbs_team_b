@@ -10,6 +10,7 @@ import com.thoughtworks.bbs.service.UserService;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,45 @@ public class UserServiceImpl implements UserService {
         }
 
         return new ServiceResult<User>(errors, user);
+    }
+
+    @Override
+    public ServiceResult<User> update(User user) {
+        Map<String, String> errors = validator.validate(user);
+        SqlSession session = factory.openSession();
+
+        if(errors.isEmpty()) {
+            try{
+                UserMapper userMapper = session.getMapper(UserMapper.class);
+
+                userMapper.update(user);
+
+                session.commit();
+            } finally {
+                session.close();
+            }
+        }
+
+        return new ServiceResult<User>(errors, user);
+    }
+
+    @Override
+    public String changePassword(User user, String oldPassword, String newPassword, String confirmPassword){
+        String result = new String();
+        if(null != validator.passwordValidate(newPassword)){
+            result = "failed";
+        }
+        else if(user.getPasswordHash().equals(oldPassword) && newPassword.equals(confirmPassword))
+        {
+            user.setPasswordHash(newPassword);
+            update(user);
+            result = "success";
+        }
+        else
+        {   result = "failed" ;
+        }
+
+        return result;
     }
 
     @Override
