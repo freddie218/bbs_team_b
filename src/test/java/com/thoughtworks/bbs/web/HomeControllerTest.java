@@ -1,4 +1,4 @@
-package com.thoughtworks.bbs.controller;
+package com.thoughtworks.bbs.web;
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.web.HomeController;
