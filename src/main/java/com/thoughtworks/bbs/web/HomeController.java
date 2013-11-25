@@ -28,7 +28,7 @@ public class HomeController {
         return "home";
     }
 
-    public void fakePostService(PostService service){
+    public void rstPostService(PostService service){
         postService = service;
     }
 }

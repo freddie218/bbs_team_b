@@ -39,11 +39,11 @@ public class HomeControllerTest {
         when(principal.toString()).thenReturn("juntao");
         when(postService.findAllPost()).thenReturn(list);
         homeController = new HomeController();
+        homeController.rstPostService(postService);
     }
 
     @Test
     public void should_find_all_posts_and_return_home_when_home(){
-        homeController.fakePostService(postService);
         String ret = homeController.getMethodForHome(model, post, principal);
         verify(postService,times(1)).findAllPost();
         assertThat(ret, is("home"));
