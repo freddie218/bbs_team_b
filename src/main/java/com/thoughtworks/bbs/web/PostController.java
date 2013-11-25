@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class PostController {
     }
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
-    public ModelAndView processCreate(HttpServletRequest request, Principal principal) throws IOException {
+    public RedirectView processCreate(HttpServletRequest request, Principal principal) throws IOException {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String parentId = request.getParameter("parentId");
@@ -59,7 +60,8 @@ public class PostController {
                 .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date());
 
         postService.save(builder.build());
-
-        return new ModelAndView("posts/createSuccess");
+        // return new ModelAndView("posts/createSuccess");
+        //return new ModelAndView("home", "posts", postService.findMainPostByAuthorName(principal.getName()));
+        return new RedirectView("../");
     }
 }

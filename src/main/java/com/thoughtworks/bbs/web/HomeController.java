@@ -18,12 +18,17 @@ public class HomeController {
     PostService postService = new PostServiceImpl(MyBatisUtil.getSqlSessionFactory());
 
     @RequestMapping(method = RequestMethod.GET)
-    public String get(Model model, @ModelAttribute("post") Post post, Principal principal) {
+    public String getMethodForHome(Model model, @ModelAttribute("post") Post post, Principal principal) {
         if (null == principal) {
             return "login";
         }
 
-        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        //model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        model.addAttribute("posts", postService.findAllPost());
         return "home";
+    }
+
+    public void rstPostService(PostService service){
+        postService = service;
     }
 }

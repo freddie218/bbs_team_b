@@ -1,1 +1,2 @@
-mysql -uroot < db/baseline.sql
+mysql -uroot -p < db/baseline.sql
+
