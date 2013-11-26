@@ -22,4 +22,32 @@ public class UserValidator {
         }
         return errors;
     }
+
+    public String passwordValidate(String password){
+        if(StringUtils.isBlank(password)){
+            return  "Password can not be null";
+        }
+        else if(password.length() < 6 || password.length() > 12){
+            return "Password length must be 6~12";
+        }
+        else if((password.charAt(0) == '_')){
+            return "Invalid password character!";
+        }
+        else{
+            for(int i = 0; i < password.length(); i++)
+            {
+                if((password.charAt(i) >= 'a' && password.charAt(i) <= 'z')
+                   || (password.charAt(i) >= 'A' && password.charAt(i) <= 'Z')
+                   || (password.charAt(i) >= '0' && password.charAt(i) <= '9')
+                   || (password.charAt(i) == '_')){
+                    continue;
+                }
+                else{
+                    return "Invalid password character!";
+                }
+            }
+        }
+
+        return null;
+    }
 }

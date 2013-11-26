@@ -91,3 +91,22 @@ table {
 .text-error {
     color: indianred;
 }
+
+.messageInfo {
+    color: white;
+    background-color: green;
+    font-size: 16pt;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+}
+
+.messageError {
+    color: white;
+    background-color: red;
+    font-size: 16pt;
+    padding: 5px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}

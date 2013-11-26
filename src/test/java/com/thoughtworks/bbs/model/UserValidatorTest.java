@@ -43,4 +43,22 @@ public class UserValidatorTest {
 
         assertThat(errors.get("password"), is("Password can not be null"));
     }
+
+    @Test
+    public void shouldBeValidPassword(){
+        String result = validator.passwordValidate("123456");
+        assertThat("password", null == result);
+
+        result = validator.passwordValidate("12345");
+        assertThat("password", "Password length must be 6~12" == result);
+
+        result = validator.passwordValidate("123456789123456789");
+        assertThat("password", "Password length must be 6~12" == result);
+
+        result = validator.passwordValidate("!@123456");
+        assertThat("password", "Invalid password character!" == result);
+
+        result = validator.passwordValidate("_123456");
+        assertThat("password", "Invalid password character!" == result);
+    }
 }

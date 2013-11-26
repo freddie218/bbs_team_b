@@ -49,10 +49,17 @@ public class UserServiceImplTest {
     }
 
 
+    @Test
+    public void shouldUpdateUserWhenUpdateUser(){
+        userService.update(user);
+    }
 
 
+    @Test
+    public void shouldChangePasswordWhenChangePassword(){
+        userService.changePassword(user,"password","password","password");
 
-
-
+        verify(userMapper).update(user);
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.thoughtworks.bbs.controller;
+package com.thoughtworks.bbs.web;
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.web.HomeController;
@@ -11,9 +11,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,18 +35,17 @@ public class HomeControllerTest {
         principal = mock(Principal.class);
         list = mock(List.class);
         postService = mock(PostServiceImpl.class);
-        when(model.addAttribute("post", list)).thenReturn(model);
+        when(model.addAttribute("posts", list)).thenReturn(model);
         when(principal.toString()).thenReturn("juntao");
         when(postService.findAllPost()).thenReturn(list);
         homeController = new HomeController();
+        homeController.rstPostService(postService);
     }
 
     @Test
     public void should_find_all_posts_and_return_home_when_home(){
-        String ret;
-        homeController.fakePostService(postService);
-        ret=homeController.get(model,post,principal);
-        verify(postService).findAllPost();
+        String ret = homeController.getMethodForHome(model, post, principal);
+        verify(postService,times(1)).findAllPost();
         assertThat(ret, is("home"));
     }
 

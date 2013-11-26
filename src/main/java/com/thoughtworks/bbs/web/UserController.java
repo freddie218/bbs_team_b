@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -63,13 +64,22 @@ public class UserController {
         return new ModelAndView("user/createSuccess", map);
     }
 
-    @RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.GET)
-    public ModelAndView ChangePassword(ModelMap model, Principal principal) {
-        User user = userService.getByUsername(principal.getName());
-        Map<String, User> map = new HashMap<String, User>();
-        map.put("user", user);
+    @RequestMapping(value = {"/changePassword"}, method = RequestMethod.GET)
+    public ModelAndView changePassword(ModelMap model) {
+        return new ModelAndView("user/changePassword");
+    }
 
-        return new ModelAndView("user/ChangePassword", map);
+    @RequestMapping(value = {"/changePassword"}, method = RequestMethod.POST)
+    public String processChangePassword(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
+        User user = userService.getByUsername(principal.getName());
+
+        String oldPassword = request.getParameter("old password");
+        String newPassword = request.getParameter("new password");
+        String confirmPassword = request.getParameter("confirm password");
+
+        model.addAttribute(userService.changePassword(user, oldPassword, newPassword, confirmPassword), "true");
+
+        return "user/profile";
     }
 
     @RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.POST)
@@ -94,6 +104,5 @@ public class UserController {
         } else {
               return  new ModelAndView("user/ChangePassword",null).addObject("user",user).addObject("message","Wrong Password!<a href='#'><strong>Can't change!</strong></a>");
         }
-
     }
 }
