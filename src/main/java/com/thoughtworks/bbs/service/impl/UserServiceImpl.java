@@ -92,4 +92,9 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+    public boolean verify(User user, String oldPassWord) {
+        //To change body of created methods use File | Settings | File Templates.
+        return false;
+    }
 }
