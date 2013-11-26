@@ -12,7 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -70,7 +69,7 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/changePassword"}, method = RequestMethod.POST)
-    public String processChangePassword(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
+    public ModelAndView processChangePassword(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
         User user = userService.getByUsername(principal.getName());
 
         String oldPassword = request.getParameter("old password");
@@ -78,11 +77,15 @@ public class UserController {
         String confirmPassword = request.getParameter("confirm password");
 
         model.addAttribute(userService.changePassword(user, oldPassword, newPassword, confirmPassword), "true");
+        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
 
-        return "user/profile";
+        Map<String, User> map = new HashMap<String, User>();
+        map.put("user", user);
+
+        return new ModelAndView("user/profile", map);
     }
 
-    @RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.POST)
+    /*@RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.POST)
     public ModelAndView ChangePassword(HttpServletRequest request,Principal principal) throws IOException {
         User user = userService.getByUsername(principal.getName());
         String password = request.getParameter("password");
@@ -104,5 +107,5 @@ public class UserController {
         } else {
               return  new ModelAndView("user/ChangePassword",null).addObject("user",user).addObject("message","Wrong Password!<a href='#'><strong>Can't change!</strong></a>");
         }
-    }
+    } */
 }

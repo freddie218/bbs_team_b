@@ -18,7 +18,6 @@
 
 <div class="alter-success" id="message">
     <a class="close" data-dismiss="alter" href="#">&times;</a>
-
 </div>
 
 <div id="userInformation">
@@ -35,9 +34,9 @@
             <td><a href="<c:url value='/user/changePassword' />" class="brand">Change Password</a></td>
         </tr>
     </table>
-
 </div>
- <H2> My posts </H2>
+
+<H2> My posts </H2>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -62,10 +61,6 @@
     </tbody>
 </table>
 
-
-
-
-<a href="./ChangePassword">Change Password</a>
 
 <%@ include file="../footer.jsp" %>
 
