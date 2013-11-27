@@ -63,16 +63,29 @@ public class UserController {
         return new ModelAndView("user/createSuccess", map);
     }
 
-    @RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.GET)
-    public ModelAndView ChangePassword(ModelMap model, Principal principal) {
+    @RequestMapping(value = {"/changePassword"}, method = RequestMethod.GET)
+    public ModelAndView changePassword(ModelMap model) {
+        return new ModelAndView("user/changePassword");
+    }
+
+    @RequestMapping(value = {"/changePassword"}, method = RequestMethod.POST)
+    public ModelAndView processChangePassword(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
         User user = userService.getByUsername(principal.getName());
+
+        String oldPassword = request.getParameter("old password");
+        String newPassword = request.getParameter("new password");
+        String confirmPassword = request.getParameter("confirm password");
+
+        model.addAttribute(userService.changePassword(user, oldPassword, newPassword, confirmPassword), "true");
+        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+
         Map<String, User> map = new HashMap<String, User>();
         map.put("user", user);
 
-        return new ModelAndView("user/ChangePassword", map);
+        return new ModelAndView("user/profile", map);
     }
 
-    @RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.POST)
+    /*@RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.POST)
     public ModelAndView ChangePassword(HttpServletRequest request,Principal principal) throws IOException {
         User user = userService.getByUsername(principal.getName());
         String password = request.getParameter("password");
@@ -94,6 +107,5 @@ public class UserController {
         } else {
               return  new ModelAndView("user/ChangePassword",null).addObject("user",user).addObject("message","Wrong Password!<a href='#'><strong>Can't change!</strong></a>");
         }
-
-    }
+    } */
 }

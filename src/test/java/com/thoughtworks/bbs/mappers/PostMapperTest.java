@@ -54,7 +54,7 @@ public class PostMapperTest extends MapperTestBase{
     }
 
     @Test
-    public void shouldFindAllPostByAllName() {
+    public void shouldFindAllPost() {
         int before = postMapper.findAllPost().size();
 
         Post post1 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())

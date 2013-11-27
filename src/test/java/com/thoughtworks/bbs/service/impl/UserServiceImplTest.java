@@ -5,9 +5,12 @@ import com.thoughtworks.bbs.mappers.UserRoleMapper;
 import com.thoughtworks.bbs.model.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class UserServiceImplTest {
@@ -17,6 +20,7 @@ public class UserServiceImplTest {
     private SqlSession session;
     private SqlSessionFactory sessionFactory;
     private UserRoleMapper userRoleMapper;
+    private String oldPassWord;
 
     @Before
     public void setup(){
@@ -31,7 +35,7 @@ public class UserServiceImplTest {
         when(session.getMapper(UserRoleMapper.class)).thenReturn(userRoleMapper);
 
         userService = new UserServiceImpl(sessionFactory);
-
+        oldPassWord="wrong";
         user = new User();
         user.setUserName("user");
         user.setPasswordHash("password");
@@ -44,12 +48,18 @@ public class UserServiceImplTest {
         verify(userMapper).insert(user);
     }
 
+
     @Test
-    public void shouldGetUserWhenChangePassword(){
+    public void shouldUpdateUserWhenUpdateUser(){
         userService.update(user);
+    }
+
+
+    @Test
+    public void shouldChangePasswordWhenChangePassword(){
+        userService.changePassword(user,"password","password","password");
 
         verify(userMapper).update(user);
     }
-
 
 }

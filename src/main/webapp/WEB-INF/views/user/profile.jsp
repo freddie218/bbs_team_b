@@ -3,9 +3,21 @@
 
 <%@ include file="../header.jsp" %>
 
+<c:choose>
+    <c:when test="${not empty failed}">
+        <div id="changePasswordFailed" class="page-action changePassword-failed">
+            <i class="messageError">Change Password Failed!</i>
+        </div>
+    </c:when>
+    <c:when test="${not empty success}">
+        <div id="changePasswordSuccess" class="page-action changePassword-success">
+            <i class="messageInfo">Change Password Successful!</i>
+        </div>
+    </c:when>
+</c:choose>
+
 <div class="alter-success" id="message">
     <a class="close" data-dismiss="alter" href="#">&times;</a>
-
 </div>
 
 <div id="userInformation">
@@ -18,10 +30,13 @@
             <td>Enable</td>
             <td>${user.enabled}</td>
         </tr>
+        <tr>
+            <td><a href="<c:url value='/user/changePassword' />" class="brand">Change Password</a></td>
+        </tr>
     </table>
-
 </div>
- <H2> My posts </H2>
+
+<H2> My posts </H2>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -46,10 +61,6 @@
     </tbody>
 </table>
 
-
-
-
-<a href="./ChangePassword">Change Password</a>
 
 <%@ include file="../footer.jsp" %>
 
