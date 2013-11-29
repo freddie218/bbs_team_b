@@ -31,6 +31,13 @@ public class PostController {
     private PostService postService = new PostServiceImpl(MyBatisUtil.getSqlSessionFactory());
     private UserService userService = new UserServiceImpl(MyBatisUtil.getSqlSessionFactory());
 
+    PostController(){
+
+    }
+    public PostController(PostService postService,UserService userService){
+        this.postService = postService;
+        this.userService = userService;
+    }
     @RequestMapping(value = {"/{postId}"}, method = RequestMethod.GET)
     public String get(@PathVariable("postId") Long postId, Model model, @ModelAttribute Post post, Principal principal) {
         model.addAttribute("mainPost", postService.get(postId));
