@@ -36,7 +36,7 @@
     </table>
 </div>
 
-<H2> My posts </H2>
+<H2> My Posts </H2>
 <table class="table table-striped">
     <thead>
     <tr>
