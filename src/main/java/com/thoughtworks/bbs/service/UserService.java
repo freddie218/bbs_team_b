@@ -3,7 +3,6 @@ package com.thoughtworks.bbs.service;
 import com.thoughtworks.bbs.model.User;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserService {
     User get(long id);
@@ -14,9 +13,9 @@ public interface UserService {
 
     ServiceResult<User> update(User user);
 
-    String changePassword(User user, String oldPassword, String newPassword, String confirmPassword);
-
     void delete(User user);
 
     User getByUsername(String username);
+
+    boolean verifyPassword(String username, String password);
 }
