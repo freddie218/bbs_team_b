@@ -68,7 +68,6 @@ public class UserControllerTest {
         verify(model).addAttribute("posts",postService.findMainPostByAuthorName("user"));
     }
 
-
     @Test
     public void shouldReturnChangePasswordPageWhenClickChangePassword(){
         assertThat(userController.changePassword(), equalTo("user/changePassword"));
@@ -108,5 +107,31 @@ public class UserControllerTest {
 
         verify(userService, never()).update(user);
         assertThat(expected, equalTo(result));
+    }
+
+    @Test
+    public void shouldGoToUpdateProfilePageWhenClickUpdateProfile(){
+        ModelAndView modelAndView = userController.updateProfile(model,principal);
+        assertThat(modelAndView.getViewName(),is("user/updateProfile"));
+    }
+
+    @Test
+    public void shouldReturnProfilePageAndUpdateUserWhenUpdateUserProfileSuccess(){
+        when(userService.getByUsername(principal.getName())).thenReturn(user);
+        when(request.getParameter("username")).thenReturn(user.getUserName()+"_updated");
+
+        ModelAndView modelAndView = userController.processUpdateUserProfile(model, request, principal);
+        verify(userService, times(1)).update(user);
+        assertThat(modelAndView.getViewName(), is("user/profile"));
+    }
+
+    @Test
+    public void shouldReturnProfilePageAndNotUpdateUserWhenUpdateProfileFailed(){
+        when(userService.getByUsername(principal.getName())).thenReturn(user);
+        when(request.getParameter("username")).thenReturn("");
+
+        ModelAndView modelAndView = userController.processUpdateUserProfile(model, request, principal);
+        verify(userService, never()).update(user);
+        assertThat(modelAndView.getViewName(), is("user/profile"));
     }
 }

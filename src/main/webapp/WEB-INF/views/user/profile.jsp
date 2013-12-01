@@ -32,9 +32,12 @@
         </tr>
         <tr>
             <td><a href="<c:url value='/user/changePassword' />" class="brand">Change Password</a></td>
+            <td><a href="<c:url value='/user/updateProfile' />" class="brand">Update Profile</a></td>
         </tr>
     </table>
 </div>
+
+
 
 <H2> My Posts </H2>
 <table class="table table-striped">

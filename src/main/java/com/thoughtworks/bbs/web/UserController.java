@@ -95,4 +95,13 @@ public class UserController {
 
         return new ModelAndView("user/profile", map);
     }
+
+    @RequestMapping(value = {"/updateProfile"}, method = RequestMethod.GET)
+    public ModelAndView updateProfile(ModelMap model, Principal principal) {
+        User user = userService.getByUsername(principal.getName());
+        Map<String, User> map = new HashMap<String, User>();
+        map.put("user", user);
+
+        return new ModelAndView("user/updateProfile", map);
+    }
 }
