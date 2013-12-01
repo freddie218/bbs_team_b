@@ -45,20 +45,22 @@ public class UserValidatorTest {
     }
 
     @Test
-    public void shouldBeValidPassword(){
-        String result = validator.passwordValidate("123456");
-        assertThat("password", null == result);
+    public void shouldReturnTrueWhenPasswordFormatCorrect(){
+        assertThat("password correct", true == validator.passwordValidate("123456"));
+    }
 
-        result = validator.passwordValidate("12345");
-        assertThat("password", "Password length must be 6~12" == result);
+    @Test
+    public void shouldReturnFalseWhenPasswordFormatWrong(){
+        assertThat("password length should not be less than 6",
+                false == validator.passwordValidate("123"));
 
-        result = validator.passwordValidate("123456789123456789");
-        assertThat("password", "Password length must be 6~12" == result);
+        assertThat("password length should not be more than 12",
+                false == validator.passwordValidate("123456789123456789"));
 
-        result = validator.passwordValidate("!@123456");
-        assertThat("password", "Invalid password character!" == result);
+        assertThat("password can only contains alphabet, numbers and '_'",
+                false == validator.passwordValidate("!@123456"));
 
-        result = validator.passwordValidate("_123456");
-        assertThat("password", "Invalid password character!" == result);
+        assertThat("password should not start with '_'",
+                false == validator.passwordValidate("_123456"));
     }
 }

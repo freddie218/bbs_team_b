@@ -2,6 +2,7 @@ package com.thoughtworks.bbs.web;
 
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.model.UserValidator;
 import com.thoughtworks.bbs.service.PostService;
 import com.thoughtworks.bbs.service.UserService;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
@@ -31,9 +32,7 @@ public class UserController {
     private PostService postService = new PostServiceImpl(MyBatisUtil.getSqlSessionFactory());
 
     public void rstUserService(UserService userService) {
-
         this.userService=userService;
-
     }
 
 
@@ -78,21 +77,31 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/changePassword"}, method = RequestMethod.GET)
-    public ModelAndView changePassword(ModelMap model) {
-        return new ModelAndView("user/changePassword");
+    public String changePassword() {
+        return "user/changePassword";
     }
 
     @RequestMapping(value = {"/changePassword"}, method = RequestMethod.POST)
-    public ModelAndView processChangePassword(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
-        User user = userService.getByUsername(principal.getName());
+    public ModelAndView processChangePassword(ModelMap model, HttpServletRequest request, Principal principal){
+        User user =  userService.getByUsername(principal.getName());
+        UserValidator userValidator = new UserValidator();
 
         String oldPassword = request.getParameter("old password");
         String newPassword = request.getParameter("new password");
         String confirmPassword = request.getParameter("confirm password");
 
-        model.addAttribute(userService.changePassword(user, oldPassword, newPassword, confirmPassword), "true");
-        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        if(userService.verifyPassword(user.getUserName(),oldPassword)
+           && userValidator.passwordValidate(newPassword)
+           && newPassword.equals(confirmPassword))
+        {
+            user.setPasswordHash(newPassword);
+            model.addAttribute(userService.update(user).getErrors().isEmpty()?
+            "success" : "failed", "true");
+        }
+        else
+            model.addAttribute("failed", "true");
 
+        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
         Map<String, User> map = new HashMap<String, User>();
         map.put("user", user);
 
@@ -109,27 +118,12 @@ public class UserController {
 
 
 
-    /*@RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.POST)
-    public ModelAndView ChangePassword(HttpServletRequest request,Principal principal) throws IOException {
+    @RequestMapping(value = {"/updateProfile"}, method = RequestMethod.GET)
+    public ModelAndView updateProfile(ModelMap model, Principal principal) {
         User user = userService.getByUsername(principal.getName());
-        String password = request.getParameter("password");
-        String newPassword = request.getParameter("confirmPassword");
+        Map<String, User> map = new HashMap<String, User>();
+        map.put("user", user);
 
-        if(user.getPasswordHash().equals(password))
-        {
-            if (!user.getPasswordHash().equals(newPassword))
-            {
-                user.setPasswordHash(newPassword);
-                userService.update(user);
-                Map<String,User>map=new HashMap<String, User>();
-                map.put("user",user);
-                return new ModelAndView("user/profile",null).addObject("user",user).addObject("message","Password has been changed successfully!");
-            }else {
-                return new ModelAndView("user/ChangePassword",null).addObject("user",user).addObject("message","New password is the same with the old one! ");
-            }
-
-        } else {
-              return  new ModelAndView("user/ChangePassword",null).addObject("user",user).addObject("message","Wrong Password!<a href='#'><strong>Can't change!</strong></a>");
-        }
-    } */
+        return new ModelAndView("user/updateProfile", map);
+    }
 }
