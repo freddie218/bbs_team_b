@@ -14,15 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -55,7 +54,8 @@ public class UserControllerTest {
         principal = mock(Principal.class);
         when(principal.getName()).thenReturn(user.getUserName());
         userController = new UserController();
-        userController.srtUserService(userService);
+        userController.rstUserService(userService);
+        userController.rstPostService(postService);
 
 
     }
@@ -71,9 +71,20 @@ public class UserControllerTest {
     @Test
     public void profile_should_addAttribute(){
         userController.userProfile(model,principal);
-        verify(model).addAttribute("posts",postService.findMainPostByAuthorName("user"));
+        verify(model).addAttribute("posts", postService.findMainPostByAuthorName("user"));
+
     }
 
+    @Test
+    public void del_post_should_delete_post_and_return_redirect_string() {
+
+        Post post=mock(Post.class);
+        when(postService.get(1L)).thenReturn(post);
+        String ret=userController.delPostId(1L, null);
+        verify(postService).get(1L);
+        verify(postService).delete(post);
+        assertThat(ret,is("redirect:/user/profile"));
+    }
 
 
 }

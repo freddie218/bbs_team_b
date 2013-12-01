@@ -1,5 +1,6 @@
 package com.thoughtworks.bbs.web;
 
+import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
 import com.thoughtworks.bbs.service.PostService;
 import com.thoughtworks.bbs.service.UserService;
@@ -8,10 +9,14 @@ import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import com.thoughtworks.bbs.util.MyBatisUtil;
 import com.thoughtworks.bbs.util.UserBuilder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -25,11 +30,20 @@ public class UserController {
     private UserService userService = new UserServiceImpl(MyBatisUtil.getSqlSessionFactory());
     private PostService postService = new PostServiceImpl(MyBatisUtil.getSqlSessionFactory());
 
-    public void srtUserService(UserService userService) {
+    public void rstUserService(UserService userService) {
 
-        this.userService=new UserServiceImpl(MyBatisUtil.getSqlSessionFactory());
+        this.userService=userService;
 
     }
+
+
+    public void rstPostService(PostService postService) {
+        this.postService = postService;
+    }
+
+
+
+
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
     public ModelAndView registerUser(ModelMap model) {
@@ -84,6 +98,16 @@ public class UserController {
 
         return new ModelAndView("user/profile", map);
     }
+
+    @RequestMapping(value = {"/del/{postId}"}, method = RequestMethod.GET)
+    public String delPostId(@PathVariable("postId") Long postId, Principal principal) {
+        System.out.println("del redirect"+postId);
+        Post post = postService.get(postId);
+        postService.delete(post);
+        return "redirect:/user/profile";
+    }
+
+
 
     /*@RequestMapping(value = {"/ChangePassword"}, method = RequestMethod.POST)
     public ModelAndView ChangePassword(HttpServletRequest request,Principal principal) throws IOException {

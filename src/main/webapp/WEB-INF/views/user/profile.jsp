@@ -54,8 +54,11 @@
                     <c:out value="${post.title}"/>
                 </a>
             </td>
-            <td><c:out value="${post.authorName}"/></td>
+            <td><c:out value="${post.authorName}" /></td>
             <td><c:out value="${post.createTime}"/></td>
+            <td>
+            <a href='javascript:if(confirm("${post.authorName}")){  location.href = "del/${post.postId}"}'>X</a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>
