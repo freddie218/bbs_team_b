@@ -100,11 +100,11 @@ public class Post {
         return modifierId;
     }
 
-    public String getCreateTimeString() {
+    public String getcreateTimeString() {
         return createTimeString;
     }
 
-    public void setCreateTimeString(String createTimeString) {
+    public void setcreateTimeString(String createTimeString) {
         this.createTimeString = createTimeString;
     }
 }
