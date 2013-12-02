@@ -149,3 +149,4 @@ public class UserControllerTest {
 //        assertThat(modelAndView.getViewName(), is("user/profile"));
 //    }
 }
+

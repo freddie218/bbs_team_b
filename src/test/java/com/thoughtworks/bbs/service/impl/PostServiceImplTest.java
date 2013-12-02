@@ -78,3 +78,4 @@ public class PostServiceImplTest {
         assertThat(returnedPostList, is(expectedPostList));
     }
 }
+
