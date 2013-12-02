@@ -1,5 +1,16 @@
 package com.thoughtworks.bbs.model;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 /**
  * Created with IntelliJ IDEA.
  * User: st
