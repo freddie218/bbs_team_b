@@ -14,7 +14,7 @@ public class Post {
     private Date modifyTime;
     private Long creatorId;
     private Long modifierId;
-    private String createTimeFormat;
+    private String createTimeString;
 
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -45,7 +45,7 @@ public class Post {
 
     public Post setCreateTime(Date createTime) {
         this.createTime = createTime;
-        this.createTimeFormat = dateFormat.format(createTime);
+        this.createTimeString = dateFormat.format(createTime);
         return this;
     }
 
@@ -101,10 +101,10 @@ public class Post {
     }
 
     public String getCreateTimeString() {
-        return createTimeFormat;
+        return createTimeString;
     }
 
     public void setCreateTimeString(String createTimeString) {
-        this.createTimeFormat = createTimeString;
+        this.createTimeString = createTimeString;
     }
 }
