@@ -18,7 +18,7 @@
             <tr>
                 <td><c:out value="${post.title}"/></td>
                 <td><c:out value="${post.authorName}"/></td>
-                <td><c:out value="${post.createTime}"/></td>
+                <td><c:out value="${post.createTimeString}"/></td>
                 <td><c:out value="${post.content}"/></td>
             </tr>
         </c:forEach>
