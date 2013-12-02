@@ -21,7 +21,7 @@
                 </a>
             </td>
             <td><c:out value="${post.authorName}"/></td>
-            <td><c:out value="${post.createTimeString}"/></td>
+            <td><c:out value="${post.createTimeFormat}"/></td>
         </tr>
     </c:forEach>
     </tbody>
