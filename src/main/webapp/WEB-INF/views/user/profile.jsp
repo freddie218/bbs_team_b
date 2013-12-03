@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="pageTitle" scope="request" value="Profile"/>
 
 <%@ include file="../header.jsp" %>
@@ -60,7 +61,7 @@
             <td><c:out value="${post.authorName}" /></td>
             <td><c:out value="${post.createTimeString}"/></td>
             <td>
-            <a href='javascript:if(confirm("Are you sure to delete this post?(post title:${post.title})")){  location.href = "del/${post.postId}"}'>X</a>
+            <a href='javascript:if(confirm("Are you sure to delete this post?(post title:${fn:escapeXml(post.title)})")){location.href="del/${post.postId}"}'>X</a>
             </td>
         </tr>
     </c:forEach>
