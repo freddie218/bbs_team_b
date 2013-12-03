@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -73,13 +75,18 @@ public class UserControllerTest {
 
     @Test
     public void del_post_should_delete_post_and_return_redirect_string() {
+        List<Post> postList = new LinkedList<Post>();
+        for (int i = 0; i < 6; i++) {
+            postList.add(0,new Post());
+        }
 
-        Post post=mock(Post.class);
-        when(postService.get(1L)).thenReturn(post);
-        String ret=userController.delPostId(1L, null);
-        verify(postService).get(1L);
-        verify(postService).delete(post);
-        assertThat(ret,is("redirect:/user/profile"));
+        when(postService.findAllPostByMainPost(1L)).thenReturn(postList);
+
+        String ret = userController.delPostId(1L, principal);
+        for ( Post post:postList) {
+            verify(postService).delete(post);
+        }
+        assertThat(ret, is("redirect:/user/profile"));
     }
 
     @Test

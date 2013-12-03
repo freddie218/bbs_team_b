@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -110,9 +111,13 @@ public class UserController {
 
     @RequestMapping(value = {"/del/{postId}"}, method = RequestMethod.GET)
     public String delPostId(@PathVariable("postId") Long postId, Principal principal) {
-        System.out.println("del redirect"+postId);
-        Post post = postService.get(postId);
-        postService.delete(post);
+        if (null == principal) {
+            return "login";
+        }
+        List<Post> postList=postService.findAllPostByMainPost(postId);
+        for(Post post:postList){
+            postService.delete(post);
+        }
         return "redirect:/user/profile";
     }
 
