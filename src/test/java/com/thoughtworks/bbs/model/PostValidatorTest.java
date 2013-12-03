@@ -42,4 +42,6 @@ public class PostValidatorTest {
 
         assertThat(errors.get("title"), is("Please enter post title"));
     }
+
+
 }

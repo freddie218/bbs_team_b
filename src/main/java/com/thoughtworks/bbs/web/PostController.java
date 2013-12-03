@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
@@ -45,6 +46,38 @@ public class PostController {
         return "posts/show";
     }
 
+
+    @RequestMapping(value = {"/{postId}"}, method = RequestMethod.POST)
+    public String postShow(HttpServletRequest request, Principal principal,Model model,@PathVariable("postId") Long postId) {
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String parentId = request.getParameter("parentId");
+
+        Long parentIdLong = 0L;
+
+        if(StringUtils.isEmpty(content)){
+         model.addAttribute("failed", "content is empty");
+//            JOptionPane.showMessageDialog(null,"in if");
+
+        }
+        if (!StringUtils.isEmpty(parentId)) {
+            parentIdLong = Long.parseLong(parentId);
+        }
+
+        User currentUser = userService.getByUsername(principal.getName());
+
+        PostBuilder builder = new PostBuilder();
+        builder.title(title).content(content).author(currentUser.getUserName()).parentId(parentIdLong).creatorId(currentUser.getId())
+                .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date());
+
+        postService.save(builder.build());
+        model.addAttribute("mainPost", postService.get(postId));
+        model.addAttribute("posts", postService.findAllPostByMainPost(postId));
+        // return new ModelAndView("posts/createSuccess");
+        //return new ModelAndView("home", "posts", postService.findMainPostByAuthorName(principal.getName()));
+        return "posts/show";
+    }
+
     @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
     public ModelAndView createPostForm(ModelMap model, Principal principal) {
         return new ModelAndView("posts/create");
@@ -67,8 +100,8 @@ public class PostController {
                 .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date());
 
         postService.save(builder.build());
-        // return new ModelAndView("posts/createSuccess");
-        //return new ModelAndView("home", "posts", postService.findMainPostByAuthorName(principal.getName()));
+            // return new ModelAndView("posts/createSuccess");
+            //return new ModelAndView("home", "posts", postService.findMainPostByAuthorName(principal.getName()));
         return new RedirectView("../");
-    }
+        }
 }
