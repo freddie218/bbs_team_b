@@ -10,7 +10,7 @@ import com.thoughtworks.bbs.service.UserService;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +30,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        return null;
+        SqlSession session = factory.openSession();
+        List<User> userList= new LinkedList<User>();
+        try {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            userList = mapper.getAll();
+        }finally {
+            session.close();
+        }
+        return userList;
     }
 
     @Override
@@ -118,7 +126,6 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
-
 
 
     public boolean verify(User user, String oldPassWord) {

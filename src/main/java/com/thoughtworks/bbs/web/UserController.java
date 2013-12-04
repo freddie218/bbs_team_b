@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -108,4 +109,12 @@ public class UserController {
               return  new ModelAndView("user/ChangePassword",null).addObject("user",user).addObject("message","Wrong Password!<a href='#'><strong>Can't change!</strong></a>");
         }
     } */
+
+    @RequestMapping(value = {"/listUsers"}, method = RequestMethod.GET)
+    public ModelAndView listUsers(ModelMap map) {
+        List<User> users = userService.getAll();
+        map.put("users",users);
+        return new ModelAndView("user/users", map);
+    }
+
 }
