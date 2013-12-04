@@ -47,7 +47,7 @@
         <th>Title</th>
         <th>Author</th>
         <th>Publish Time</th>
-        <th></th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
