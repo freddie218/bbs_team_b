@@ -75,4 +75,11 @@ public class UserServiceImplTest {
         assertThat(result,equalTo(request));
     }
 
+    @Test
+    public void shouldGetAllUsers(){
+        userService.getAll();
+
+        verify(userMapper).getAll();
+    }
+
 }

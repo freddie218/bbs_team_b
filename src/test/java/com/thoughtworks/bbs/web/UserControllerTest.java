@@ -149,5 +149,10 @@ public class UserControllerTest {
 //        verify(userService, never()).update(user);
 //        assertThat(modelAndView.getViewName(), is("user/profile"));
 //    }
+    @Test
+    public void shouldGoToUsersWhenClickUsers(){
+        ModelAndView modelAndView = userController.listUsers(model);
+        assertThat(modelAndView.getViewName(),is("user/users"));
+    }
 }
 
