@@ -20,7 +20,7 @@
 <body>
     <div class="navbar">
         <div class="navbar-inner">
-            <a class="brand" href="<c:url value='/' />" class="nav_link">
+            <a class="brand" href="<c:url value='/' />" class="nav_link" >
                 ThoughtWorks BBS
             </a>
             <ul class="nav">
@@ -35,6 +35,11 @@
                             <li>
                                 <a href="<c:url value='/user/create' />" class="nav_link"><i class="icon-plus"></i> Create User</a>
                             </li>
+                        </security:authorize>
+                        <security:authorize ifAnyGranted="ROLE_ADMIN">
+                              <li>
+                                 <a href="<c:url value='/user/listUsers' />" class="nav_link"><i class="icon-plus"></i> Users</a>
+                              </li>
                         </security:authorize>
                         <li>
                             <a href="<c:url value='/posts/create' />" class="nav_link"><i class="icon-plus"></i> Create Post</a>
