@@ -1,28 +1,18 @@
 package com.thoughtworks.bbs.web;
 
-import com.thoughtworks.bbs.mappers.UserMapper;
-import com.thoughtworks.bbs.mappers.UserRoleMapper;
-import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created with IntelliJ IDEA.

@@ -32,8 +32,8 @@ public class PostControllerTest {
     private Model model;
     private ModelAndView expected;
     private ModelAndView result;
-    private RedirectView expected_rediret;
-    private RedirectView result_rediret;
+    private RedirectView expected_redirect;
+    private RedirectView result_redirect;
     @Before
     public void setup(){
         postservice = mock(PostServiceImpl.class);
@@ -60,10 +60,10 @@ public class PostControllerTest {
         when(request.getParameter("title")).thenReturn("title");
         when(request.getParameter("content")).thenReturn("content");
 
-        result_rediret = postController.processCreate(request,principal);
-        expected_rediret=new RedirectView("../");
+        result_redirect = postController.processCreate(request,principal);
+        expected_redirect=new RedirectView("../");
 
-        assertEquals("page should redirect to home",expected_rediret.getBeanName(),result_rediret.getBeanName());
+        assertEquals("page should redirect to home",expected_redirect.getBeanName(),result_redirect.getBeanName());
     }
 
 
