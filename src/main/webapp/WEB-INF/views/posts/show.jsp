@@ -18,7 +18,7 @@
             <tr>
                 <td><c:out value="${post.title}"/></td>
                 <td><c:out value="${post.authorName}"/></td>
-                <td><c:out value="${post.createTime}"/></td>
+                <td><c:out value="${post.createTimeString}"/></td>
                 <td><c:out value="${post.content}"/></td>
             </tr>
         </c:forEach>
@@ -26,9 +26,15 @@
 </table>
 
 </br>
-
+ <c:choose>
+      <c:when test="${not empty failed}">
+          <div id="createPostFailed" class="page-action createPost-failed">
+              <i class="messageError">Content cannot be empty!</i>
+          </div>
+      </c:when>
+  </c:choose>
 <div id="createPanel">
-    <form action="<c:url value='/posts/create' />" method="post">
+    <form action="<c:url value='/posts/${postId}' />" method="post">
         <input type="hidden" id="parentId" name="parentId" value="${mainPost.postId}" />
         <input type="hidden" id="title" name="title" value="Re: ${mainPost.title}" />
         <textarea name="content" id="content"  placeholder="post content" cols="100" rows="6"></textarea>

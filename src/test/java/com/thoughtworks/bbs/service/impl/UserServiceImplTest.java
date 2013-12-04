@@ -5,12 +5,11 @@ import com.thoughtworks.bbs.mappers.UserRoleMapper;
 import com.thoughtworks.bbs.model.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class UserServiceImplTest {
@@ -54,12 +53,26 @@ public class UserServiceImplTest {
         userService.update(user);
     }
 
+    @Test
+    public void shouldReturnTrueWhenVerifyRightPassword(){
+        String username = user.getUserName();
+        String password = user.getPasswordHash();
+        when(userMapper.findByUsername(username)).thenReturn(user);
+
+        boolean expected = true;
+        boolean result = userService.verifyPassword(username, password);
+        assertThat(expected, equalTo(result));
+    }
 
     @Test
-    public void shouldChangePasswordWhenChangePassword(){
-        userService.changePassword(user,"password","password","password");
+    public void shouldReturnFalseWhenVerifyWrongPassword(){
+        String username = user.getUserName();
+        String password = user.getPasswordHash() + "_wrong";
+        when(userMapper.findByUsername(username)).thenReturn(user);
 
-        verify(userMapper).update(user);
+        boolean request = false;
+        boolean result = userService.verifyPassword(username, password);
+        assertThat(result,equalTo(request));
     }
 
 }

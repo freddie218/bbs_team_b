@@ -89,25 +89,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changePassword(User user, String oldPassword, String newPassword, String confirmPassword){
-        String result = new String();
-        if(null != validator.passwordValidate(newPassword)){
-            result = "failed";
-        }
-        else if(user.getPasswordHash().equals(oldPassword) && newPassword.equals(confirmPassword))
-        {
-            user.setPasswordHash(newPassword);
-            update(user);
-            result = "success";
-        }
-        else
-        {   result = "failed" ;
-        }
-
-        return result;
-    }
-
-    @Override
     public void delete(User user) {
 
     }
@@ -127,10 +108,15 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
-    public boolean verify(User user, String oldPassWord) {
-        //To change body of created methods use File | Settings | File Templates.
-        return false;
+    @Override
+    public boolean verifyPassword(String username, String password) {
+        User user = getByUsername(username);
+        if(null == user)
+            return false;
+        else if(password.equals(user.getPasswordHash()))
+            return true;
+        else
+            return false;
     }
 
 }

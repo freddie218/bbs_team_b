@@ -23,15 +23,15 @@ public class UserValidator {
         return errors;
     }
 
-    public String passwordValidate(String password){
+    public boolean passwordValidate(String password){
         if(StringUtils.isBlank(password)){
-            return  "Password can not be null";
+            return  false;
         }
         else if(password.length() < 6 || password.length() > 12){
-            return "Password length must be 6~12";
+            return false;
         }
         else if((password.charAt(0) == '_')){
-            return "Invalid password character!";
+            return false;
         }
         else{
             for(int i = 0; i < password.length(); i++)
@@ -43,11 +43,11 @@ public class UserValidator {
                     continue;
                 }
                 else{
-                    return "Invalid password character!";
+                    return false;
                 }
             }
         }
 
-        return null;
+        return true;
     }
 }

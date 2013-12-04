@@ -1,5 +1,7 @@
 package com.thoughtworks.bbs.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Post {
@@ -12,6 +14,9 @@ public class Post {
     private Date modifyTime;
     private Long creatorId;
     private Long modifierId;
+    private String createTimeString;
+
+    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public Post setPostId(long postId) {
         this.postId = postId;
@@ -40,6 +45,7 @@ public class Post {
 
     public Post setCreateTime(Date createTime) {
         this.createTime = createTime;
+        this.createTimeString = dateFormat.format(createTime);
         return this;
     }
 
@@ -92,5 +98,13 @@ public class Post {
 
     public Long getModifierId() {
         return modifierId;
+    }
+
+    public String getcreateTimeString() {
+        return createTimeString;
+    }
+
+    public void setcreateTimeString(String createTimeString) {
+        this.createTimeString = createTimeString;
     }
 }

@@ -20,7 +20,7 @@
 <body>
     <div class="navbar">
         <div class="navbar-inner">
-            <a class="brand" href="<c:url value='/' />" class="nav_link" >
+            <a class="brand" href="<c:url value='/' />" class="nav_link">
                 ThoughtWorks BBS
             </a>
             <ul class="nav">
@@ -36,11 +36,11 @@
                                 <a href="<c:url value='/user/create' />" class="nav_link"><i class="icon-plus"></i> Create User</a>
                             </li>
                         </security:authorize>
-                        <security:authorize ifAnyGranted="ROLE_ADMIN">
-                              <li>
-                                 <a href="<c:url value='/user/listUsers' />" class="nav_link"><i class="icon-plus"></i> Users</a>
-                              </li>
-                        </security:authorize>
+                         <security:authorize ifAnyGranted="ROLE_ADMIN">
+                             <li>
+                                <a href="<c:url value='/user/listUsers' />" class="nav_link"><i class="icon-plus"></i> Users</a>
+                             </li>
+                         </security:authorize>
                         <li>
                             <a href="<c:url value='/posts/create' />" class="nav_link"><i class="icon-plus"></i> Create Post</a>
                         </li>
@@ -55,7 +55,7 @@
     </div>
 
     <!--[if lt IE 9]>
-    <div class="alert alert-warning">
-        You are using a Legacy Browser - it is not supported. Please upgrade to <a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-9/worldwide-languages">IE9</a>, Firefox, Safari, Chrome or Opera.
-    </div>
+        <div class="alert alert-warning">
+            You are using a Legacy Browser - it is not supported. Please upgrade to <a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-9/worldwide-languages">IE9</a>, Firefox, Safari, Chrome or Opera.
+        </div>
     <![endif]-->

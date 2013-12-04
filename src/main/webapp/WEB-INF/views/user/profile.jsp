@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="pageTitle" scope="request" value="Profile"/>
 
 <%@ include file="../header.jsp" %>
@@ -32,11 +33,14 @@
         </tr>
         <tr>
             <td><a href="<c:url value='/user/changePassword' />" class="brand">Change Password</a></td>
+            <td><a href="<c:url value='/user/updateProfile' />" class="brand">Update Profile</a></td>
         </tr>
     </table>
 </div>
 
-<H2> My posts </H2>
+
+
+<H2> My Posts </H2>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -54,8 +58,11 @@
                     <c:out value="${post.title}"/>
                 </a>
             </td>
-            <td><c:out value="${post.authorName}"/></td>
-            <td><c:out value="${post.createTime}"/></td>
+            <td><c:out value="${post.authorName}" /></td>
+            <td><c:out value="${post.createTimeString}"/></td>
+            <td>
+            <a href='javascript:if(confirm("Are you sure to delete this post?(post title:${fn:escapeXml(post.title)})")){location.href="del/${post.postId}"}'>X</a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

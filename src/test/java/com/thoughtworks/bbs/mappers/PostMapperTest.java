@@ -10,7 +10,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-public class PostMapperTest extends MapperTestBase{
+public class PostMapperTest extends MapperTestBase {
     PostMapper postMapper;
     Post post;
 

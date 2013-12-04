@@ -18,6 +18,7 @@ public class PostValidatorTest {
 
         post = new Post();
         post.setAuthorName("Juntao");
+        post.setContent("content");
         post.setTitle("Introduce to TDD");
     }
 
@@ -42,4 +43,6 @@ public class PostValidatorTest {
 
         assertThat(errors.get("title"), is("Please enter post title"));
     }
+
+
 }
