@@ -112,14 +112,16 @@ public class UserController {
 
     @RequestMapping(value = {"/del/{postId}"}, method = RequestMethod.GET)
     public String delPostId(@PathVariable("postId") Long postId, Principal principal) {
-        if (null == principal) {
-            return "login";
+        Post mainPost = postService.get(postId);
+        String authorName = mainPost.getAuthorName();
+        if (null != principal&&principal.equals(authorName)){
+            List<Post> postList=postService.findAllPostByMainPost(postId);
+            for(Post post:postList){
+                postService.delete(post);
+            }
+            return "redirect:/user/profile";
         }
-        List<Post> postList=postService.findAllPostByMainPost(postId);
-        for(Post post:postList){
-            postService.delete(post);
-        }
-        return "redirect:/user/profile";
+        return "redirect:/login";
     }
 
 
