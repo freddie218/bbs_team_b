@@ -114,7 +114,7 @@ public class UserController {
     public String delPostId(@PathVariable("postId") Long postId, Principal principal) {
         Post mainPost = postService.get(postId);
         String authorName = mainPost.getAuthorName();
-        if (null != principal&&principal.equals(authorName)){
+        if (null != principal&&principal.getName().equals(authorName)){
             List<Post> postList=postService.findAllPostByMainPost(postId);
             for(Post post:postList){
                 postService.delete(post);

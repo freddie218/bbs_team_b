@@ -1,5 +1,6 @@
 package com.thoughtworks.bbs.web;
 
+import com.sun.corba.se.impl.corba.PrincipalImpl;
 import com.thoughtworks.bbs.model.Post;
 
 import com.thoughtworks.bbs.model.User;
@@ -41,7 +42,7 @@ public class UserControllerTest {
         user.setUserName("user");
         user.setPasswordHash("password");
         model = mock(ModelMap.class);
-        principal = mock(Principal.class);
+        principal =  mock(Principal.class);
         request = mock(HttpServletRequest.class);
 
         userController = new UserController();
@@ -73,7 +74,10 @@ public class UserControllerTest {
         for (int i = 0; i < 6; i++) {
             postList.add(0,new Post());
         }
-
+        Post mainPost = new Post();
+        mainPost.setAuthorName("M");
+        when(postService.get(1L)).thenReturn(mainPost);
+        when(principal.getName()).thenReturn("M");
         when(postService.findAllPostByMainPost(1L)).thenReturn(postList);
 
         String ret = userController.delPostId(1L, principal);
