@@ -52,6 +52,12 @@ public class PostServiceImplTest {
 
         verify(mapper).update(post);
     }
+    @Test
+    public void shouldDeleteDataFromPostServiceWhenDeletingPost(){
+        Post post = postBuilder.id(1L).build();
+        postService.delete(post);
+        verify(mapper).delete(post);
+    }
 
     @Test
     public void shouldGetPostByAuthorName() {
