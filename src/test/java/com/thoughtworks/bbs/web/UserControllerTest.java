@@ -1,8 +1,6 @@
 package com.thoughtworks.bbs.web;
 
-import com.sun.corba.se.impl.corba.PrincipalImpl;
 import com.thoughtworks.bbs.model.Post;
-
 import com.thoughtworks.bbs.model.User;
 import com.thoughtworks.bbs.service.ServiceResult;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
@@ -14,10 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -93,10 +91,15 @@ public class UserControllerTest {
     }
 
     @Test
-    public void shouldReturnProfilePageAndUpdateUserWhenChangePasswordSuccess(){
+    public void shouldReturnProfilePageAfterChangePassword() throws Exception {
         String expected = "user/profile";
         String result = null;
+        result = userController.processChangePassword(model,request, principal).getViewName();
+        assertThat(expected, equalTo(result));
+    }
 
+    @Test
+    public void shouldUpdateUserWhenChangePasswordSuccess(){
         when(userService.getByUsername(principal.getName())).thenReturn(user);
         when(userService.update(user)).thenReturn(new ServiceResult<User>(new HashMap<String, String>(),user));
         when(request.getParameter("username")).thenReturn(user.getUserName());
@@ -104,17 +107,13 @@ public class UserControllerTest {
         when(request.getParameter("new password")).thenReturn(user.getPasswordHash());
         when(request.getParameter("confirm password")).thenReturn(user.getPasswordHash());
         when(userService.verifyPassword(user.getUserName(), user.getPasswordHash())).thenReturn(true);
-        result = userController.processChangePassword(model,request, principal).getViewName();
+        userController.processChangePassword(model,request, principal).getViewName();
 
         verify(userService, times(1)).update(user);
-        assertThat(expected, equalTo(result));
     }
 
     @Test
-    public void shouldReturnProfilePageAndNotUpdateUserWhenChangePasswordFailed(){
-        String expected = "user/profile";
-        String result = null;
-
+    public void shouldNotUpdateUserWhenChangePasswordFailed(){
         when(userService.getByUsername(principal.getName())).thenReturn(user);
         when(userService.update(user)).thenReturn(new ServiceResult<User>(new HashMap<String, String>(),user));
         when(request.getParameter("username")).thenReturn(user.getUserName());
@@ -122,10 +121,9 @@ public class UserControllerTest {
         when(request.getParameter("new password")).thenReturn(user.getPasswordHash());
         when(request.getParameter("confirm password")).thenReturn(user.getPasswordHash()+"_wrong");
         when(userService.verifyPassword(user.getUserName(), user.getPasswordHash())).thenReturn(true);
-        result = userController.processChangePassword(model,request, principal).getViewName();
+        userController.processChangePassword(model,request, principal).getViewName();
 
         verify(userService, never()).update(user);
-        assertThat(expected, equalTo(result));
     }
 
     @Test
