@@ -43,14 +43,13 @@ public class UserServiceImplTest {
     @Test
     public void shouldInsertUserWhenCreateNew(){
         userService.save(user);
-
         verify(userMapper).insert(user);
     }
-
 
     @Test
     public void shouldUpdateUserWhenUpdateUser(){
         userService.update(user);
+        verify(userMapper).update(user);
     }
 
     @Test

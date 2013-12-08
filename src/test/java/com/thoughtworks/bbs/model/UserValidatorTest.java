@@ -50,17 +50,26 @@ public class UserValidatorTest {
     }
 
     @Test
-    public void shouldReturnFalseWhenPasswordFormatWrong(){
+    public void shouldReturnFalseWhenPasswordTooShort() throws Exception {
         assertThat("password length should not be less than 6",
-                false == validator.passwordValidate("123"));
+                !validator.passwordValidate("123"));
+    }
 
+    @Test
+    public void shouldReturnFalseWhenPasswordTooLong() throws Exception {
         assertThat("password length should not be more than 12",
-                false == validator.passwordValidate("123456789123456789"));
+                !validator.passwordValidate("123456789123456789"));
+    }
 
-        assertThat("password can only contains alphabet, numbers and '_'",
-                false == validator.passwordValidate("!@123456"));
-
+    @Test
+    public void shouldReturnFalseWhenPasswordStartsWithUnderLine() throws Exception {
         assertThat("password should not start with '_'",
-                false == validator.passwordValidate("_123456"));
+                !validator.passwordValidate("_123456"));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenPasswordContainsIllegalCharacter(){
+        assertThat("password can only contains alphabet, numbers and '_'",
+                !validator.passwordValidate("!@123456"));
     }
 }
