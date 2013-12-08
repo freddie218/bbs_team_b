@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
 public class UserServiceImplTest {
@@ -77,8 +78,18 @@ public class UserServiceImplTest {
     @Test
     public void shouldGetAllUsers(){
         userService.getAll();
-
         verify(userMapper).getAll();
     }
 
+    @Test
+    public void shouldReturnFalseWhenVerifyRepeatedNewUsername() throws Exception {
+        when(userMapper.findByUsername("username")).thenReturn(user);
+        assertThat(userService.verifyUsername("username"), is(false));
+    }
+
+    @Test
+    public void shouldReturnTrueWhenVerifyATotallyNewName() throws Exception {
+        when(userMapper.findByUsername("username")).thenReturn(null);
+        assertThat(userService.verifyUsername("username"), is(true));
+    }
 }

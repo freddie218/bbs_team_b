@@ -63,6 +63,24 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
 
+    @Override
+    public int updatePostsAuthorByUserName(String user, String new_user) {
+        SqlSession session = factory.openSession();
+        int cnt = 0;
+
+        try{
+            PostMapper postMapper = session.getMapper(PostMapper.class);
+            List<Post> postList = postMapper.findMainPostByAuthorName(user);
+            for(Post post : postList){
+                postMapper.update(post.setAuthorName(new_user));
+                cnt ++;
+            }
+        }finally {
+            session.close();
+        }
+
+        return cnt;
+    }
 
 
     @Override

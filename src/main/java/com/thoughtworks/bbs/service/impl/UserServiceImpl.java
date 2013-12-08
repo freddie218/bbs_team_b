@@ -119,4 +119,9 @@ public class UserServiceImpl implements UserService {
             return false;
     }
 
+    @Override
+    public boolean verifyUsername(String username) {
+        return (null == getByUsername(username)) ? true : false;
+    }
+
 }

@@ -5,6 +5,7 @@
 <%@ include file="../header.jsp" %>
 
 <c:choose>
+
     <c:when test="${not empty failed}">
         <div id="changePasswordFailed" class="page-action changePassword-failed">
             <i class="messageError">Change Password Failed!</i>
@@ -14,6 +15,11 @@
         <div id="changePasswordSuccess" class="page-action changePassword-success">
             <i class="messageInfo">Change Password Successful!</i>
         </div>
+    </c:when>
+    <c:when test="${not empty updateProfileSuccess}">
+            <div id="updateProfileSuccess" class="page-action updateProfile-success">
+                <i class="messageInfo">Update Profile Successful!</i>
+            </div>
     </c:when>
 </c:choose>
 
@@ -67,7 +73,6 @@
     </c:forEach>
     </tbody>
 </table>
-
 
 <%@ include file="../footer.jsp" %>
 

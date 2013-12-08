@@ -72,4 +72,16 @@ public class UserValidatorTest {
         assertThat("password can only contains alphabet, numbers and '_'",
                 !validator.passwordValidate("!@123456"));
     }
+
+    @Test
+    public void shouldReturnTrueWhenValidateValidUsername() throws Exception {
+        assertThat("username can be anything excepted blank",
+                    validator.usernameValidate("username"));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenValidateInvalidUsername() throws Exception {
+        assertThat("username can not be empty",
+                    !validator.usernameValidate(""));
+    }
 }

@@ -107,7 +107,7 @@ public class UserControllerTest {
         when(request.getParameter("new password")).thenReturn(user.getPasswordHash());
         when(request.getParameter("confirm password")).thenReturn(user.getPasswordHash());
         when(userService.verifyPassword(user.getUserName(), user.getPasswordHash())).thenReturn(true);
-        userController.processChangePassword(model,request, principal).getViewName();
+        userController.processChangePassword(model, request, principal).getViewName();
 
         verify(userService, times(1)).update(user);
     }
@@ -121,40 +121,72 @@ public class UserControllerTest {
         when(request.getParameter("new password")).thenReturn(user.getPasswordHash());
         when(request.getParameter("confirm password")).thenReturn(user.getPasswordHash()+"_wrong");
         when(userService.verifyPassword(user.getUserName(), user.getPasswordHash())).thenReturn(true);
-        userController.processChangePassword(model,request, principal).getViewName();
+        userController.processChangePassword(model, request, principal).getViewName();
 
         verify(userService, never()).update(user);
     }
 
     @Test
-    public void shouldGoToUpdateProfilePageWhenClickUpdateProfile(){
-        ModelAndView modelAndView = userController.updateProfile(model,principal);
-        assertThat(modelAndView.getViewName(),is("user/updateProfile"));
-    }
-
-//    @Test
-//    public void shouldReturnProfilePageAndUpdateUserWhenUpdateUserProfileSuccess(){
-//        when(userService.getByUsername(principal.getName())).thenReturn(user);
-//        when(request.getParameter("username")).thenReturn(user.getUserName()+"_updated");
-//
-//        ModelAndView modelAndView = userController.processUpdateUserProfile(model, request, principal);
-//        verify(userService, times(1)).update(user);
-//        assertThat(modelAndView.getViewName(), is("user/profile"));
-//    }
-//
-//    @Test
-//    public void shouldReturnProfilePageAndNotUpdateUserWhenUpdateProfileFailed(){
-//        when(userService.getByUsername(principal.getName())).thenReturn(user);
-//        when(request.getParameter("username")).thenReturn("");
-//
-//        ModelAndView modelAndView = userController.processUpdateUserProfile(model, request, principal);
-//        verify(userService, never()).update(user);
-//        assertThat(modelAndView.getViewName(), is("user/profile"));
-//    }
-    @Test
     public void shouldGoToUsersWhenClickUsers(){
         ModelAndView modelAndView = userController.listUsers(model);
         assertThat(modelAndView.getViewName(),is("user/users"));
+    }
+
+    @Test
+    public void shouldGoToUpdateProfilePageWhenClickUpdateProfile(){
+        ModelAndView modelAndView = userController.updateProfile(model, principal);
+        assertThat(modelAndView.getViewName(),is("user/updateProfile"));
+    }
+
+    @Test
+    public void shouldGoToProfilePageWhenUpdateProfileFailed() throws Exception {
+        ModelAndView modelAndView = userController.processUpdateProfile(model, request, principal);
+        assertThat(modelAndView.getViewName(), is("user/updateProfile"));
+    }
+
+    @Test
+    public void shouldGoToProfilePageWhenUpdateProfileSuccess() throws Exception{
+        when(userService.getByUsername("username")).thenReturn(user);
+        when(request.getParameter("new username")).thenReturn("username_new");
+        when(userService.verifyUsername("username_new")).thenReturn(true);
+        when(userService.getByUsername(principal.getName())).thenReturn(user);
+
+        ModelAndView modelAndView = userController.processUpdateProfile(model, request, principal);
+        assertThat(modelAndView.getViewName(), is("user/profile"));
+    }
+
+    @Test
+    public void shouldUpdateProfileWhenNewUsernameValid() throws Exception {
+        when(userService.getByUsername("username")).thenReturn(user);
+        when(request.getParameter("new username")).thenReturn("username_new");
+        when(userService.verifyUsername("username_new")).thenReturn(true);
+        when(userService.getByUsername(principal.getName())).thenReturn(user);
+
+        ModelAndView modelAndView = userController.processUpdateProfile(model, request, principal);
+
+        verify(userService, times(1)).update(user);
+    }
+
+    @Test
+    public void shouldNotUpdateProfileWhenNewUsernameInvalid() throws Exception {
+        when(userService.getByUsername("username")).thenReturn(user);
+        when(request.getParameter("new username")).thenReturn("username");
+        when(userService.verifyUsername("username")).thenReturn(false);
+        when(userService.getByUsername(principal.getName())).thenReturn(user);
+
+        ModelAndView modelAndView = userController.processUpdateProfile(model, request, principal);
+        verify(userService, never()).update(user);
+    }
+
+    @Test
+    public void shouldNotUpdateProfileWhenNewUsernameIsBlank() throws Exception {
+        when(userService.getByUsername("username")).thenReturn(user);
+        when(request.getParameter("new username")).thenReturn("");
+        when(userService.verifyUsername("")).thenReturn(true);
+        when(userService.getByUsername(principal.getName())).thenReturn(user);
+
+        ModelAndView modelAndView = userController.processUpdateProfile(model, request, principal);
+        verify(userService, never()).update(user);
     }
 }
 

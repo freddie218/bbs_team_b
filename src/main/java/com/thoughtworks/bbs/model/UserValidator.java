@@ -50,4 +50,8 @@ public class UserValidator {
 
         return true;
     }
+
+    public boolean usernameValidate(String username) {
+        return !StringUtils.isBlank(username);
+    }
 }

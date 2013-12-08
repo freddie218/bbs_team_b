@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -82,6 +83,19 @@ public class PostServiceImplTest {
         List<Post> returnedPostList = postService.findAllPostByMainPost(id);
         verify(mapper).findAllPostByMainPost(id);
         assertThat(returnedPostList, is(expectedPostList));
+    }
+
+    @Test
+    public void shouldUpdatePostsAuthorWhenUpdatePostsAuthor() throws Exception {
+        List<Post> postList = new LinkedList<Post>();
+        postList.add(new Post().setAuthorName("user"));
+        postList.add(new Post().setAuthorName("user"));
+
+        when(mapper.findMainPostByAuthorName("user")).thenReturn(postList);
+        postService.updatePostsAuthorByUserName("user", "new_user");
+
+        assertThat(postList.get(0).getAuthorName(), is("new_user"));
+        assertThat(postList.get(1).getAuthorName(), is("new_user"));
     }
 }
 

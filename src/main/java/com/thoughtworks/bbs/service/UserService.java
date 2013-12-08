@@ -18,4 +18,6 @@ public interface UserService {
     User getByUsername(String username);
 
     boolean verifyPassword(String username, String password);
+
+    boolean verifyUsername(String username);
 }

@@ -17,4 +17,6 @@ public interface PostService {
     List<Post> findAllPostByMainPost(Long postId);
 
     List<Post> findAllPost();
+
+    int updatePostsAuthorByUserName(String user, String new_user);
 }

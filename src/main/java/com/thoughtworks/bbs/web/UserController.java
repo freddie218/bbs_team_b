@@ -10,15 +10,15 @@ import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import com.thoughtworks.bbs.util.MyBatisUtil;
 import com.thoughtworks.bbs.util.UserBuilder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -41,10 +41,6 @@ public class UserController {
     public void rstPostService(PostService postService) {
         this.postService = postService;
     }
-
-
-
-
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
     public ModelAndView registerUser(ModelMap model) {
@@ -140,5 +136,38 @@ public class UserController {
         List<User> users = userService.getAll();
         map.put("users",users);
         return new ModelAndView("user/users", map);
+    }
+
+    @RequestMapping(value = {"/updateProfile"}, method = RequestMethod.POST)
+    public ModelAndView processUpdateProfile(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
+
+        User user = userService.getByUsername(principal.getName());
+        boolean isAltered =false;
+        String oldUsername = principal.getName();
+        String newUsername = request.getParameter("new username");
+
+        UserValidator userValidator = new UserValidator();
+        if(userValidator.usernameValidate(newUsername) && userService.verifyUsername(newUsername)){
+            user.setUserName(newUsername);
+            userService.update(user);
+            postService.updatePostsAuthorByUserName(oldUsername, newUsername);
+            isAltered =true;
+            Authentication newToken = new UsernamePasswordAuthenticationToken(newUsername,user.getPasswordHash());
+            SecurityContextHolder.getContext().setAuthentication(newToken);
+            model.addAttribute("updateProfileSuccess", "true");
+        }
+        else{
+            model.addAttribute("updateProfileFailed", "true");
+        }
+
+        model.addAttribute("posts", postService.findMainPostByAuthorName(user.getUserName()));   //altered
+
+        Map<String, User> map = new HashMap<String, User>();
+        map.put("user", user);
+        if(isAltered)
+            return new ModelAndView("user/profile",map);
+        else
+            return new ModelAndView("user/updateProfile",map);
+
     }
 }
