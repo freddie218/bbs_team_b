@@ -11,14 +11,14 @@ import java.util.List;
 public interface PostMapper {
 
     @Insert(
-        "INSERT INTO post(parent_id, author_name, title, content, create_time, modify_time, creator_id, modifier_id) " +
-        "VALUES (#{parentId}, #{authorName}, #{title}, #{content}, #{createTime}, #{modifyTime}, #{creatorId}, #{modifierId})"
+        "INSERT INTO post(parent_id, author_name, title, content, create_time, modify_time, creator_id, modifier_id, liked_times) " +
+        "VALUES (#{parentId}, #{authorName}, #{title}, #{content}, #{createTime}, #{modifyTime}, #{creatorId}, #{modifierId}, #{likedTimes})"
     )
     void insert(Post item);
 
     @Select(
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
-                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId " +
+                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
                     "FROM post " +
                     "WHERE id = #{postId}"
     )
@@ -26,14 +26,14 @@ public interface PostMapper {
 
     @Select(
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
-                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId " +
+                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
                     "FROM post "
     )
     List<Post> getAll();
 
     @Select(
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
-                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId " +
+                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
                     "FROM post " +
                     "WHERE author_name = #{authorName} and parent_id = 0 " +
                     "ORDER BY create_time desc"
@@ -42,7 +42,7 @@ public interface PostMapper {
 
     @Select(
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
-                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId " +
+                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
                     "FROM post " +
                     "WHERE parent_id = 0 " +
                     "ORDER BY create_time desc"
@@ -52,7 +52,7 @@ public interface PostMapper {
     @Update(
         "UPDATE post " +
         "SET parent_id=#{parentId}, author_name=#{authorName}, title=#{title}, content=#{content}, create_time=#{createTime}," +
-                " modify_time=#{modifyTime}, creator_id=#{creatorId}, modifier_id=#{modifierId} " +
+                " modify_time=#{modifyTime}, creator_id=#{creatorId}, modifier_id=#{modifierId}, liked_times=#{likedTimes} " +
         "WHERE id=#{postId}"
     )
     void update(Post post);
@@ -69,7 +69,7 @@ public interface PostMapper {
 
     @Select(
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
-                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId " +
+                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
                     "FROM post " +
                     "WHERE (id = #{postId} and parent_id = 0)" +
                     "OR parent_id = #{postId} " +

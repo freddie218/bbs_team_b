@@ -56,6 +56,11 @@ public class PostBuilder {
         return this;
     }
 
+    public PostBuilder likedTimes(Long likedTimes){
+        post.setLikedTimes(likedTimes);
+        return  this;
+    }
+
     public Post build() {
         return post;
     }

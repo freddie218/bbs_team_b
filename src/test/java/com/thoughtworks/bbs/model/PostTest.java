@@ -37,10 +37,10 @@ public class PostTest {
 
     @Test
     public void createTimeStringShouldHaveValue(){
-        assertThat(post.getcreateTimeString(),is(notNullValue()));
+        assertThat(post.getCreateTimeString(),is(notNullValue()));
     }
 
     public void createTimeStringShouldBeFormat(){
-        assertThat(post.getcreateTimeString(),is(timeFormat));
+        assertThat(post.getCreateTimeString(),is(timeFormat));
     }
 }

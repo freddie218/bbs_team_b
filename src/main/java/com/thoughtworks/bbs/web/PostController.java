@@ -68,7 +68,7 @@ public class PostController {
 
         PostBuilder builder = new PostBuilder();
         builder.title(title).content(content).author(currentUser.getUserName()).parentId(parentIdLong).creatorId(currentUser.getId())
-                .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date());
+                .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date()).likedTimes(0L);
 
         postService.save(builder.build());
         model.addAttribute("mainPost", postService.get(postId));
@@ -97,7 +97,7 @@ public class PostController {
 
         PostBuilder builder = new PostBuilder();
         builder.title(title).content(content).author(currentUser.getUserName()).parentId(parentIdLong).creatorId(currentUser.getId())
-                .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date());
+                .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date()).likedTimes(0L);
 
         postService.save(builder.build());
             // return new ModelAndView("posts/createSuccess");

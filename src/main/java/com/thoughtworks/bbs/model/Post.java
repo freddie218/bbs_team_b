@@ -15,6 +15,7 @@ public class Post {
     private Long creatorId;
     private Long modifierId;
     private String createTimeString;
+    private Long likedTimes;
 
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -64,6 +65,14 @@ public class Post {
         return this;
     }
 
+    public void setCreateTimeString(String createTimeString) {
+        this.createTimeString = createTimeString;
+    }
+
+    public Post setLikedTimes(long likedTimes)  {
+        this.likedTimes=likedTimes;
+        return this;
+    }
     public Long getPostId() {
         return postId;
     }
@@ -100,11 +109,13 @@ public class Post {
         return modifierId;
     }
 
-    public String getcreateTimeString() {
+    public String getCreateTimeString() {
         return createTimeString;
     }
 
-    public void setcreateTimeString(String createTimeString) {
-        this.createTimeString = createTimeString;
+    public Long getLikedTimes(){
+        return likedTimes;
     }
+
+
 }
