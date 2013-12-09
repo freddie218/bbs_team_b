@@ -17,18 +17,19 @@
             <tr>
                 <td> <c:out value="${user.userName}"/> </td>
                 <td> <c:out value="${user.enabled}"/> </td>
-                <c:choose>
-                   <c:when test="${not empty return}">
-                      <td>
-                         <a href='javascript:if(confirm("Are you sure to disable this user?){location.href="dis/${user.userId}"}'>X</a>
-                      </td>
-                   </c:when>
-                </c:choose>
+                <td>
+
+                   <c:if test="${user.isRegular}">
+                        <a href='javascript:if(confirm("Are you sure to disable this user?(user userName)")){location.href="dis/${user.id}"}'>X</a>
+                   </c:if>
+
+               </td>
             </tr>
         </c:forEach>
 
 
     </table>
+
 </div>
 
 
