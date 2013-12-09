@@ -38,7 +38,7 @@
                         </security:authorize>
                          <security:authorize ifAnyGranted="ROLE_ADMIN">
                              <li>
-                                <a href="<c:url value='/user/listUsers' />" class="nav_link"><i class="icon-plus"></i> Users</a>
+                                <a href="<c:url value='/user/users' />" class="nav_link"><i class="icon-plus"></i> Users</a>
                              </li>
                          </security:authorize>
                         <li>

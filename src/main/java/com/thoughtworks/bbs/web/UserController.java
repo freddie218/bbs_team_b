@@ -146,7 +146,7 @@ public class UserController {
         return new ModelAndView("user/updateProfile", map);
     }
 
-    @RequestMapping(value = {"/listUsers"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/users"}, method = RequestMethod.GET)
     public ModelAndView listUsers(ModelMap map) {
         List<User> users = userService.getAll();
         map.put("users",users);

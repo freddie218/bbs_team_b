@@ -17,7 +17,7 @@
 
         <intercept-url pattern="/admin" access="ROLE_ADMIN"/>
         <intercept-url pattern="/user" access="ROLE_REGULAR"/>
-        <intercept-url pattern="/user/listUsers" access="ROLE_ADMIN"/>
+        <intercept-url pattern="/user/users" access="ROLE_ADMIN"/>
         <!--<intercept-url pattern="/**" access="ROLE_REGULAR,ROLE_ADMIN" />-->
         <access-denied-handler error-page="/403" />
     </http>
