@@ -52,7 +52,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void click_profile_should_return_profile(){
+    public void click_userProfile_should_return_profile(){
         ModelAndView modelAndView =
                 userController.userProfile(model,principal);
         assertThat(modelAndView.getViewName(),is("user/profile"));
@@ -64,6 +64,14 @@ public class UserControllerTest {
         userController.userProfile(model,principal);
         verify(model).addAttribute("posts", postService.findMainPostByAuthorName("user"));
 
+    }
+
+    @Test
+    public void click_authorName_should_return_profile(){
+        String authorName = user.getUserName();
+        Post post = new Post();
+        ModelAndView modelAndView = userController.visitUserProfile(model,principal,authorName,post);
+        assertThat(modelAndView.getViewName(),is("user/profile"));
     }
 
     @Test

@@ -17,7 +17,11 @@
         <c:forEach var="post" items="${posts}" varStatus="row">
             <tr>
                 <td><c:out value="${post.title}"/></td>
-                <td><c:out value="${post.authorName}"/></td>
+                <td>
+                    <a href="<c:url value='/user/${post.authorName}' />">
+                        <c:out value="${post.authorName}"/>
+                    </a>
+                </td>
                 <td><c:out value="${post.createTimeString}"/></td>
                 <td><c:out value="${post.content}"/></td>
             </tr>
