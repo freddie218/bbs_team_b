@@ -19,4 +19,5 @@ public interface PostService {
     List<Post> findAllPost();
 
     int updatePostsAuthorByUserName(String user, String new_user);
+
 }

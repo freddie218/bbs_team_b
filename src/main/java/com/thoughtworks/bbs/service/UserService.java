@@ -1,6 +1,7 @@
 package com.thoughtworks.bbs.service;
 
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.model.UserRole;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface UserService {
     boolean verifyPassword(String username, String password);
 
     boolean verifyUsername(String username);
+
+
+
+
 }

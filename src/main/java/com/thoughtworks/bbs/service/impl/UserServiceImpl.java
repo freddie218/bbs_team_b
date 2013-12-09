@@ -124,4 +124,5 @@ public class UserServiceImpl implements UserService {
         return (null == getByUsername(username)) ? true : false;
     }
 
+
 }

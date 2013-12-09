@@ -9,6 +9,7 @@
         <tr>
             <th>Name</th>
             <th>Enable</th>
+            <th>Disable</th>
         </tr>
 
 
@@ -16,11 +17,19 @@
             <tr>
                 <td> <c:out value="${user.userName}"/> </td>
                 <td> <c:out value="${user.enabled}"/> </td>
+                <td>
+
+                   <c:if test="${user.isRegular}">
+                        <a href='javascript:if(confirm("Are you sure to disable this user?(user userName)")){location.href="dis/${user.id}"}'>X</a>
+                   </c:if>
+
+               </td>
             </tr>
         </c:forEach>
 
 
     </table>
+
 </div>
 
 

@@ -5,6 +5,7 @@ public class User {
     private String userName;
     private boolean enabled;
     private String passwordHash;
+    private boolean isRegular;
 
     public Long getId() {
         return id;
@@ -29,7 +30,12 @@ public class User {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
+    public void setIsRegular(boolean isRegular){
+        this.isRegular=isRegular;
+    }
+    public boolean getIsRegular(){
+        return isRegular;
+    }
     public String getPasswordHash() {
         return passwordHash;
     }
