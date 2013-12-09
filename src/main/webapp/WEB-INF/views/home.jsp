@@ -9,7 +9,7 @@
         <th>Title</th>
         <th>Author</th>
         <th>Publish Time</th>
-        <th></th>
+        <th>Operations</th>
     </tr>
     </thead>
     <tbody>
@@ -21,11 +21,14 @@
                 </a>
             </td>
             <td>
-                            <a href="<c:url value='/user/${post.authorName}' />">
-                                <c:out value="${post.authorName}"/>
-                            </a>
-                        </td>
+                <a href="<c:url value='/user/${post.authorName}' />">
+                    <c:out value="${post.authorName}"/>
+                </a>
+            </td>
             <td><c:out value="${post.createTimeString}"/></td>
+            <td>
+                <a href='posts/like/${post.postId}'>Like</a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

@@ -104,7 +104,7 @@ public class PostController {
         }
     @RequestMapping(value = {"/like/{postId}"}, method = RequestMethod.GET)
     public String add1LikedTime(@PathVariable("postId") Long id,@RequestHeader("Referer") String referer, Principal principal) {
-        System.out.println("test: "+referer+" id : "+id);
+        //System.out.println("test: "+referer+" id : "+id);
         if(principal == null){
             return "login";
         }
