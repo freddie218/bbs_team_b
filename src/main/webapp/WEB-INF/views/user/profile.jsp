@@ -37,10 +37,12 @@
             <td>Enable</td>
             <td>${user.enabled}</td>
         </tr>
+            <c:if test="${not empty isMyself}">
         <tr>
             <td><a href="<c:url value='/user/changePassword' />" class="brand">Change Password</a></td>
             <td><a href="<c:url value='/user/updateProfile' />" class="brand">Update Profile</a></td>
         </tr>
+            </c:if>
     </table>
 </div>
 
@@ -53,7 +55,9 @@
         <th>Title</th>
         <th>Author</th>
         <th>Publish Time</th>
+        <c:if test = "${not empty isMyself}">
         <th>Delete</th>
+        </c:if>
     </tr>
     </thead>
     <tbody>
@@ -66,9 +70,11 @@
             </td>
             <td><c:out value="${post.authorName}" /></td>
             <td><c:out value="${post.createTimeString}"/></td>
+            <c:if test = "${not empty isMyself}">
             <td>
             <a href='javascript:if(confirm("Are you sure to delete this post?(post title:${fn:escapeXml(post.title)})")){location.href="del/${post.postId}"}'>X</a>
             </td>
+            </c:if>
         </tr>
     </c:forEach>
     </tbody>

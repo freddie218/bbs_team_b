@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,7 +54,21 @@ public class UserController {
         Map<String, User> map = new HashMap<String, User>();
         map.put("user", user);
         model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        model.addAttribute("isMyself","true");
 
+        return new ModelAndView("user/profile", map);
+    }
+
+    @RequestMapping(value = {"/{authorName}"}, method = RequestMethod.GET)
+    public ModelAndView visitUserProfile(ModelMap model, Principal principal,@PathVariable("authorName") String authorName,@ModelAttribute Post post) {
+        User user = userService.getByUsername(authorName);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("user", user);
+        map.put("posts", postService.findMainPostByAuthorName(authorName));
+        if (null != principal&&principal.getName().equals(authorName))
+            map.put("isMyself","true");
+        else
+            map.put("isNotMyself","true");
         return new ModelAndView("user/profile", map);
     }
 

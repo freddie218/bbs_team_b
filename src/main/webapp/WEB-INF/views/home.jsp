@@ -20,7 +20,11 @@
                     <c:out value="${post.title}"/>
                 </a>
             </td>
-            <td><c:out value="${post.authorName}"/></td>
+            <td>
+                            <a href="<c:url value='/user/${post.authorName}' />">
+                                <c:out value="${post.authorName}"/>
+                            </a>
+                        </td>
             <td><c:out value="${post.createTimeString}"/></td>
         </tr>
     </c:forEach>
