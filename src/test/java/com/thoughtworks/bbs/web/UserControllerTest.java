@@ -1,11 +1,16 @@
 package com.thoughtworks.bbs.web;
 
+import com.thoughtworks.bbs.mappers.UserRoleMapper;
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.model.UserRole;
 import com.thoughtworks.bbs.service.ServiceResult;
+import com.thoughtworks.bbs.service.UserRoleService;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
+import com.thoughtworks.bbs.service.impl.UserRoleServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,22 +25,27 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 public class UserControllerTest {
 
     private UserServiceImpl userService;
     private PostServiceImpl postService;
+    private UserRoleServiceImpl userRoleService;
     private User user;
     private ModelMap model;
     private Principal principal;
     private HttpServletRequest request;
 
     private UserController userController;
-
+    private UserRole userRole_admin;
+    private UserRole userRole_regular1;
+    private UserRole userRole_regular2;
     @Before
     public void setup(){
         userService = mock(UserServiceImpl.class);
         postService = mock(PostServiceImpl.class);
+        userRoleService=mock(UserRoleServiceImpl.class);
         user = new User();
         user.setUserName("user");
         user.setPasswordHash("password");
@@ -49,6 +59,9 @@ public class UserControllerTest {
 
         when(principal.getName()).thenReturn(user.getUserName());
         when(userService.getByUsername("user")).thenReturn(user);
+        userRole_regular1 = new UserRole();
+        userRole_regular2 = new UserRole();
+        userRole_admin = new UserRole();
     }
 
     @Test
@@ -187,6 +200,42 @@ public class UserControllerTest {
 
         ModelAndView modelAndView = userController.processUpdateProfile(model, request, principal);
         verify(userService, never()).update(user);
+    }
+    @Ignore
+    @Test
+    public void isRegularShouldTrueWhenRegularUser(){
+        List<Long> expectedRoleList = new LinkedList<Long>();
+        List<User> userList= new LinkedList<User>();
+        User user_admin= new User();
+        user_admin.setId(1L);
+        user_admin.setUserName("admin");
+        User user_regular1 = new User();
+        user_regular1.setId(2L);
+        user_regular1.setUserName("regular1");
+        User user_regular2 = new User();
+        user_regular2.setId(3L);
+        user_regular2.setUserName("regular2");
+        userRole_admin.setRoleName("ROLE_ADMIN");
+        userRole_admin.setUserId(1L);
+
+
+        userRole_regular1.setRoleName("ROLE_REGULAR");
+        userRole_regular1.setUserId(2L);
+        userRole_regular2.setRoleName("ROLE_REGULAR");
+        userRole_regular2.setUserId(3L);
+        userList.add(user_admin);
+        userList.add(user_regular1);
+        userList.add(user_regular2);
+        expectedRoleList.add(userRole_regular1.getUserId());
+        expectedRoleList.add(userRole_regular2.getUserId());
+        when((userRoleService.getAllNotAdmin())).thenReturn(expectedRoleList);
+        when(userService.getAll()).thenReturn(userList);
+        when(userService.getAll().get(1)).thenReturn(user_regular1);
+
+        ModelAndView modelAndView = userController.listUsers(model);
+        verify((userService.getAll().get(1)),times(1)).setEnabled(true);
+
+
     }
 }
 

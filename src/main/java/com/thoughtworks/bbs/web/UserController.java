@@ -3,10 +3,13 @@ package com.thoughtworks.bbs.web;
 
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.model.UserRole;
 import com.thoughtworks.bbs.model.UserValidator;
 import com.thoughtworks.bbs.service.PostService;
+import com.thoughtworks.bbs.service.UserRoleService;
 import com.thoughtworks.bbs.service.UserService;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
+import com.thoughtworks.bbs.service.impl.UserRoleServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import com.thoughtworks.bbs.util.MyBatisUtil;
 import com.thoughtworks.bbs.util.UserBuilder;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
@@ -32,7 +36,7 @@ import java.util.Map;
 public class UserController {
     private UserService userService = new UserServiceImpl(MyBatisUtil.getSqlSessionFactory());
     private PostService postService = new PostServiceImpl(MyBatisUtil.getSqlSessionFactory());
-
+    private UserRoleService userRoleService = new UserRoleServiceImpl(MyBatisUtil.getSqlSessionFactory());
     public void rstUserService(UserService userService) {
         this.userService=userService;
     }
@@ -134,9 +138,22 @@ public class UserController {
     @RequestMapping(value = {"/listUsers"}, method = RequestMethod.GET)
     public ModelAndView listUsers(ModelMap map) {
         List<User> users = userService.getAll();
+        List<Long> usersNotAdmin = userRoleService.getAllNotAdmin();
+
+        for (int index=0;index<users.size();index++){
+            if(usersNotAdmin.contains(users.get(index).getId())) {
+                users.get(index).setIsRegular(true);
+
+            }
+            else {
+                users.get(index).setIsRegular(false);
+            }
+        }
         map.put("users",users);
+
         return new ModelAndView("user/users", map);
     }
+
 
     @RequestMapping(value = {"/updateProfile"}, method = RequestMethod.POST)
     public ModelAndView processUpdateProfile(ModelMap model, HttpServletRequest request, Principal principal) throws IOException {
@@ -170,4 +187,5 @@ public class UserController {
             return new ModelAndView("user/updateProfile",map);
 
     }
+
 }

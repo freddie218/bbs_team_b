@@ -9,6 +9,7 @@
         <tr>
             <th>Name</th>
             <th>Enable</th>
+            <th>Disable</th>
         </tr>
 
 
@@ -16,6 +17,13 @@
             <tr>
                 <td> <c:out value="${user.userName}"/> </td>
                 <td> <c:out value="${user.enabled}"/> </td>
+                <c:choose>
+                   <c:when test="${not empty return}">
+                      <td>
+                         <a href='javascript:if(confirm("Are you sure to disable this user?){location.href="dis/${user.userId}"}'>X</a>
+                      </td>
+                   </c:when>
+                </c:choose>
             </tr>
         </c:forEach>
 
