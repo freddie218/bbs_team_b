@@ -19,7 +19,7 @@ public class PostMapperTest extends MapperTestBase {
         super.setUp();
         postMapper = getSqlSession().getMapper(PostMapper.class);
         post = new Post().setAuthorName("juntao").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0).setLikedTimes(0);
     }
 
     @Test
@@ -36,13 +36,13 @@ public class PostMapperTest extends MapperTestBase {
         int before = postMapper.findMainPostByAuthorName("longkai").size();
 
         Post post1 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(11);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(11).setLikedTimes(0);
         Post post2 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0).setLikedTimes(0);
         Post post3 = new Post().setAuthorName("juner").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(22);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(22).setLikedTimes(0);
         Post post4 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0).setLikedTimes(0);
         postMapper.insert(post1);
         postMapper.insert(post2);
         postMapper.insert(post3);
@@ -58,13 +58,13 @@ public class PostMapperTest extends MapperTestBase {
         int before = postMapper.findAllPost().size();
 
         Post post1 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(11);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(11).setLikedTimes(0);
         Post post2 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0).setLikedTimes(0);
         Post post3 = new Post().setAuthorName("juner").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(22);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(22).setLikedTimes(0);
         Post post4 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0).setLikedTimes(0);
         postMapper.insert(post1);
         postMapper.insert(post2);
         postMapper.insert(post3);
@@ -81,13 +81,13 @@ public class PostMapperTest extends MapperTestBase {
         int before = postMapper.findAllPostByMainPost(3L).size();
 
         Post post1 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(3L);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(3L).setLikedTimes(0);
         Post post2 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(2L);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(2L).setLikedTimes(0);
         Post post3 = new Post().setAuthorName("juner").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(3L);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(3L).setLikedTimes(0);
         Post post4 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
-                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(3L);
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(3L).setLikedTimes(0);
         postMapper.insert(post1);
         postMapper.insert(post2);
         postMapper.insert(post3);
@@ -96,5 +96,14 @@ public class PostMapperTest extends MapperTestBase {
         List<Post> resultList = postMapper.findAllPostByMainPost(3L);
 
         assertThat(resultList.size(), is(before + 3));
+    }
+
+    @Test
+    public void should_add_liked_times() {
+        Long before = postMapper.get(1L).getLikedTimes();
+        for (int i = 0; i < 5; i++) {
+            postMapper.add1LikedTime(1L);
+        }
+        assertThat(postMapper.get(1L).getLikedTimes(),is(before+5));
     }
 }

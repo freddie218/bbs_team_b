@@ -20,4 +20,5 @@ public interface PostService {
 
     int updatePostsAuthorByUserName(String user, String new_user);
 
+    void add1LikedTime(Long l);
 }

@@ -10,6 +10,8 @@
             <th>Author</th>
             <th>Publish Time</th>
             <th>Content</th>
+            <th>Liked</th>
+            <th>Operations</th>
         </tr>
     </thead>
 
@@ -24,6 +26,16 @@
                 </td>
                 <td><c:out value="${post.createTimeString}"/></td>
                 <td><c:out value="${post.content}"/></td>
+                <td>
+                     <c:if test="${row.index==0}">
+                        ${post.likedTimes} times
+                     </c:if>
+                </td>
+                <td>
+                     <c:if test="${row.index==0}">
+                          <a href='like/${post.postId}'>Like</a>
+                     </c:if>
+                </td>
             </tr>
         </c:forEach>
     </tbody>

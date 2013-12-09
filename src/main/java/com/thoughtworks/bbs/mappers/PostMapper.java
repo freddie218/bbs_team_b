@@ -76,4 +76,13 @@ public interface PostMapper {
                     "ORDER BY id asc"
     )
     List<Post> findAllPostByMainPost(Long postId);
+
+
+
+    @Update(
+            "UPDATE post " +
+            "SET liked_times=liked_times+1 " +
+            "WHERE id=#{postId}"
+    )
+    void add1LikedTime(Long postId);
 }

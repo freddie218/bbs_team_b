@@ -82,6 +82,18 @@ public class PostServiceImpl implements PostService {
         return cnt;
     }
 
+    @Override
+    public void add1LikedTime(Long postId) {
+        SqlSession session = factory.openSession();
+        try {
+            PostMapper postMapper = session.getMapper(PostMapper.class);
+            postMapper.add1LikedTime(postId);
+            session.commit();
+        } finally {
+            session.close();
+        }
+    }
+
 
     @Override
     public ServiceResult<Post> save(Post post) {
@@ -126,7 +138,6 @@ public class PostServiceImpl implements PostService {
 
         try {
             PostMapper postMapper = session.getMapper(PostMapper.class);
-
             posts = postMapper.findAllPostByMainPost(postId);
         } finally {
             session.close();

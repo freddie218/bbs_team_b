@@ -88,4 +88,9 @@ public class PostControllerTest {
         assertEquals("page should redirect to current page",expected_page,result_page);
     }
 
+    @Test
+    public void should_add_liked_times() {
+        postController.add1LikedTime(1L,"back", principal);
+        verify(postservice).add1LikedTime(1L);
+    }
 }

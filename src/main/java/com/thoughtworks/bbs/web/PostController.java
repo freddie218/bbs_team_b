@@ -9,13 +9,11 @@ import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import com.thoughtworks.bbs.util.MyBatisUtil;
 import com.thoughtworks.bbs.util.PostBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -104,4 +102,13 @@ public class PostController {
             //return new ModelAndView("home", "posts", postService.findMainPostByAuthorName(principal.getName()));
         return new RedirectView("../");
         }
+    @RequestMapping(value = {"/like/{postId}"}, method = RequestMethod.GET)
+    public String add1LikedTime(@PathVariable("postId") Long id,@RequestHeader("Referer") String referer, Principal principal) {
+        System.out.println("test: "+referer+" id : "+id);
+        if(principal == null){
+            return "login";
+        }
+        postService.add1LikedTime(id);
+        return "redirect:"+ referer;
+    }
 }

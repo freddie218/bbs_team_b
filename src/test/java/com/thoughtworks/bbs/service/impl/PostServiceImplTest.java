@@ -97,5 +97,11 @@ public class PostServiceImplTest {
         assertThat(postList.get(0).getAuthorName(), is("new_user"));
         assertThat(postList.get(1).getAuthorName(), is("new_user"));
     }
+
+    @Test
+    public void should_add_liked_times(){
+        postService.add1LikedTime(1L);
+        verify(mapper).add1LikedTime(1L);
+    }
 }
 
