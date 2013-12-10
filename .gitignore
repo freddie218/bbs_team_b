@@ -7,3 +7,6 @@ classes/*
 .gradle/*
 build/*
 out/*
+*~
+*log
+src/main/resources/database.properties
