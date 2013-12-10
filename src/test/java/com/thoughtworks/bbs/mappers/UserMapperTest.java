@@ -31,4 +31,11 @@ public class UserMapperTest extends MapperTestBase {
         userMapper.insert(user2);
         assertThat(userMapper.getAll().size(),is(before + 2));
      }
+
+    @Test
+    public void shouldFindUserById() throws Exception {
+        User user = new UserBuilder().userName("username").password("123456").build();
+        userMapper.insert(user);
+        assertThat(userMapper.findByUserId(user.getId()).getId(), is(user.getId()));
+    }
 }

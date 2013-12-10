@@ -1,11 +1,9 @@
 package com.thoughtworks.bbs.web;
 
-import com.thoughtworks.bbs.mappers.UserRoleMapper;
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
 import com.thoughtworks.bbs.model.UserRole;
 import com.thoughtworks.bbs.service.ServiceResult;
-import com.thoughtworks.bbs.service.UserRoleService;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserRoleServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
@@ -25,7 +23,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verify;
 
 public class UserControllerTest {
 
@@ -242,8 +239,14 @@ public class UserControllerTest {
 
         ModelAndView modelAndView = userController.listUsers(model);
         verify((userService.getAll().get(1)),times(1)).setEnabled(true);
+    }
 
-
+    @Test
+    public void shouldDisableUserWhenDisableUser() throws Exception {
+        user.setEnabled(true);
+        when(userService.getByUserId(user.getId())).thenReturn(user);
+        userController.disableUser(user.getId(), principal);
+        assertThat(user.isEnabled(), is(false));
     }
 }
 
