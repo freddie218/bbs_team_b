@@ -35,4 +35,6 @@ public interface UserMapper {
                     "FROM users "
     )
     List<User> getAll();
+
+
 }
