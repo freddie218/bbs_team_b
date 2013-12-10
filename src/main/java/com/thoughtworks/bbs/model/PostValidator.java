@@ -9,7 +9,6 @@ public class PostValidator {
     public Map<String, String> validate(Post post) {
         Map<String, String> errors = new HashMap<String, String>();
 
-
         if (StringUtils.isBlank(post.getAuthorName())) {
             errors.put("authorName", "Please enter author name");
         }
