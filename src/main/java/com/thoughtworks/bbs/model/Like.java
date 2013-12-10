@@ -12,23 +12,26 @@ public class Like {
         return postId;
     }
 
-    public void setPostId(Long postId) {
+    public Like setPostId(Long postId) {
         this.postId = postId;
+        return this;
     }
 
     public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public Like setParentId(Long parentId) {
         this.parentId = parentId;
+        return this;
     }
 
     public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public Like setUserId(Long userId) {
         this.userId = userId;
+        return this;
     }
 }
