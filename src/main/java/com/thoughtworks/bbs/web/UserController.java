@@ -3,7 +3,6 @@ package com.thoughtworks.bbs.web;
 
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
-import com.thoughtworks.bbs.model.UserRole;
 import com.thoughtworks.bbs.model.UserValidator;
 import com.thoughtworks.bbs.service.PostService;
 import com.thoughtworks.bbs.service.UserRoleService;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.*;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
@@ -203,4 +201,13 @@ public class UserController {
 
     }
 
+
+    @RequestMapping(value = {"/dis/{id}"}, method = RequestMethod.GET)
+    public String disableUser(@PathVariable("id") Long userId, Principal principal) {
+        User user = userService.getByUserId(userId);
+        user.setEnabled(false);
+        userService.update(user);
+
+        return "redirect:/user/users";
+    }
 }

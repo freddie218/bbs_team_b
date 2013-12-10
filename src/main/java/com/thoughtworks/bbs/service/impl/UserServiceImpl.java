@@ -109,6 +109,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getByUserId(Long userId) {
+        SqlSession session = factory.openSession();
+        User user = null;
+
+        try{
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            user = mapper.findByUserId(userId);
+        }finally {
+            session.close();
+        }
+        return user;
+    }
+
+    @Override
     public boolean verifyPassword(String username, String password) {
         User user = getByUsername(username);
         if(null == user)
