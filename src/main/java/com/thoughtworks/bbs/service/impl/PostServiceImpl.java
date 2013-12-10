@@ -75,6 +75,7 @@ public class PostServiceImpl implements PostService {
                 postMapper.update(post.setAuthorName(new_user));
                 cnt ++;
             }
+            session.commit();
         }finally {
             session.close();
         }

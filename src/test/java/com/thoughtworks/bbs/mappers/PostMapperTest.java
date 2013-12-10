@@ -100,10 +100,15 @@ public class PostMapperTest extends MapperTestBase {
 
     @Test
     public void should_add_liked_times() {
-        Long before = postMapper.get(1L).getLikedTimes();
+        postMapper.insert(post);  //  fake one for empty
+        List<Post> pl=postMapper.findAllPost();
+
+        Long id=pl.get(0).getPostId();
+        Post p = postMapper.get(id);
+        Long before = p.getLikedTimes();
         for (int i = 0; i < 5; i++) {
-            postMapper.add1LikedTime(1L);
+            postMapper.add1LikedTime(id);
         }
-        assertThat(postMapper.get(1L).getLikedTimes(),is(before+5));
+        assertThat(postMapper.get(id).getLikedTimes(),is(before+5));
     }
 }
