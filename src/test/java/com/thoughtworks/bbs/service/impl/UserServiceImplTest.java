@@ -92,4 +92,10 @@ public class UserServiceImplTest {
         when(userMapper.findByUsername("username")).thenReturn(null);
         assertThat(userService.verifyUsername("username"), is(true));
     }
+
+    @Test
+    public void shouldReturnUserWhenFindUserById() throws Exception {
+        when(userMapper.findByUserId(1L)).thenReturn(user);
+        assertThat(userService.getByUserId(1L), is(user));
+    }
 }

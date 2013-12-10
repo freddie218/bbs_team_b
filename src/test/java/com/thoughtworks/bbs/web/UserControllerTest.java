@@ -1,11 +1,9 @@
 package com.thoughtworks.bbs.web;
 
-import com.thoughtworks.bbs.mappers.UserRoleMapper;
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
 import com.thoughtworks.bbs.model.UserRole;
 import com.thoughtworks.bbs.service.ServiceResult;
-import com.thoughtworks.bbs.service.UserRoleService;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserRoleServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
@@ -25,7 +23,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verify;
 
 public class UserControllerTest {
 
@@ -217,12 +214,15 @@ public class UserControllerTest {
         User user_admin= new User();
         user_admin.setId(1L);
         user_admin.setUserName("admin");
+        user_admin.setEnabled(true);
         User user_regular1 = new User();
         user_regular1.setId(2L);
         user_regular1.setUserName("regular1");
+        user_regular1.setEnabled(true);
         User user_regular2 = new User();
         user_regular2.setId(3L);
         user_regular2.setUserName("regular2");
+        user_regular2.setEnabled(true);
         userRole_admin.setRoleName("ROLE_ADMIN");
         userRole_admin.setUserId(1L);
 
@@ -238,12 +238,22 @@ public class UserControllerTest {
         expectedRoleList.add(userRole_regular2.getUserId());
         when((userRoleService.getAllNotAdmin())).thenReturn(expectedRoleList);
         when(userService.getAll()).thenReturn(userList);
-        when(userService.getAll().get(1)).thenReturn(user_regular1);
+        when(userService.getAll().get(1)).thenReturn(userList.get(1));
 
         ModelAndView modelAndView = userController.listUsers(model);
+
+        verify(userService).getAll();
+
         verify((userService.getAll().get(1)),times(1)).setEnabled(true);
+    }
 
 
+    @Test
+    public void shouldDisableUserWhenDisableUser() throws Exception {
+        user.setEnabled(true);
+        when(userService.getByUserId(user.getId())).thenReturn(user);
+        userController.disableUser(user.getId(), principal);
+        assertThat(user.isEnabled(), is(false));
     }
 }
 
