@@ -20,7 +20,7 @@
                 <td>
 
                    <c:if test="${user.isRegular}">
-                        <a href='javascript:if(confirm("Are you sure to disable this user?(user userName)")){location.href="dis/${user.id}"}'>X</a>
+                        <a href='javascript:if(confirm("The page at host:8080 say:\n Are you sure to disable this user?")){location.href="dis/${user.id}"}'>X</a>
                    </c:if>
 
                </td>
