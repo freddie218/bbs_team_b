@@ -28,7 +28,7 @@
             <td><c:out value="${post.key.createTimeString}"/></td>
             <td>
                 <c:if test="${not post.value}">
-                    <a href='posts/like/${post.key.postId}'>Like</a>
+                    <a href='javascript:alert("you like this post");location.href="posts/like/${post.key.postId}";'>Like</a>
                 </c:if>
             </td>
         </tr>
