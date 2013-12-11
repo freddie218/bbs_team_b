@@ -64,9 +64,8 @@ public class LikeServiceImplTest {
         verify(likeMapper).findLikeByUserId(1L);
     }
 
-
     @Test
-    public void should_return_true_when_in_likes() {
+    public void should_return_true_when_user_likes() {
 
         List<Like> expectedList = new LinkedList<Like>();
         Like like1 = new Like().setPostId(4L).setParentId(0L).setUserId(1L);
@@ -85,10 +84,8 @@ public class LikeServiceImplTest {
         assertThat(true, is(ret));
     }
 
-
-
     @Test
-    public void should_return_true_when_not_in_likes() {
+    public void should_return_true_when_user_not_likes() {
 
         List<Like> expectedList = new LinkedList<Like>();
         Like like1 = new Like().setPostId(1L).setParentId(0L).setUserId(1L);
@@ -107,6 +104,43 @@ public class LikeServiceImplTest {
         assertThat(false, is(ret));
     }
 
+    @Test
+    public void should_return_true_when_is_favorite() {
 
+        List<Like> expectedList = new LinkedList<Like>();
+        Like like1 = new Like().setPostId(1L).setParentId(0L).setUserId(4L);
+        Like like2 = new Like().setPostId(3L).setParentId(0L).setUserId(4L);
+        Like like3 = new Like().setPostId(7L).setParentId(0L).setUserId(4L);
+        Like like4 = new Like().setPostId(2L).setParentId(0L).setUserId(4L);
+        Like like5 = new Like().setPostId(8L).setParentId(0L).setUserId(4L);
+        expectedList.add(like1);
+        expectedList.add(like2);
+        expectedList.add(like3);
+        expectedList.add(like4);
+        expectedList.add(like5);
+        when(likeMapper.findLikeByUserId(4L)).thenReturn(expectedList);
 
+        boolean ret = likeService.isFavorite(4L,3L);
+        assertThat(true, is(ret));
+    }
+
+    @Test
+    public void should_return_true_when_not_favorite() {
+
+        List<Like> expectedList = new LinkedList<Like>();
+        Like like1 = new Like().setPostId(1L).setParentId(0L).setUserId(4L);
+        Like like2 = new Like().setPostId(3L).setParentId(0L).setUserId(4L);
+        Like like3 = new Like().setPostId(7L).setParentId(0L).setUserId(4L);
+        Like like4 = new Like().setPostId(2L).setParentId(0L).setUserId(4L);
+        Like like5 = new Like().setPostId(8L).setParentId(0L).setUserId(4L);
+        expectedList.add(like1);
+        expectedList.add(like2);
+        expectedList.add(like3);
+        expectedList.add(like4);
+        expectedList.add(like5);
+        when(likeMapper.findLikeByUserId(4L)).thenReturn(expectedList);
+
+        boolean ret = likeService.isFavorite(4L,9L);
+        assertThat(false, is(ret));
+    }
 }

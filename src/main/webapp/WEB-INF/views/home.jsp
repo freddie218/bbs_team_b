@@ -13,21 +13,23 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="post" items="${posts}" varStatus="row">
+    <c:forEach var="post" items="${postsWithLiked}" varStatus="row">
         <tr>
             <td>
-                <a href="<c:url value='/posts/${post.postId}' />">
-                    <c:out value="${post.title}"/>
+                <a href="<c:url value='/posts/${post.key.postId}' />">
+                    <c:out value="${post.key.title}"/>
                 </a>
             </td>
             <td>
-                <a href="<c:url value='/user/${post.authorName}' />">
-                    <c:out value="${post.authorName}"/>
+                <a href="<c:url value='/user/${post.key.authorName}' />">
+                    <c:out value="${post.key.authorName}"/>
                 </a>
             </td>
-            <td><c:out value="${post.createTimeString}"/></td>
+            <td><c:out value="${post.key.createTimeString}"/></td>
             <td>
-                <a href='posts/like/${post.postId}'>Like</a>
+                <c:if test="${not post.value}">
+                    <a href='posts/like/${post.key.postId}'>Like</a>
+                </c:if>
             </td>
         </tr>
     </c:forEach>

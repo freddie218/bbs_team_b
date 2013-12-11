@@ -9,6 +9,7 @@ import com.thoughtworks.bbs.service.ServiceResult;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -77,11 +78,22 @@ public class LikeServiceImpl implements LikeService {
         return new ServiceResult<Like>(errors, like);
     }
     @Override
-    public boolean isUserLikesPost(Long uid,Long pid) {
+    public Boolean isUserLikesPost(Long uid,Long pid) {
         List<Like> likes = findLikeByPostId(pid);
         for (Like like : likes) {
             Long id=like.getUserId();
             if(id==uid){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean isFavorite(Long uid, Long pid) {
+        List<Like> likes = findLikeByUserId(uid);
+        for (Like like : likes) {
+            if(like.getPostId().equals(pid)){
                 return true;
             }
         }

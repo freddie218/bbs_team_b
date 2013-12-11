@@ -16,5 +16,7 @@ public interface LikeService {
 
     ServiceResult<Like> save(Like like);
 
-    public boolean isUserLikesPost(Long uid,Long pid);
+    public Boolean isUserLikesPost(Long uid,Long pid);
+
+    public Boolean isFavorite(Long uid,Long pid);
 }
