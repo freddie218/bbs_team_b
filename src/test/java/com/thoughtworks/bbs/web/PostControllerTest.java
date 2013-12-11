@@ -1,13 +1,18 @@
 package com.thoughtworks.bbs.web;
 
+import com.thoughtworks.bbs.model.Like;
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.service.LikeService;
 import com.thoughtworks.bbs.service.PostService;
 import com.thoughtworks.bbs.service.UserService;
+import com.thoughtworks.bbs.service.impl.LikeServiceImpl;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
+import com.thoughtworks.bbs.util.LikeBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,13 +22,15 @@ import sun.security.acl.PrincipalImpl;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class PostControllerTest {
-    private PostService postservice;
+    private PostService postService;
     private UserService userService;
+    private LikeService likeService;
     private PostController postController;
     private HttpServletRequest request;
     private User user;
@@ -37,16 +44,20 @@ public class PostControllerTest {
     private ModelMap modelMap;
     private Long PostId;
     private Post post;
+    private Like like;
     @Before
     public void setup(){
-        postservice = mock(PostServiceImpl.class);
+        postService = mock(PostServiceImpl.class);
         userService = mock(UserServiceImpl.class);
+        likeService = mock(LikeServiceImpl.class);
         request = mock(HttpServletRequest.class);
         modelMap = mock(ModelMap.class);
+
         user = new User();
         user.setUserName("name");
         user.setPasswordHash("123456");
         user.setId(0L);
+
         model = mock(Model.class);
         when(userService.getByUsername("name")).thenReturn(user);
         when(request.getParameter("parentId")).thenReturn("0");
@@ -54,8 +65,14 @@ public class PostControllerTest {
 
         principal = new PrincipalImpl("name");
 
-        postController = new PostController(postservice,userService);
+        postController = new PostController(postService,userService,likeService);
         PostId=1L;
+
+        like=new Like().setPostId(1L).setParentId(0L).setUserId(1L);
+
+
+        post = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(11).setLikedTimes(0);
     }
 
     @Test
@@ -90,7 +107,9 @@ public class PostControllerTest {
 
     @Test
     public void should_add_liked_times() {
-        postController.add1LikedTime(1L,"back", principal);
-        verify(postservice).add1LikedTime(1L);
+        when(postService.get(1L)).thenReturn(post);
+        postController.add1LikedTime(1L, "back", principal);
+        verify(likeService).save(Matchers.<Like>anyObject());
+        verify(postService).add1LikedTime(1L);
     }
 }
