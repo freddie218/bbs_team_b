@@ -44,6 +44,9 @@ public class UserController {
     public void rstPostService(PostService postService) {
         this.postService = postService;
     }
+    public void rstUserRoleService(UserRoleService userRoleService){
+        this.userRoleService = userRoleService;
+    }
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
     public ModelAndView registerUser(ModelMap model) {
@@ -153,15 +156,7 @@ public class UserController {
         List<User> users = userService.getAll();
         List<Long> usersNotAdmin = userRoleService.getAllNotAdmin();
 
-        for (int index=0;index<users.size();index++){
-            if(usersNotAdmin.contains(users.get(index).getId())) {
-                users.get(index).setIsRegular(true);
-
-            }
-            else {
-                users.get(index).setIsRegular(false);
-            }
-        }
+        users=userService.setUsersIsRegular(users,usersNotAdmin);
         map.put("users",users);
 
         return new ModelAndView("user/users", map);
