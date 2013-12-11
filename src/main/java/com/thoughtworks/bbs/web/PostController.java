@@ -1,11 +1,15 @@
 package com.thoughtworks.bbs.web;
 
+import com.thoughtworks.bbs.model.Like;
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.service.LikeService;
 import com.thoughtworks.bbs.service.PostService;
 import com.thoughtworks.bbs.service.UserService;
+import com.thoughtworks.bbs.service.impl.LikeServiceImpl;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
+import com.thoughtworks.bbs.util.LikeBuilder;
 import com.thoughtworks.bbs.util.MyBatisUtil;
 import com.thoughtworks.bbs.util.PostBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -29,13 +33,15 @@ public class PostController {
 
     private PostService postService = new PostServiceImpl(MyBatisUtil.getSqlSessionFactory());
     private UserService userService = new UserServiceImpl(MyBatisUtil.getSqlSessionFactory());
+    private LikeService likeService = new LikeServiceImpl(MyBatisUtil.getSqlSessionFactory());
 
     PostController(){
 
     }
-    public PostController(PostService postService,UserService userService){
+    public PostController(PostService postService,UserService userService,LikeService likeService){
         this.postService = postService;
         this.userService = userService;
+        this.likeService = likeService;
     }
     @RequestMapping(value = {"/{postId}"}, method = RequestMethod.GET)
     public String get(@PathVariable("postId") Long postId, Model model, @ModelAttribute Post post, Principal principal) {
@@ -108,7 +114,20 @@ public class PostController {
         if(principal == null){
             return "login";
         }
+
+        User user = userService.getByUsername(principal.getName());
+        Long uid = user.getId();
+        Post post = postService.get(id);
+        Long pid = post.getParentId();
+
+        LikeBuilder likeBuilder=new LikeBuilder().postId(id).parentId(pid).userId(uid);
+
+        Like like=likeBuilder.build();
+
+
+        likeService.save(like);
         postService.add1LikedTime(id);
+
         return "redirect:"+ referer;
     }
 }
