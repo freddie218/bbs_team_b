@@ -115,7 +115,6 @@ public class PostController {
         }
     @RequestMapping(value = {"/like/{postId}"}, method = RequestMethod.GET)
     public String add1LikedTime(@PathVariable("postId") Long id,@RequestHeader("Referer") String referer, Principal principal) {
-        //System.out.println("test: "+referer+" id : "+id);
         if(principal == null){
             return "login";
         }
@@ -125,10 +124,13 @@ public class PostController {
         Post post = postService.get(id);
         Long pid = post.getParentId();
 
+        if(likeService.isUserLikesPost(uid,pid)) {
+            return "login";
+        }
+
         LikeBuilder likeBuilder=new LikeBuilder().postId(id).parentId(pid).userId(uid);
 
         Like like=likeBuilder.build();
-
 
         likeService.save(like);
         postService.add1LikedTime(id);
