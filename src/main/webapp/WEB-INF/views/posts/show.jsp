@@ -33,7 +33,9 @@
                 </td>
                 <td>
                      <c:if test="${row.index==0}">
-                          <a href='like/${post.postId}'>Like</a>
+                         <c:if test="${not liked}">
+                              <a href='like/${post.postId}'>Like</a>
+                         </c:if>
                      </c:if>
                 </td>
             </tr>

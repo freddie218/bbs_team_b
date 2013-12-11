@@ -1,7 +1,6 @@
 package com.thoughtworks.bbs.web;
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
-import com.thoughtworks.bbs.web.HomeController;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
@@ -44,7 +43,7 @@ public class HomeControllerTest {
 
     @Test
     public void should_find_all_posts_and_return_home_when_home(){
-        String ret = homeController.getMethodForHome(model, post, principal);
+        String ret = homeController.home(model, post, principal);
         verify(postService,times(1)).findAllPost();
         assertThat(ret, is("home"));
     }

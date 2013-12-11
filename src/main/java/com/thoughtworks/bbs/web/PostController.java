@@ -26,6 +26,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/posts")
@@ -47,6 +48,10 @@ public class PostController {
     public String get(@PathVariable("postId") Long postId, Model model, @ModelAttribute Post post, Principal principal) {
         model.addAttribute("mainPost", postService.get(postId));
         model.addAttribute("posts", postService.findAllPostByMainPost(postId));
+
+        Long uid = userService.getByUsername(principal.getName()).getId();
+        boolean liked=likeService.isUserLikesPost(uid,postId);
+        model.addAttribute("liked",liked);
         return "posts/show";
     }
 

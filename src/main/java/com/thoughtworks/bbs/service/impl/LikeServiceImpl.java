@@ -29,7 +29,7 @@ public class LikeServiceImpl implements LikeService {
 
         try {
             LikeMapper likeMapper = session.getMapper(LikeMapper.class);
-            likes = likeMapper.findAllLikeByPostId(likeId);
+            likes = likeMapper.findLikeByPostId(likeId);
         } finally {
             session.close();
         }
@@ -49,7 +49,7 @@ public class LikeServiceImpl implements LikeService {
 
         try {
             LikeMapper likeMapper = session.getMapper(LikeMapper.class);
-            likes = likeMapper.findAllLikeByUserId(likeId);
+            likes = likeMapper.findLikeByUserId(likeId);
         } finally {
             session.close();
         }
@@ -75,5 +75,16 @@ public class LikeServiceImpl implements LikeService {
         }
 
         return new ServiceResult<Like>(errors, like);
+    }
+    @Override
+    public boolean isUserLikesPost(Long uid,Long pid) {
+        List<Like> likes = findLikeByPostId(pid);
+        for (Like like : likes) {
+            Long id=like.getUserId();
+            if(id==uid){
+                return true;
+            }
+        }
+        return false;
     }
 }

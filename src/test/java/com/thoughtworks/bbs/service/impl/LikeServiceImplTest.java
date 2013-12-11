@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -54,12 +55,58 @@ public class LikeServiceImplTest {
     @Test
     public void should_use_mapper_when_find_by_post_id() {
         List<Like> returnedLikeList = likeService.findLikeByPostId(1L);
-        verify(likeMapper).findAllLikeByPostId(1L);
+        verify(likeMapper).findLikeByPostId(1L);
     }
 
     @Test
     public void should_use_mapper_when_find_by_user_id() {
         List<Like> returnedLikeList = likeService.findLikeByUserId(1L);
-        verify(likeMapper).findAllLikeByUserId(1L);
+        verify(likeMapper).findLikeByUserId(1L);
     }
+
+
+    @Test
+    public void should_return_true_when_in_likes() {
+
+        List<Like> expectedList = new LinkedList<Like>();
+        Like like1 = new Like().setPostId(4L).setParentId(0L).setUserId(1L);
+        Like like2 = new Like().setPostId(4L).setParentId(0L).setUserId(2L);
+        Like like3 = new Like().setPostId(4L).setParentId(0L).setUserId(4L);
+        Like like4 = new Like().setPostId(4L).setParentId(0L).setUserId(3L);
+        Like like5 = new Like().setPostId(4L).setParentId(0L).setUserId(5L);
+        expectedList.add(like1);
+        expectedList.add(like2);
+        expectedList.add(like3);
+        expectedList.add(like4);
+        expectedList.add(like5);
+        when(likeMapper.findLikeByPostId(4L)).thenReturn(expectedList);
+
+        boolean ret = likeService.isUserLikesPost(1L, 4L);
+        assertThat(true, is(ret));
+    }
+
+
+
+    @Test
+    public void should_return_true_when_not_in_likes() {
+
+        List<Like> expectedList = new LinkedList<Like>();
+        Like like1 = new Like().setPostId(1L).setParentId(0L).setUserId(1L);
+        Like like2 = new Like().setPostId(1L).setParentId(0L).setUserId(2L);
+        Like like3 = new Like().setPostId(1L).setParentId(0L).setUserId(5L);
+        Like like4 = new Like().setPostId(1L).setParentId(0L).setUserId(4L);
+        Like like5 = new Like().setPostId(1L).setParentId(0L).setUserId(7L);
+        expectedList.add(like1);
+        expectedList.add(like2);
+        expectedList.add(like3);
+        expectedList.add(like4);
+        expectedList.add(like5);
+        when(likeMapper.findLikeByPostId(1L)).thenReturn(expectedList);
+
+        boolean ret = likeService.isUserLikesPost(3L, 1L);
+        assertThat(false, is(ret));
+    }
+
+
+
 }

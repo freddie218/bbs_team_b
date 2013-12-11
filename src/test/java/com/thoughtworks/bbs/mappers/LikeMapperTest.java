@@ -46,7 +46,7 @@ public class LikeMapperTest extends MapperTestBase{
 
     @Test
     public void should_find_all_like_by_post_id() {
-        int before = likeMapper.findAllLikeByPostId(1L).size();
+        int before = likeMapper.findLikeByPostId(1L).size();
 
         Like like1 = new Like().setPostId(1L).setParentId(0L).setUserId(2L);
         Like like2 = new Like().setPostId(1L).setParentId(0L).setUserId(3L);
@@ -59,12 +59,12 @@ public class LikeMapperTest extends MapperTestBase{
         likeMapper.insert(like4);
         likeMapper.insert(like5);
 
-        assertThat(likeMapper.findAllLikeByPostId(1L).size(), is(before + 3));
+        assertThat(likeMapper.findLikeByPostId(1L).size(), is(before + 3));
     }
 
     @Test
     public void should_find_all_like_by_user_id() {
-        int before = likeMapper.findAllLikeByUserId(3L).size();
+        int before = likeMapper.findLikeByUserId(3L).size();
 
         Like like1 = new Like().setPostId(1L).setParentId(0L).setUserId(2L);
         Like like2 = new Like().setPostId(1L).setParentId(0L).setUserId(3L);
@@ -77,6 +77,6 @@ public class LikeMapperTest extends MapperTestBase{
         likeMapper.insert(like4);
         likeMapper.insert(like5);
 
-        assertThat(likeMapper.findAllLikeByUserId(3L).size(), is(before + 4));
+        assertThat(likeMapper.findLikeByUserId(3L).size(), is(before + 4));
     }
 }

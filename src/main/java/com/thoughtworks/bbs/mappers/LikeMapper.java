@@ -26,12 +26,12 @@ public interface LikeMapper {
             "FROM likes " +
             "WHERE (post_id = #{postId} )"
     )
-    List<Like> findAllLikeByPostId(Long postId);
+    List<Like> findLikeByPostId(Long postId);
 
     @Select(
             "SELECT post_id as postId, parent_id as parentId, user_id as userId " +
                     "FROM likes " +
                     "WHERE (user_id = #{userId} )"
     )
-    List<Like> findAllLikeByUserId(Long userId);
+    List<Like> findLikeByUserId(Long userId);
 }

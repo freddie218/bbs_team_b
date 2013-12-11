@@ -15,4 +15,6 @@ public interface LikeService {
     List<Like> findLikeByUserId(Long id);
 
     ServiceResult<Like> save(Like like);
+
+    public boolean isUserLikesPost(Long uid,Long pid);
 }
