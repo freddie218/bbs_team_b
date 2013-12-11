@@ -33,16 +33,15 @@ public class UserControllerTest {
     private ModelMap model;
     private Principal principal;
     private HttpServletRequest request;
+    private List<Long> usersNotAdmin = new LinkedList<Long>();
 
     private UserController userController;
-    private UserRole userRole_admin;
-    private UserRole userRole_regular1;
-    private UserRole userRole_regular2;
+
     @Before
     public void setup(){
         userService = mock(UserServiceImpl.class);
         postService = mock(PostServiceImpl.class);
-        userRoleService=mock(UserRoleServiceImpl.class);
+        userRoleService = mock(UserRoleServiceImpl.class);
         user = new User();
         user.setUserName("user");
         user.setPasswordHash("password");
@@ -53,12 +52,10 @@ public class UserControllerTest {
         userController = new UserController();
         userController.rstUserService(userService);
         userController.rstPostService(postService);
-
+        userController.rstUserRoleService(userRoleService);
         when(principal.getName()).thenReturn(user.getUserName());
         when(userService.getByUsername("user")).thenReturn(user);
-        userRole_regular1 = new UserRole();
-        userRole_regular2 = new UserRole();
-        userRole_admin = new UserRole();
+
     }
 
     @Test
@@ -206,11 +203,11 @@ public class UserControllerTest {
         ModelAndView modelAndView = userController.processUpdateProfile(model, request, principal);
         verify(userService, never()).update(user);
     }
-    @Ignore
+
     @Test
     public void isRegularShouldTrueWhenRegularUser(){
-        List<Long> expectedRoleList = new LinkedList<Long>();
         List<User> userList= new LinkedList<User>();
+
         User user_admin= new User();
         user_admin.setId(1L);
         user_admin.setUserName("admin");
@@ -223,28 +220,25 @@ public class UserControllerTest {
         user_regular2.setId(3L);
         user_regular2.setUserName("regular2");
         user_regular2.setEnabled(true);
-        userRole_admin.setRoleName("ROLE_ADMIN");
-        userRole_admin.setUserId(1L);
 
-
-        userRole_regular1.setRoleName("ROLE_REGULAR");
-        userRole_regular1.setUserId(2L);
-        userRole_regular2.setRoleName("ROLE_REGULAR");
-        userRole_regular2.setUserId(3L);
         userList.add(user_admin);
         userList.add(user_regular1);
         userList.add(user_regular2);
-        expectedRoleList.add(userRole_regular1.getUserId());
-        expectedRoleList.add(userRole_regular2.getUserId());
-        when((userRoleService.getAllNotAdmin())).thenReturn(expectedRoleList);
+
+        user_admin.setEnabled(false);
+        user_regular1.setEnabled(true);
+        user_regular2.setEnabled(true);
+
+        Long id_user_regular1=2L;
+        Long id_user_regular2=3L;
+        usersNotAdmin.add(id_user_regular1);
+        usersNotAdmin.add(id_user_regular2);
+
         when(userService.getAll()).thenReturn(userList);
-        when(userService.getAll().get(1)).thenReturn(userList.get(1));
-
+        when(userRoleService.getAllNotAdmin()).thenReturn(usersNotAdmin);
         ModelAndView modelAndView = userController.listUsers(model);
+        verify(userService).setUsersIsRegular(userList,usersNotAdmin);
 
-        verify(userService).getAll();
-
-        verify((userService.getAll().get(1)),times(1)).setEnabled(true);
     }
 
 

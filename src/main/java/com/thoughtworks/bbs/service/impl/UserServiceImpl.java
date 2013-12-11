@@ -138,5 +138,16 @@ public class UserServiceImpl implements UserService {
         return (null == getByUsername(username)) ? true : false;
     }
 
-
+    @Override
+    public List<User> setUsersIsRegular(List<User> users,List<Long> usersNotAdmin){
+        for (int index=0;index<users.size();index++){
+            if(usersNotAdmin.contains(users.get(index).getId())) {
+                users.get(index).setIsRegular(true);
+            }
+            else {
+                users.get(index).setIsRegular(false);
+            }
+        }
+        return  users;
+    }
 }

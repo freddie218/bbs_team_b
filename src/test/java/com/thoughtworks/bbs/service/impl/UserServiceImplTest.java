@@ -3,10 +3,15 @@ package com.thoughtworks.bbs.service.impl;
 import com.thoughtworks.bbs.mappers.UserMapper;
 import com.thoughtworks.bbs.mappers.UserRoleMapper;
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.model.UserRole;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -97,5 +102,28 @@ public class UserServiceImplTest {
     public void shouldReturnUserWhenFindUserById() throws Exception {
         when(userMapper.findByUserId(1L)).thenReturn(user);
         assertThat(userService.getByUserId(1L), is(user));
+    }
+    @Test
+    public void shouldSetTrueWhenUsersNotAdmin(){
+        List<User> userRegular = new LinkedList<User>();
+        user.setId(1L);
+        userRegular.add(user);
+        List<Long> userNotAdmin = new LinkedList<Long>();
+        Long userId = 1L;
+        userNotAdmin.add(userId);
+        userRegular=userService.setUsersIsRegular(userRegular,userNotAdmin);
+        assertThat(userRegular.get(0).getIsRegular(), CoreMatchers.is(true));
+    }
+
+    @Test
+    public void shouldSetFalseWhenUsersIsAdmin(){
+        List<User> userAdmin = new LinkedList<User>();
+        user.setId(1L);
+        userAdmin.add(user);
+        List<Long> userNotAdmin = new LinkedList<Long>();
+        Long userId = 2L;
+        userNotAdmin.add(userId);
+        userAdmin=userService.setUsersIsRegular(userAdmin,userNotAdmin);
+        assertThat(userAdmin.get(0).getIsRegular(), CoreMatchers.is(false));
     }
 }
