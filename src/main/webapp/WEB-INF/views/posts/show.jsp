@@ -12,6 +12,7 @@
             <th>Content</th>
             <th>Liked</th>
             <th>Operations</th>
+            <th>Delete</th>
         </tr>
     </thead>
 
@@ -36,6 +37,11 @@
                          <c:if test="${not liked}">
                               <a href='javascript:alert("you like this post");location.href="like/${post.postId};"'>Like</a>
                          </c:if>
+                     </c:if>
+                </td>
+                <td>
+                     <c:if test="${not empty isAuthor}">
+                         <a href="javascript:void(0);" onclick="">X</a>
                      </c:if>
                 </td>
             </tr>
