@@ -1,14 +1,11 @@
 package com.thoughtworks.bbs.service.impl;
 
 import com.thoughtworks.bbs.mappers.UserRoleMapper;
-import com.thoughtworks.bbs.model.User;
 import com.thoughtworks.bbs.model.UserRole;
-
 import com.thoughtworks.bbs.service.UserRoleService;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-import javax.swing.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,5 +43,27 @@ public class UserRoleServiceImpl implements UserRoleService {
     public UserRole getUserRole() {
         UserRole user_role = new UserRole();
         return user_role;
+    }
+    @Override
+    public UserRole getByUserId(Long userId){
+        SqlSession session = factory.openSession();
+        UserRole userRole = new UserRole();
+        try{
+            UserRoleMapper mapper = session.getMapper(UserRoleMapper.class);
+            userRole = mapper.get(userId);
+        }finally {
+            session.close();
+        }
+        return userRole;
+    }
+    @Override
+    public void authoriseRoleName(UserRole userRole){
+         SqlSession session = factory.openSession();
+        try{
+            UserRoleMapper mapper = session.getMapper(UserRoleMapper.class);
+            mapper.authoriseUserRole(userRole);
+        } finally {
+            session.close();
+        }
     }
 }

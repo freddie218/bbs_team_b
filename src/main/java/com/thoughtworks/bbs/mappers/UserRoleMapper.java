@@ -3,6 +3,7 @@ package com.thoughtworks.bbs.mappers;
 import com.thoughtworks.bbs.model.UserRole;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ public interface UserRoleMapper {
     void insert(UserRole userRole);
 
     @Select(
-        "SELECT (userid, rolename) FROM user_roles " +
-        "WHERE id=#{userId}"
+            value = "SELECT userid as userId, rolename as roleName FROM user_roles " +
+                    "WHERE userid=#{userId}"
     )
     UserRole get(Long userId);
 
@@ -26,6 +27,10 @@ public interface UserRoleMapper {
             "WHERE rolename=#{roleName}"
     )
     List<Long> getRegularUsersId(String roleName);
-
-
+    @Update(
+            value = "UPDATE user_roles " +
+                    "SET  rolename=#{roleName} " +
+                    "WHERE userid=#{userId}"
+    )
+    void authoriseUserRole(UserRole userRole);
 }

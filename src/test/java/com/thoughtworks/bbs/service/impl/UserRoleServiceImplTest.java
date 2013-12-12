@@ -7,14 +7,14 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -65,5 +65,22 @@ public class UserRoleServiceImplTest {
         List<Long> returnedRoleList = userRoleService.getAllNotAdmin();
         assertThat(returnedRoleList, is(expectedRoleList));
 
+    }
+
+    @Test
+    public void shouldReturnUserRoleWhenGetByUserId(){
+        Long id_user = 1L;
+        UserRole userRole = new UserRole();
+        userRole.setUserId(id_user);
+        userRole.setRoleName("ROLE_REGULAR");
+        when(mapper.get(id_user)).thenReturn(userRole);
+        UserRole result = userRoleService.getByUserId(id_user);
+        assertEquals(userRole,result);
+    }
+
+    @Test
+    public void shouldUpdateUserRoleWhenAuthoriseRoleName(){
+        userRoleService.authoriseRoleName(userRole_regular1);
+        verify(mapper).authoriseUserRole(userRole_regular1);
     }
 }

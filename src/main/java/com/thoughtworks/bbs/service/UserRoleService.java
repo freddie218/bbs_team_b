@@ -14,4 +14,8 @@ import java.util.List;
 public interface UserRoleService {
     List<Long> getAllNotAdmin();
     UserRole getUserRole();
+
+    UserRole getByUserId(Long userId);
+
+    void authoriseRoleName(UserRole userRole);
 }
