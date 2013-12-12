@@ -3,6 +3,7 @@ package com.thoughtworks.bbs.web;
 
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.model.UserRole;
 import com.thoughtworks.bbs.model.UserValidator;
 import com.thoughtworks.bbs.service.PostService;
 import com.thoughtworks.bbs.service.UserRoleService;
@@ -155,7 +156,7 @@ public class UserController {
     public ModelAndView listUsers(ModelMap map) {
         List<User> users = userService.getAll();
         List<Long> usersNotAdmin = userRoleService.getAllNotAdmin();
-
+        UserRole userRole = new UserRole();
         users=userService.setUsersIsRegular(users,usersNotAdmin);
         map.put("users",users);
 
@@ -204,5 +205,14 @@ public class UserController {
         userService.update(user);
 
         return "redirect:/user/users";
+    }
+    @RequestMapping(value = {"/authorise/{id}"},method = RequestMethod.GET)
+    public String authoriseUser(@PathVariable("id") Long userId,Principal principal){
+        UserRole userRole = userRoleService.getByUserId(userId);
+        userRole.setRoleName("ROLE_ADMIN");
+        userRoleService.authoriseRoleName(userRole);
+
+        return "redirect:/user/users";
+
     }
 }
