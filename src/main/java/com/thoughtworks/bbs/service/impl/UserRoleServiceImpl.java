@@ -51,6 +51,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         try{
             UserRoleMapper mapper = session.getMapper(UserRoleMapper.class);
             userRole = mapper.get(userId);
+            session.commit();
         }finally {
             session.close();
         }
@@ -62,6 +63,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         try{
             UserRoleMapper mapper = session.getMapper(UserRoleMapper.class);
             mapper.authoriseUserRole(userRole);
+            session.commit();
         } finally {
             session.close();
         }
