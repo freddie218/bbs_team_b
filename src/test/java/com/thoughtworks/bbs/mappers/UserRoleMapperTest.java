@@ -59,11 +59,11 @@ public class UserRoleMapperTest extends MapperTestBase{
     @Test
     public void shouldUpdateRoleNameWhenUpdateUserRole(){
         UserRole userRole = new UserRole();
-        userRole.setRoleName("ROLE_REGULAR");
+        userRole.setRoleName("ROLE_ADMIN");
         userRole.setUserId(8L);
         userRoleMapper.insert(userRole);
         userRoleMapper.authoriseUserRole(userRole);
-        assertEquals("ROLE_REGULAR", userRole.getRoleName());
+        assertEquals("ROLE_ADMIN", userRole.getRoleName());
 
     }
 
