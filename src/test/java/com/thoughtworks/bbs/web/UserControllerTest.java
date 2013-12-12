@@ -8,7 +8,6 @@ import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserRoleServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -240,8 +240,33 @@ public class UserControllerTest {
         verify(userService).setUsersIsRegular(userList,usersNotAdmin);
 
     }
-
-
+    @Test
+    public void shouldsetUserwhenRegularUser(){
+        List<User> userList= new LinkedList<User>();
+        String expected = "User";
+        User user_regular = new User();
+        user_regular.setId(1L);
+        userList.add(user_regular);
+        Long id_user_regular = 1L;
+        usersNotAdmin.add(id_user_regular);
+        when(userService.getAll()).thenReturn(userList);
+        when(userRoleService.getAllNotAdmin()).thenReturn(usersNotAdmin);
+        verify(userService).setUsersIsRegular(userList,usersNotAdmin);
+        verify(user_regular).setUserRole(expected);
+    }
+    @Test
+    public void shouldAuthoriseUserClickArrow(){
+        Long id_user = 1L;
+        user.setId(id_user);
+        UserRole userRole = new UserRole();
+        userRole.setRoleName("User");
+        userRole.setUserId(id_user);
+        user = user.setUserRole("Administrator");
+        when(userRoleService.getByUserId(id_user)).thenReturn(userRole);
+        String result = userController.authoriseUser(id_user,principal);
+        verify(userRoleService).authoriseRoleName(userRole);
+         assertEquals("redirect:/user/users",result);
+    }
     @Test
     public void shouldDisableUserWhenDisableUser() throws Exception {
         user.setEnabled(true);
