@@ -80,7 +80,7 @@ public class LikeServiceImplTest {
         expectedList.add(like5);
         when(likeMapper.findLikeByPostId(4L)).thenReturn(expectedList);
 
-        boolean ret = likeService.isUserLikesPost(1L, 4L);
+        boolean ret = likeService.doesUserLikePost(1L, 4L);
         assertThat(true, is(ret));
     }
 
@@ -100,7 +100,7 @@ public class LikeServiceImplTest {
         expectedList.add(like5);
         when(likeMapper.findLikeByPostId(1L)).thenReturn(expectedList);
 
-        boolean ret = likeService.isUserLikesPost(3L, 1L);
+        boolean ret = likeService.doesUserLikePost(3L, 1L);
         assertThat(false, is(ret));
     }
 
@@ -120,7 +120,7 @@ public class LikeServiceImplTest {
         expectedList.add(like5);
         when(likeMapper.findLikeByUserId(4L)).thenReturn(expectedList);
 
-        boolean ret = likeService.isFavorite(4L,3L);
+        boolean ret = likeService.isPostUsersFavorite(4L,3L);
         assertThat(true, is(ret));
     }
 
@@ -140,7 +140,7 @@ public class LikeServiceImplTest {
         expectedList.add(like5);
         when(likeMapper.findLikeByUserId(4L)).thenReturn(expectedList);
 
-        boolean ret = likeService.isFavorite(4L,9L);
+        boolean ret = likeService.isPostUsersFavorite(4L,9L);
         assertThat(false, is(ret));
     }
 }

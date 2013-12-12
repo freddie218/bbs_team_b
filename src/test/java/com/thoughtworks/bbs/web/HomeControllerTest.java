@@ -58,7 +58,7 @@ public class HomeControllerTest {
 
         when(postService.findAllPost()).thenReturn(postList);
         when(userService.getByUsername("m")).thenReturn(user);
-        when(likeService.isFavorite(1L,1L)).thenReturn(true);
+        when(likeService.doesUserLikePost(1L,1L)).thenReturn(true);
 
         homeController = new HomeController();
         homeController.rstPostService(postService);
@@ -70,7 +70,7 @@ public class HomeControllerTest {
     public void should_find_all_posts_and_return_home_when_home(){
         String ret = homeController.home(model, principal);
         verify(postService,times(1)).findAllPost();
-        verify(likeService,times(postList.size())).isFavorite(anyLong(), anyLong());
+        verify(likeService,times(postList.size())).doesUserLikePost(anyLong(), anyLong());
         assertThat(ret, is("home"));
     }
 }
