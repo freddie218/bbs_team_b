@@ -33,6 +33,7 @@ public class HomeControllerTest {
     private LikeServiceImpl likeService;
     private Model model;
     private Post post;
+    private Like like;
     private Principal principal;
     private List<Post> postList;
     private List<Like> likeList;
@@ -42,12 +43,13 @@ public class HomeControllerTest {
     @Before
     public void setup(){
         model = mock(Model.class);
-        post = mock(Post.class);
         principal = mock(Principal.class);
         postList = new LinkedList<Post>();
-        Post post = new Post().setPostId(1L);
+        post = new Post().setPostId(1L);
         postList.add(post);
         likeList = new LinkedList<Like>();
+        like = new Like().setPostId(1L);
+        likeList.add(like);
         user=new User().setUserName("m").setPasswordHash("123456").setId(1L);
         postService = mock(PostServiceImpl.class);
         userService = mock(UserServiceImpl.class);
@@ -58,7 +60,7 @@ public class HomeControllerTest {
 
         when(postService.findAllPost()).thenReturn(postList);
         when(userService.getByUsername("m")).thenReturn(user);
-        when(likeService.doesUserLikePost(1L,1L)).thenReturn(true);
+        when(likeService.findLikeByUserId(1L)).thenReturn(likeList);
 
         homeController = new HomeController();
         homeController.rstPostService(postService);
@@ -70,7 +72,7 @@ public class HomeControllerTest {
     public void should_find_all_posts_and_return_home_when_home(){
         String ret = homeController.home(model, principal);
         verify(postService,times(1)).findAllPost();
-        verify(likeService,times(postList.size())).doesUserLikePost(anyLong(), anyLong());
+        verify(likeService,times(1)).findLikeByUserId(1L);
         assertThat(ret, is("home"));
     }
 }
