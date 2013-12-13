@@ -139,4 +139,16 @@ public class UserServiceImplTest {
         userService.setUsersIsRegular(userList,usersNotAdmin);
         assertEquals(expected,user_regular.getUserRole());
     }
+    @Test
+    public void shouldsetAdministratorwhenAdminUser(){
+        List<User> userList= new LinkedList<User>();
+        String expected = "Administrator";
+        User user_admin = new User();
+        user_admin.setId(1L);
+        userList.add(user_admin);
+        List<Long> usersNotAdmin = new LinkedList<Long>();
+        userService.setUsersIsRegular(userList,usersNotAdmin);
+        assertEquals(expected,user_admin.getUserRole());
+    }
+
 }
