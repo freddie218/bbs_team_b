@@ -240,20 +240,7 @@ public class UserControllerTest {
         verify(userService).setUsersIsRegular(userList,usersNotAdmin);
 
     }
-    @Test
-    public void shouldsetUserwhenRegularUser(){
-        List<User> userList= new LinkedList<User>();
-        String expected = "User";
-        User user_regular = new User();
-        user_regular.setId(1L);
-        userList.add(user_regular);
-        Long id_user_regular = 1L;
-        usersNotAdmin.add(id_user_regular);
-        when(userService.getAll()).thenReturn(userList);
-        when(userRoleService.getAllNotAdmin()).thenReturn(usersNotAdmin);
-        verify(userService).setUsersIsRegular(userList,usersNotAdmin);
-        verify(user_regular).setUserRole(expected);
-    }
+
     @Test
     public void shouldAuthoriseUserClickArrow(){
         Long id_user = 1L;
