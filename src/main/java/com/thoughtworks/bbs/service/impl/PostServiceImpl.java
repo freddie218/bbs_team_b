@@ -34,13 +34,28 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> findMainPostByAuthorName(String authorName) {
+    public List<Post> getMainPostByAuthorName(String authorName) {
         SqlSession session = factory.openSession();
         List<Post> posts = new LinkedList<Post>();
 
         try {
             PostMapper postMapper = session.getMapper(PostMapper.class);
             posts = postMapper.findMainPostByAuthorName(authorName);
+        } finally {
+            session.close();
+        }
+
+        return posts;
+    }
+
+    @Override
+    public List<Post> getAllPostsByAuthorName(String authorName) {
+        SqlSession session = factory.openSession();
+        List<Post> posts = new LinkedList<Post>();
+
+        try{
+            PostMapper postMapper = session.getMapper(PostMapper.class);
+            posts = postMapper.findAllPostsByAuthorName(authorName);
         } finally {
             session.close();
         }
@@ -64,13 +79,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int updatePostsAuthorByUserName(String user, String new_user) {
+    public int updateAllPostsAuthorByUserName(String user, String new_user) {
         SqlSession session = factory.openSession();
         int cnt = 0;
 
         try{
             PostMapper postMapper = session.getMapper(PostMapper.class);
-            List<Post> postList = postMapper.findMainPostByAuthorName(user);
+            List<Post> postList = postMapper.findAllPostsByAuthorName(user);
             for(Post post : postList){
                 postMapper.update(post.setAuthorName(new_user));
                 cnt ++;
