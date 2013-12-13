@@ -28,7 +28,7 @@
                <td>
                <c:out value="${user.userRole}"/>
                  <c:if test="${user.isRegular}">
-                                        <a href='javascript:if(confirm("The page at localhost:8080 says:\n Are you sure to authorise this user?")){location.href="authorise/${user.id}"}'>↑</a>
+                                        <a href='javascript:if(confirm("Are you sure to authorise this user?")){location.href="authorise/${user.id}"}'><span class="text-primary">&uarr;</span></a>
                  </c:if>
                </td>
             </tr>
