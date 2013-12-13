@@ -80,15 +80,7 @@ public class PostController {
                 .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date()).likedTimes(0L);
 
         postService.save(builder.build());
-        model.addAttribute("mainPost", postService.get(postId));
-        model.addAttribute("posts", postService.findAllPostByMainPost(postId));
-
-
-        Long uid = userService.getByUsername(principal.getName()).getId();
-        boolean liked=likeService.doesUserLikePost(uid,postId);
-        model.addAttribute("liked",liked);
-
-        return "posts/show";
+        return "redirect:" + postId;
     }
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
