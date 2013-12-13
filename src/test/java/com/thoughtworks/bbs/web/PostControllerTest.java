@@ -98,7 +98,7 @@ public class PostControllerTest {
     public void shouldReturnToTheCurrentPost(){
         when(request.getParameter("title")).thenReturn("title");
         when(request.getParameter("content")).thenReturn("content");
-        String expected_page = "posts/show";
+        String expected_page = "redirect:1";
         String result_page = postController.postShow(request,principal,model,PostId);
 
 
