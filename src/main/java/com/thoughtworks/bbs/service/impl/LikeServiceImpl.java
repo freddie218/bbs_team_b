@@ -78,7 +78,7 @@ public class LikeServiceImpl implements LikeService {
         return new ServiceResult<Like>(errors, like);
     }
     @Override
-    public Boolean isUserLikesPost(Long uid,Long pid) {
+    public Boolean doesUserLikePost(Long uid,Long pid) {
         List<Like> likes = findLikeByPostId(pid);
         for (Like like : likes) {
             Long id=like.getUserId();
@@ -90,7 +90,7 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public Boolean isFavorite(Long uid, Long pid) {
+    public Boolean isPostUsersFavorite(Long uid, Long pid) {
         List<Like> likes = findLikeByUserId(uid);
         for (Like like : likes) {
             if(like.getPostId().equals(pid)){
