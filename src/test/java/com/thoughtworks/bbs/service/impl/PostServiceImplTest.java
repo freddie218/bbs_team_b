@@ -61,15 +61,26 @@ public class PostServiceImplTest {
     }
 
     @Test
-    public void shouldGetPostByAuthorName() {
+    public void shouldGetMainPostByAuthorName() {
         String authorName = "juntao";
         List<Post> expectedPostList = new ArrayList();
         expectedPostList.add(new Post());
         when((mapper.findMainPostByAuthorName(authorName))).thenReturn(expectedPostList);
 
-        List<Post> returnedPostList = postService.findMainPostByAuthorName(authorName);
+        List<Post> returnedPostList = postService.getMainPostByAuthorName(authorName);
         verify(mapper).findMainPostByAuthorName(authorName);
         assertThat(returnedPostList, is(expectedPostList));
+    }
+
+    @Test
+    public void shouldGetAllPostsByAuthorName() throws Exception {
+        String authorName = "yang";
+        List<Post> expectedPostList = new ArrayList();
+        when(mapper.findAllPostsByAuthorName(authorName)).thenReturn(expectedPostList);
+
+        List<Post> returnedPostList = postService.getAllPostsByAuthorName(authorName);
+        verify(mapper).findAllPostsByAuthorName(authorName);
+        assertThat(expectedPostList, is(returnedPostList));
     }
 
     @Test
@@ -92,7 +103,7 @@ public class PostServiceImplTest {
         postList.add(new Post().setAuthorName("user"));
 
         when(mapper.findMainPostByAuthorName("user")).thenReturn(postList);
-        postService.updatePostsAuthorByUserName("user", "new_user");
+        postService.updateAllPostsAuthorByUserName("user", "new_user");
 
         assertThat(postList.get(0).getAuthorName(), is("new_user"));
         assertThat(postList.get(1).getAuthorName(), is("new_user"));

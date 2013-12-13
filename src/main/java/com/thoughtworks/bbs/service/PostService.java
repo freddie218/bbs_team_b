@@ -8,7 +8,9 @@ public interface PostService {
 
     Post get(Long postId);
 
-    List<Post> findMainPostByAuthorName(String authorName);
+    List<Post> getMainPostByAuthorName(String authorName);
+
+    List<Post> getAllPostsByAuthorName(String authorName);
 
     ServiceResult<Post> save(Post post);
 
@@ -18,7 +20,7 @@ public interface PostService {
 
     List<Post> findAllPost();
 
-    int updatePostsAuthorByUserName(String user, String new_user);
+    int updateAllPostsAuthorByUserName(String user, String new_user);
 
     void add1LikedTime(Long l);
 }

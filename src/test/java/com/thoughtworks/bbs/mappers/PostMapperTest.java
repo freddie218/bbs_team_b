@@ -54,6 +54,21 @@ public class PostMapperTest extends MapperTestBase {
     }
 
     @Test
+    public void shouldFindAllPostsByAuthorName() throws Exception {
+        List<Post> beforeList = postMapper.findAllPostsByAuthorName("yang");
+
+        Post post1 = new Post().setAuthorName("yang").setTitle("I am a post").setContent("content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(11L).setLikedTimes(0);
+        Post post2 = new Post().setAuthorName("yang").setTitle("I am a post").setContent("content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0L).setLikedTimes(0);
+        postMapper.insert(post1);
+        postMapper.insert(post2);
+
+        List<Post> afterList = postMapper.findAllPostsByAuthorName("yang");
+        assertThat(afterList.size(), is(beforeList.size() + 2));
+    }
+
+    @Test
     public void shouldFindAllPost() {
         int before = postMapper.findAllPost().size();
 

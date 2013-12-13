@@ -69,7 +69,7 @@ public class UserControllerTest {
     @Test
     public void profile_should_addAttribute(){
         userController.userProfile(model,principal);
-        verify(model).addAttribute("posts", postService.findMainPostByAuthorName("user"));
+        verify(model).addAttribute("posts", postService.getMainPostByAuthorName("user"));
 
     }
 
@@ -144,13 +144,13 @@ public class UserControllerTest {
     @Test
     public void shouldGoToUsersWhenClickUsers(){
         ModelAndView modelAndView = userController.listUsers(model);
-        assertThat(modelAndView.getViewName(),is("user/users"));
+        assertThat(modelAndView.getViewName(), is("user/users"));
     }
 
     @Test
     public void shouldGoToUpdateProfilePageWhenClickUpdateProfile(){
         ModelAndView modelAndView = userController.updateProfile(model, principal);
-        assertThat(modelAndView.getViewName(),is("user/updateProfile"));
+        assertThat(modelAndView.getViewName(), is("user/updateProfile"));
     }
 
     @Test
