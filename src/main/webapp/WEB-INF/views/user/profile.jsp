@@ -56,7 +56,7 @@
         <th>Author</th>
         <th>Publish Time</th>
         <c:if test = "${not empty isMyself}">
-        <th>Delete</th>
+        <th>Operations</th>
         </c:if>
     </tr>
     </thead>
