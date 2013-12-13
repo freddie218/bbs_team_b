@@ -244,14 +244,13 @@ public class UserControllerTest {
     @Test
     public void shouldAuthoriseUserClickArrow(){
         Long id_user = 1L;
-        user.setId(id_user);
         UserRole userRole = new UserRole();
         userRole.setRoleName("User");
         userRole.setUserId(id_user);
-        user = user.setUserRole("Administrator");
         when(userRoleService.getByUserId(id_user)).thenReturn(userRole);
         String result = userController.authoriseUser(id_user,principal);
         verify(userRoleService).authoriseRoleName(userRole);
+        verify(userRoleService).getByUserId(id_user);
          assertEquals("redirect:/user/users",result);
     }
     @Test
