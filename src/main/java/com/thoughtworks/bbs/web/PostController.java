@@ -82,8 +82,12 @@ public class PostController {
         postService.save(builder.build());
         model.addAttribute("mainPost", postService.get(postId));
         model.addAttribute("posts", postService.findAllPostByMainPost(postId));
-        // return new ModelAndView("posts/createSuccess");
-        //return new ModelAndView("home", "posts", postService.findMainPostByAuthorName(principal.getName()));
+
+
+        Long uid = userService.getByUsername(principal.getName()).getId();
+        boolean liked=likeService.doesUserLikePost(uid,postId);
+        model.addAttribute("liked",liked);
+
         return "posts/show";
     }
 
