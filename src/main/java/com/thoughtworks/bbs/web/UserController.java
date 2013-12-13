@@ -65,7 +65,7 @@ public class UserController {
         return new ModelAndView("user/profile", map);
     }
 
-    @RequestMapping(value = {"/{authorName}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/users/{authorName}"}, method = RequestMethod.GET)
     public ModelAndView visitUserProfile(ModelMap model, Principal principal,@PathVariable("authorName") String authorName,@ModelAttribute Post post) {
         User user = userService.getByUsername(authorName);
         Map<String, Object> map = new HashMap<String, Object>();

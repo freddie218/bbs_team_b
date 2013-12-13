@@ -21,7 +21,7 @@
                 </a>
             </td>
             <td>
-                <a href="<c:url value='/user/${post.key.authorName}' />">
+                <a href="<c:url value='/user/users/${post.key.authorName}' />">
                     <c:out value="${post.key.authorName}"/>
                 </a>
             </td>
