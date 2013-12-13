@@ -34,8 +34,10 @@
                 </td>
                 <td>
                      <c:if test="${row.index==0}">
-                         <c:if test="${not liked}">
+                        <c:if test="${not empty liked}">
+                            <c:if test="${not liked}">
                               <a href='javascript:alert("you like this post");location.href="like/${post.postId};"'>Like</a>
+                            </c:if>
                          </c:if>
                      </c:if>
                 </td>
