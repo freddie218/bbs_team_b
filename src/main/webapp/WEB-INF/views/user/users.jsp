@@ -16,7 +16,9 @@
 
         <c:forEach var="user" items="${users}" varStatus="row">
             <tr>
-                <td> <c:out value="${user.userName}"/> </td>
+                <td><a href="<c:url value='/user/users/${user.userName}' />">
+                         <c:out value="${user.userName}"/>
+                 </a> </td>
                 <td> <c:out value="${user.enabled}"/> </td>
                 <td>
 
