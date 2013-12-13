@@ -102,7 +102,7 @@ public class PostServiceImplTest {
         postList.add(new Post().setAuthorName("user"));
         postList.add(new Post().setAuthorName("user"));
 
-        when(mapper.findMainPostByAuthorName("user")).thenReturn(postList);
+        when(mapper.findAllPostsByAuthorName("user")).thenReturn(postList);
         postService.updateAllPostsAuthorByUserName("user", "new_user");
 
         assertThat(postList.get(0).getAuthorName(), is("new_user"));
