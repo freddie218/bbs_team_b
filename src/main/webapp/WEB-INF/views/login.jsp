@@ -2,7 +2,21 @@
 <c:set var="pageTitle" scope="request" value="Login"/>
 
 <%@ include file="header.jsp" %>
-
+<style type="text/css">
+    body{
+         margin:0 auto;
+         background:#EEEEEE;
+         width:100%;
+         max-width:800px;
+    }
+    #content .form-horizontal{
+         background:#DDDDDD;
+         max-width:400px;
+         margin:auto;
+         padding:10px 10px 20px 25px;
+    }
+</style>
+  <div id="content">
     <c:choose>
         <c:when test="${not empty error}">
             <div id="loginError" class="page-action login-error">
@@ -36,6 +50,7 @@
             </div>
         </div>
         Don't have an account? <a href='<c:url value="/user/create" />'>Click here to register one!</a>
-	</form>
+   </form>
+  </div>
 
 <%@ include file="footer.jsp" %>

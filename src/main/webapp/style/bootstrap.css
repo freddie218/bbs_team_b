@@ -2191,11 +2191,12 @@ textarea.input-lg {
 
 @media (min-width: 768px) {
   .form-horizontal .control-label {
-    text-align: right;
+    text-align: left;
   }
 }
 
 .btn {
+  background-color:#bbb;
   display: inline-block;
   padding: 6px 12px;
   margin-bottom: 0;
