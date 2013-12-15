@@ -1,8 +1,6 @@
 <hr />
-
-<p class="pagination-centered">
+<footer>
     ThoughtWorks BBS - powered by ZhengDaYeXiao !
-</p>
-
+</footer>
 </body>
 </html>
