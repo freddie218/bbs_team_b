@@ -26,8 +26,8 @@
 body{
   background:#eee;
   margin:0 auto;
-  width:100%; 
-  max-width:800px; 
+  width:100%;
+  max-width:800px;
 }
 #content{
   margin-left:auto;
