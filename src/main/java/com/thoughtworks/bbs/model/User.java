@@ -6,7 +6,14 @@ public class User {
     private boolean enabled;
     private String passwordHash;
     private boolean isRegular;
-
+    private String userRole;
+    public String getUserRole(){
+        return userRole;
+    }
+    public User setUserRole(String userRole){
+        this.userRole = userRole;
+        return this;
+    }
     public Long getId() {
         return id;
     }

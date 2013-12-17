@@ -41,9 +41,9 @@ a:active { color: gray; }
 
 .page-action {
     font-size: 16pt;
-    padding: 5px 15px;
     margin-bottom: 10px;
     border-radius: 5px;
+    text-align:center;
 }
 
 .error {
@@ -57,7 +57,7 @@ form label {
 }
 
 .controls {
-    display: inline-block;
+    display: block;
     margin-bottom: 10px;
 }
 

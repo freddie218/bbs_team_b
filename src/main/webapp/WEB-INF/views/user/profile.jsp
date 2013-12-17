@@ -22,7 +22,86 @@
             </div>
     </c:when>
 </c:choose>
+<style>
+body{
+  background:#eee;
+  margin:0 auto;
+  width:100%;
+  max-width:800px;
+}
+#content{
+  margin-left:auto;
+  margin-right:auto;
+}
+.navbar ul li a:hover{
+  background:#ddd;
+}
+#userInformation{
+  width:240px;
+  display:block;
+}
+#userInformation table{
+  width:240px;
+}
+#userInformation table tr td{
+  background:#f9f9f9;
+  overflow:visible;
+}
+#userInformation table tr td:first-child {
+  background:#ddd;
+  width:100px;
+  border-bottom:1px #fff solid;
+}
 
+#userInformation .changefield {
+  margin:0px;
+  list-style-type:none;
+  overflow:hidden;
+  width:240px;
+}
+#userInformation .changefield a{
+  font-size: 14px;
+  display:inline;
+  padding-left: 7px;
+  margin-left: 7px;
+  border-left: 1px #000 solid; /*Vertical dividing line*/
+}
+#userInformation .changefield .first{
+padding-left: 0px;
+margin-left: 0px;
+border-left: 0;
+}
+#postinfo{
+  overflow:hidden;
+  margin-top:50px;
+  height: auto;
+  width:600px;
+}
+#postinfo h2{
+  font-size:24px;
+}
+#postinfo table tr td{
+  background:#f9f9f9;
+  max-width:100px;
+}
+#postinfo table tr:first-child{
+  background:#ddd;
+}
+#postinfo table tr th{
+  border-left:1px #fff solid;
+}
+#postinfo table tr th:first-child{
+  border-left:0;
+}
+footer{        /* from bootstrap navbar-fixed-bottom */
+    position: fixed; 
+    left: 10px;
+    bottom: 10px;
+    z-index: 1030;
+}
+</style>
+<div id="content">
+<!-- x -->
 <div class="alter-success" id="message">
     <a class="close" data-dismiss="alter" href="#">&times;</a>
 </div>
@@ -37,26 +116,26 @@
             <td>Enable</td>
             <td>${user.enabled}</td>
         </tr>
-            <c:if test="${not empty isMyself}">
-        <tr>
-            <td><a href="<c:url value='/user/changePassword' />" class="brand">Change Password</a></td>
-            <td><a href="<c:url value='/user/updateProfile' />" class="brand">Update Profile</a></td>
-        </tr>
-            </c:if>
-    </table>
+    </table>        
+    <c:if test="${not empty isMyself}">
+    <div class="changefield">
+      <a href="<c:url value='/user/changePassword' />" class="brand first">Change Password</a> 
+      <a href="<c:url value='/user/updateProfile' />" class="brand">Update Profile</a>
+    </div>
+    </c:if>
 </div>
 
 
-
+<div id="postinfo">
 <H2> My Posts </H2>
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>Title</th>
+        <th class="first">Title</th>
         <th>Author</th>
         <th>Publish Time</th>
         <c:if test = "${not empty isMyself}">
-        <th>Delete</th>
+        <th>Operations</th>
         </c:if>
     </tr>
     </thead>
@@ -79,6 +158,7 @@
     </c:forEach>
     </tbody>
 </table>
-
+</div>
+</div>
 <%@ include file="../footer.jsp" %>
 

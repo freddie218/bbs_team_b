@@ -13,42 +13,42 @@ public class UserValidator {
     }
 
     public Map<String, String> validate(User user) {
-        if(StringUtils.isBlank(user.getUserName())) {
-            errors.put("username", "Username can not be null");
-        }
-
-        if(StringUtils.isBlank(user.getPasswordHash())) {
-            errors.put("password", "Password can not be null");
-        }
+        invalid(user.getUserName(), "username", "Username");
+        invalid(user.getPasswordHash(), "password", "Password");
         return errors;
     }
 
-    public boolean passwordValidate(String password){
-        if(StringUtils.isBlank(password)){
-            return  false;
+    private void invalid(String item, String key, String value) {
+        if(StringUtils.isBlank(item)) {
+            errors.put(key, value + " can not be null");
         }
-        else if(password.length() < 6 || password.length() > 12){
-            return false;
-        }
-        else if((password.charAt(0) == '_')){
-            return false;
-        }
-        else{
-            for(int i = 0; i < password.length(); i++)
-            {
-                if((password.charAt(i) >= 'a' && password.charAt(i) <= 'z')
-                   || (password.charAt(i) >= 'A' && password.charAt(i) <= 'Z')
-                   || (password.charAt(i) >= '0' && password.charAt(i) <= '9')
-                   || (password.charAt(i) == '_')){
-                    continue;
-                }
-                else{
-                    return false;
-                }
-            }
-        }
+    }
 
-        return true;
+    public boolean passwordValidate(String password){
+        return !(StringUtils.isBlank(password) || isLengthValid(password) || isFirstCharValid(password) || passwordCharValid(password));
+
+    }
+
+    private boolean passwordCharValid(String password) {
+        for (int i = 0; i < password.length(); i++) {
+            if (!isCharValid(password.charAt(i))) return true;
+        }
+        return false;
+    }
+
+    private boolean isCharValid(char charAt) {
+        return (charAt >= 'a' && charAt <= 'z')
+                || (charAt >= 'A' && charAt <= 'Z')
+                || (charAt >= '0' && charAt <= '9')
+                || (charAt == '_');
+    }
+
+    private boolean isFirstCharValid(String password) {
+        return password.charAt(0) == '_';
+    }
+
+    private boolean isLengthValid(String password) {
+        return password.length() < 6 || password.length() > 12;
     }
 
     public boolean usernameValidate(String username) {

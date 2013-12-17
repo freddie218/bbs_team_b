@@ -39,8 +39,17 @@ public class HomeController {
 
         Map<Post,Boolean> postsWithLiked= new LinkedHashMap<Post, Boolean>();
 
+        List<Like> likes = likeService.findLikeByUserId(uid);
         for (Post post : posts) {
-            postsWithLiked.put(post, likeService.isFavorite(uid,post.getPostId()));
+            Long pid=post.getPostId();
+            Boolean liked=false;
+            for (Like like : likes) {
+                Long like_pid=like.getPostId();
+                if(pid==like_pid){
+                    liked=true;
+                }
+            }
+            postsWithLiked.put(post, liked);
         }
         model.addAttribute("postsWithLiked",postsWithLiked);
         return "home";

@@ -8,7 +8,6 @@ import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserRoleServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -69,7 +69,7 @@ public class UserControllerTest {
     @Test
     public void profile_should_addAttribute(){
         userController.userProfile(model,principal);
-        verify(model).addAttribute("posts", postService.findMainPostByAuthorName("user"));
+        verify(model).addAttribute("posts", postService.getMainPostByAuthorName("user"));
 
     }
 
@@ -144,13 +144,13 @@ public class UserControllerTest {
     @Test
     public void shouldGoToUsersWhenClickUsers(){
         ModelAndView modelAndView = userController.listUsers(model);
-        assertThat(modelAndView.getViewName(),is("user/users"));
+        assertThat(modelAndView.getViewName(), is("user/users"));
     }
 
     @Test
     public void shouldGoToUpdateProfilePageWhenClickUpdateProfile(){
         ModelAndView modelAndView = userController.updateProfile(model, principal);
-        assertThat(modelAndView.getViewName(),is("user/updateProfile"));
+        assertThat(modelAndView.getViewName(), is("user/updateProfile"));
     }
 
     @Test
@@ -241,7 +241,18 @@ public class UserControllerTest {
 
     }
 
-
+    @Test
+    public void shouldAuthoriseUserClickArrow(){
+        Long id_user = 1L;
+        UserRole userRole = new UserRole();
+        userRole.setRoleName("User");
+        userRole.setUserId(id_user);
+        when(userRoleService.getByUserId(id_user)).thenReturn(userRole);
+        String result = userController.authoriseUser(id_user,principal);
+        verify(userRoleService).authoriseRoleName(userRole);
+        verify(userRoleService).getByUserId(id_user);
+         assertEquals("redirect:/user/users",result);
+    }
     @Test
     public void shouldDisableUserWhenDisableUser() throws Exception {
         user.setEnabled(true);

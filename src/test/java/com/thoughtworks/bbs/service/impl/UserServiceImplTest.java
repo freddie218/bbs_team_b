@@ -3,7 +3,6 @@ package com.thoughtworks.bbs.service.impl;
 import com.thoughtworks.bbs.mappers.UserMapper;
 import com.thoughtworks.bbs.mappers.UserRoleMapper;
 import com.thoughtworks.bbs.model.User;
-import com.thoughtworks.bbs.model.UserRole;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.hamcrest.CoreMatchers;
@@ -13,6 +12,7 @@ import org.junit.Test;
 import java.util.LinkedList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -126,4 +126,29 @@ public class UserServiceImplTest {
         userAdmin=userService.setUsersIsRegular(userAdmin,userNotAdmin);
         assertThat(userAdmin.get(0).getIsRegular(), CoreMatchers.is(false));
     }
+    @Test
+    public void shouldsetUserwhenRegularUser(){
+        List<User> userList= new LinkedList<User>();
+        String expected = "User";
+        User user_regular = new User();
+        user_regular.setId(1L);
+        userList.add(user_regular);
+        Long id_user_regular = 1L;
+        List<Long> usersNotAdmin = new LinkedList<Long>();
+        usersNotAdmin.add(id_user_regular);
+        userService.setUsersIsRegular(userList,usersNotAdmin);
+        assertEquals(expected,user_regular.getUserRole());
+    }
+    @Test
+    public void shouldsetAdministratorwhenAdminUser(){
+        List<User> userList= new LinkedList<User>();
+        String expected = "Administrator";
+        User user_admin = new User();
+        user_admin.setId(1L);
+        userList.add(user_admin);
+        List<Long> usersNotAdmin = new LinkedList<Long>();
+        userService.setUsersIsRegular(userList,usersNotAdmin);
+        assertEquals(expected,user_admin.getUserRole());
+    }
+
 }

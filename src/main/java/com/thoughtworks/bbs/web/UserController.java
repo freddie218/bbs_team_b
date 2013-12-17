@@ -3,6 +3,7 @@ package com.thoughtworks.bbs.web;
 
 import com.thoughtworks.bbs.model.Post;
 import com.thoughtworks.bbs.model.User;
+import com.thoughtworks.bbs.model.UserRole;
 import com.thoughtworks.bbs.model.UserValidator;
 import com.thoughtworks.bbs.service.PostService;
 import com.thoughtworks.bbs.service.UserRoleService;
@@ -58,18 +59,18 @@ public class UserController {
         User user = userService.getByUsername(principal.getName());
         Map<String, User> map = new HashMap<String, User>();
         map.put("user", user);
-        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        model.addAttribute("posts", postService.getMainPostByAuthorName(principal.getName()));
         model.addAttribute("isMyself","true");
 
         return new ModelAndView("user/profile", map);
     }
 
-    @RequestMapping(value = {"/{authorName}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/users/{authorName}"}, method = RequestMethod.GET)
     public ModelAndView visitUserProfile(ModelMap model, Principal principal,@PathVariable("authorName") String authorName,@ModelAttribute Post post) {
         User user = userService.getByUsername(authorName);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("user", user);
-        map.put("posts", postService.findMainPostByAuthorName(authorName));
+        map.put("posts", postService.getMainPostByAuthorName(authorName));
         if (null != principal&&principal.getName().equals(authorName))
             map.put("isMyself","true");
         else
@@ -119,7 +120,7 @@ public class UserController {
         else
             model.addAttribute("failed", "true");
 
-        model.addAttribute("posts", postService.findMainPostByAuthorName(principal.getName()));
+        model.addAttribute("posts", postService.getMainPostByAuthorName(principal.getName()));
         Map<String, User> map = new HashMap<String, User>();
         map.put("user", user);
 
@@ -155,7 +156,7 @@ public class UserController {
     public ModelAndView listUsers(ModelMap map) {
         List<User> users = userService.getAll();
         List<Long> usersNotAdmin = userRoleService.getAllNotAdmin();
-
+        UserRole userRole = new UserRole();
         users=userService.setUsersIsRegular(users,usersNotAdmin);
         map.put("users",users);
 
@@ -175,7 +176,7 @@ public class UserController {
         if(userValidator.usernameValidate(newUsername) && userService.verifyUsername(newUsername)){
             user.setUserName(newUsername);
             userService.update(user);
-            postService.updatePostsAuthorByUserName(oldUsername, newUsername);
+            postService.updateAllPostsAuthorByUserName(oldUsername, newUsername);
             isAltered =true;
             Authentication newToken = new UsernamePasswordAuthenticationToken(newUsername,user.getPasswordHash());
             SecurityContextHolder.getContext().setAuthentication(newToken);
@@ -185,7 +186,7 @@ public class UserController {
             model.addAttribute("updateProfileFailed", "true");
         }
 
-        model.addAttribute("posts", postService.findMainPostByAuthorName(user.getUserName()));   //altered
+        model.addAttribute("posts", postService.getMainPostByAuthorName(user.getUserName()));   //altered
 
         Map<String, User> map = new HashMap<String, User>();
         map.put("user", user);
@@ -204,5 +205,14 @@ public class UserController {
         userService.update(user);
 
         return "redirect:/user/users";
+    }
+    @RequestMapping(value = {"/authorise/{id}"},method = RequestMethod.GET)
+    public String authoriseUser(@PathVariable("id") Long userId,Principal principal){
+        UserRole userRole = userRoleService.getByUserId(userId);
+        userRole.setRoleName("ROLE_ADMIN");
+        userRoleService.authoriseRoleName(userRole);
+
+        return "redirect:/user/users";
+
     }
 }

@@ -57,7 +57,7 @@ public class PostController {
         model.addAttribute("posts", postService.findAllPostByMainPost(postId));
 
         Long uid = userService.getByUsername(principal.getName()).getId();
-        boolean liked=likeService.isUserLikesPost(uid,postId);
+        boolean liked=likeService.doesUserLikePost(uid,postId);
         model.addAttribute("liked",liked);
         return "posts/show";
     }
@@ -105,11 +105,7 @@ public class PostController {
                 .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date()).likedTimes(0L);
 
         postService.save(builder.build());
-        model.addAttribute("mainPost", postService.get(postId));
-        model.addAttribute("posts", postService.findAllPostByMainPost(postId));
-        // return new ModelAndView("posts/createSuccess");
-        //return new ModelAndView("home", "posts", postService.findMainPostByAuthorName(principal.getName()));
-        return "posts/show";
+        return "redirect:" + postId;
     }
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
@@ -139,26 +135,26 @@ public class PostController {
         return new RedirectView("../");
         }
     @RequestMapping(value = {"/like/{postId}"}, method = RequestMethod.GET)
-    public String add1LikedTime(@PathVariable("postId") Long id,@RequestHeader("Referer") String referer, Principal principal) {
+    public String add1LikedTime(@PathVariable("postId") Long postId,@RequestHeader("Referer") String referer, Principal principal) {
         if(principal == null){
             return "login";
         }
 
         User user = userService.getByUsername(principal.getName());
-        Long uid = user.getId();
-        Post post = postService.get(id);
-        Long pid = post.getParentId();
+        Long userId = user.getId();
+        Post post = postService.get(postId);
+        Long parentId = post.getParentId();
 
-        if(likeService.isUserLikesPost(uid,pid)) {
+        if(likeService.doesUserLikePost(userId,postId)) {
             return "login";
         }
 
-        LikeBuilder likeBuilder=new LikeBuilder().postId(id).parentId(pid).userId(uid);
+        LikeBuilder likeBuilder=new LikeBuilder().postId(postId).parentId(parentId).userId(userId);
 
         Like like=likeBuilder.build();
 
         likeService.save(like);
-        postService.add1LikedTime(id);
+        postService.add1LikedTime(postId);
 
         return "redirect:"+ referer;
     }

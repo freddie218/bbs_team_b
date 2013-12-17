@@ -1,10 +1,10 @@
 package com.thoughtworks.bbs.mappers;
 
-import com.thoughtworks.bbs.model.User;
 import com.thoughtworks.bbs.model.UserRole;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -44,4 +44,27 @@ public class UserRoleMapperTest extends MapperTestBase{
 
 
     }
+
+    @Test
+    public void shouldReturnUserRoleWhenGetByUserId(){
+        UserRole userRole = new UserRole();
+        userRole.setRoleName("ROLE_REGULAR");
+        userRole.setUserId(8L);
+        userRoleMapper.insert(userRole);
+        UserRole result = userRoleMapper.get(userRole.getUserId());
+        assertEquals(userRole.getRoleName(), result.getRoleName());
+        assertEquals(userRole.getUserId(),result.getUserId());
+    }
+
+    @Test
+    public void shouldUpdateRoleNameWhenAuthoriseUserRole(){
+        UserRole userRole = new UserRole();
+        userRole.setRoleName("ROLE_ADMIN");
+        userRole.setUserId(8L);
+        userRoleMapper.insert(userRole);
+        userRoleMapper.authoriseUserRole(userRole);
+        assertEquals("ROLE_ADMIN", userRole.getRoleName());
+
+    }
+
 }

@@ -143,9 +143,11 @@ public class UserServiceImpl implements UserService {
         for (int index=0;index<users.size();index++){
             if(usersNotAdmin.contains(users.get(index).getId())) {
                 users.get(index).setIsRegular(true);
+                users.get(index).setUserRole("User");
             }
             else {
                 users.get(index).setIsRegular(false);
+                users.get(index).setUserRole("Administrator");
             }
         }
         return  users;
