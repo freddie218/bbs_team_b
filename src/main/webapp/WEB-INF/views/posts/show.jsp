@@ -3,7 +3,6 @@
 
 <%@ include file="../header.jsp" %>
 
-
  <style>
  body{
     background:#eee;
@@ -13,7 +12,6 @@
  #createPanel{
     width:760px;
     margin:0 auto;
-
  }
  #content{
    background:#eee;
@@ -71,11 +69,16 @@
             </a>
                &nbsp Create Time:
                <B><c:out value="${post.createTimeString}"/></B>
+               &nbsp Delete:
+               <B><c:if test="${not empty isAuthor}">
+                  <a href="javascript:void(0);" onclick="show_confirm('${post.postId}');">X</a>
+               </c:if></B>
           </div>
               </br>
            <div id="postContent">
                <c:out value="${post.content}"/>
            </div>
+
     </c:forEach>
   </div>
 
@@ -97,6 +100,18 @@
         <button type="submit" class="btn">Create</button>
     </form>
  </div>
+
+
+<script type="text/javascript">
+function show_confirm(deletePostId)
+{
+      document.deletePostForm.deleteReplyPost.value = deletePostId;
+      document.deletePostForm.submit();
+}
+</script>
+<form  name="deletePostForm" action="<c:url value='/posts/del' />" method="post">
+     <input type="hidden" id="deleteReplyPost" name="deleteReplyPost" >
+</form>
 
   </br>
 </div>

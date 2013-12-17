@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,9 @@ import javax.swing.*;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/posts")
@@ -46,6 +49,10 @@ public class PostController {
     }
     @RequestMapping(value = {"/{postId}"}, method = RequestMethod.GET)
     public String get(@PathVariable("postId") Long postId, Model model, @ModelAttribute Post post, Principal principal) {
+        if (postService.get(postId).getAuthorName().equals(principal.getName()))
+        {
+            model.addAttribute("isAuthor", "Yes");
+        }
         model.addAttribute("mainPost", postService.get(postId));
         model.addAttribute("posts", postService.findAllPostByMainPost(postId));
 
@@ -55,6 +62,24 @@ public class PostController {
         return "posts/show";
     }
 
+    @RequestMapping(value = {"/del"}, method = RequestMethod.POST)
+    public String processDeleteReplyPost(HttpServletRequest request,Model model) {
+        Long deletePostId = Long.parseLong(request.getParameter("deleteReplyPost"));
+        Post deleteReplyId=postService.get(deletePostId);
+        Long parentId=postService.get(deletePostId).getParentId();
+        if (0==parentId)
+
+        {
+            postService.deleteAllPostsByMainPost(deletePostId);
+        }
+        else
+        {
+            postService.delete(deleteReplyId);
+        }
+        model.addAttribute("mainPost", postService.get(parentId));
+        model.addAttribute("posts", postService.findAllPostByMainPost(parentId));
+        return "redirect:" + parentId;
+    }
 
     @RequestMapping(value = {"/{postId}"}, method = RequestMethod.POST)
     public String postShow(HttpServletRequest request, Principal principal,Model model,@PathVariable("postId") Long postId) {

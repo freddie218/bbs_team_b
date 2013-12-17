@@ -16,7 +16,7 @@
          padding:10px 10px 20px 25px;
     }
 </style>
-  <div id="content">
+  <div id="content" align="centre">
     <c:choose>
         <c:when test="${not empty error}">
             <div id="loginError" class="page-action login-error">

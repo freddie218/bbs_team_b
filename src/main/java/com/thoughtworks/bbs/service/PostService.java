@@ -23,4 +23,6 @@ public interface PostService {
     int updateAllPostsAuthorByUserName(String user, String new_user);
 
     void add1LikedTime(Long l);
+
+    void deleteAllPostsByMainPost(long postId);
 }

@@ -23,7 +23,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -38,7 +42,7 @@ public class PostControllerTest {
     private Principal principal;
     private Model model;
     private ModelAndView expected;
-    private ModelAndView result;
+    private String result;
     private RedirectView expected_redirect;
     private RedirectView result_redirect;
     private ModelMap modelMap;
@@ -111,5 +115,15 @@ public class PostControllerTest {
         postController.add1LikedTime(1L, "back", principal);
         verify(likeService).save(Matchers.<Like>anyObject());
         verify(postService).add1LikedTime(1L);
+    }
+
+    @Test
+    public void shouldDeleteTheReplyPost() {
+        Post aReplyPost = new Post().setPostId(2L).setParentId(1L);
+        when(request.getParameter("deletePostId")).thenReturn(String.valueOf(2L));
+        when(postService.get(2L)).thenReturn(aReplyPost);
+ //       when(aReplyPost.getParentId()).thenReturn(1L);
+//        String result = postController.processDeleteReplyPost(request,model);
+    //  assertThat(result, is("redirect:/posts/show"));
     }
 }
