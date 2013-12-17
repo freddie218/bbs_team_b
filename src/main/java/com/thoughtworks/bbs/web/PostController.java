@@ -78,7 +78,7 @@ public class PostController {
         }
         model.addAttribute("mainPost", postService.get(parentId));
         model.addAttribute("posts", postService.findAllPostByMainPost(parentId));
-        return "posts/show";
+        return "redirect:" + parentId;
     }
 
     @RequestMapping(value = {"/{postId}"}, method = RequestMethod.POST)
