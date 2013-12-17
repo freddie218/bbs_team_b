@@ -95,6 +95,15 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Override
+    public void deleteAllPostsByMainPost(long postId) {
+        List<Post> allPosts = findAllPostByMainPost(postId);
+        for(Post p : allPosts)
+        {
+            delete(p);
+        }
+    }
+
 
     @Override
     public ServiceResult<Post> save(Post post) {

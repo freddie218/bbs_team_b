@@ -41,7 +41,7 @@
                 </td>
                 <td>
                      <c:if test="${not empty isAuthor}">
-                         <a href="javascript:void(0);" onclick="">X</a>
+                         <a href="javascript:void(0);" onclick="show_confirm('${post.postId}');">X</a>
                      </c:if>
                 </td>
             </tr>
@@ -67,5 +67,16 @@
 </div>
 
 </br>
+
+<script type="text/javascript">
+function show_confirm(deletePostId)
+{
+      document.deletePostForm.deleteReplyPost.value = deletePostId;
+      document.deletePostForm.submit();
+}
+</script>
+<form  name="deletePostForm" action="<c:url value='/posts/del' />" method="post">
+     <input type="hidden" id="deleteReplyPost" name="deleteReplyPost" >
+</form>
 
 <%@ include file="../footer.jsp" %>
