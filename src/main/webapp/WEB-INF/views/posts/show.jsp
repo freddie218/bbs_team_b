@@ -3,41 +3,6 @@
 
 <%@ include file="../header.jsp" %>
 
-
-<<<<<<< HEAD
-    <tbody>
-        <c:forEach var="post" items="${posts}" varStatus="row">
-            <tr>
-                <td><c:out value="${post.title}"/></td>
-                <td>
-                    <a href="<c:url value='/user/${post.authorName}' />">
-                        <c:out value="${post.authorName}"/>
-                    </a>
-                </td>
-                <td><c:out value="${post.createTimeString}"/></td>
-                <td><c:out value="${post.content}"/></td>
-                <td>
-                     <c:if test="${row.index==0}">
-                        ${post.likedTimes} times
-                     </c:if>
-                </td>
-                <td>
-                     <c:if test="${row.index==0}">
-                         <c:if test="${not liked}">
-                              <a href='javascript:alert("you like this post");location.href="like/${post.postId};"'>Like</a>
-                         </c:if>
-                     </c:if>
-                </td>
-                <td>
-                     <c:if test="${not empty isAuthor}">
-                         <a href="javascript:void(0);" onclick="show_confirm('${post.postId}');">X</a>
-                     </c:if>
-                </td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
-=======
  <style>
  body{
     background:#eee;
@@ -47,8 +12,6 @@
  #createPanel{
     width:760px;
     margin:0 auto;
->>>>>>> 4f016c0f60e0cc97ae65f01cdf9ba23dbb92ccd0
-
  }
  #content{
    background:#eee;
@@ -106,11 +69,16 @@
             </a>
                &nbsp Create Time:
                <B><c:out value="${post.createTimeString}"/></B>
+               &nbsp Delete:
+               <B><c:if test="${not empty isAuthor}">
+                  <a href="javascript:void(0);" onclick="show_confirm('${post.postId}');">X</a>
+               </c:if></B>
           </div>
               </br>
            <div id="postContent">
                <c:out value="${post.content}"/>
            </div>
+
     </c:forEach>
   </div>
 
@@ -133,7 +101,7 @@
     </form>
  </div>
 
-<<<<<<< HEAD
+
 <script type="text/javascript">
 function show_confirm(deletePostId)
 {
@@ -145,8 +113,6 @@ function show_confirm(deletePostId)
      <input type="hidden" id="deleteReplyPost" name="deleteReplyPost" >
 </form>
 
-=======
   </br>
 </div>
->>>>>>> 4f016c0f60e0cc97ae65f01cdf9ba23dbb92ccd0
 <%@ include file="../footer.jsp" %>
