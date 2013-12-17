@@ -32,7 +32,10 @@ body {
 a { text-decoration: none; }
 a:link { color: black; }
 a:visited { color: black; }
-a:hover { color: grey; }
+a:hover {
+          color: gray;
+          background-color:#DDDDDD;
+}
 a:active { color: gray; }
 
 .navbar-text {

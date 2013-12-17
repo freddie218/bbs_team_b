@@ -9,7 +9,6 @@ import com.thoughtworks.bbs.service.UserService;
 import com.thoughtworks.bbs.service.impl.LikeServiceImpl;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
-import com.thoughtworks.bbs.util.LikeBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
@@ -23,8 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

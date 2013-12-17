@@ -330,6 +330,7 @@ a:hover,
 a:focus {
   color: #2a6496;
   text-decoration: underline;
+  background-color:#dddddd;
 }
 
 a:focus {
@@ -4042,7 +4043,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eeeeee;
+  background-color: #dddddd;
 }
 
 .nav > li.disabled > a {
