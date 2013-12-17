@@ -120,10 +120,9 @@ public class PostControllerTest {
     @Test
     public void shouldDeleteTheReplyPost() {
         Post aReplyPost = new Post().setPostId(2L).setParentId(1L);
-        when(request.getParameter("deletePostId")).thenReturn(String.valueOf(2L));
+        when(request.getParameter("deleteReplyPost")).thenReturn(String.valueOf(2L));
         when(postService.get(2L)).thenReturn(aReplyPost);
- //       when(aReplyPost.getParentId()).thenReturn(1L);
-//        String result = postController.processDeleteReplyPost(request,model);
-    //  assertThat(result, is("redirect:/posts/show"));
+        String result = postController.processDeleteReplyPost(request,model);
+        assertThat(result, is("redirect:1"));
     }
 }
