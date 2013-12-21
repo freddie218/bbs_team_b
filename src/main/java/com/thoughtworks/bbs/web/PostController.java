@@ -71,14 +71,17 @@ public class PostController {
 
         {
             postService.deleteAllPostsByMainPost(deletePostId);
+            model.addAttribute("mainPost", postService.get(parentId));
+            model.addAttribute("posts", postService.findAllPostByMainPost(parentId));
+            return "redirect:/";
         }
         else
         {
             postService.delete(deleteReplyId);
+            model.addAttribute("mainPost", postService.get(parentId));
+            model.addAttribute("posts", postService.findAllPostByMainPost(parentId));
+            return "redirect:" + parentId;
         }
-        model.addAttribute("mainPost", postService.get(parentId));
-        model.addAttribute("posts", postService.findAllPostByMainPost(parentId));
-        return "redirect:" + parentId;
     }
 
     @RequestMapping(value = {"/{postId}"}, method = RequestMethod.POST)
