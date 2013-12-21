@@ -102,9 +102,7 @@ footer{        /* from bootstrap navbar-fixed-bottom */
 </style>
 <div id="content">
 <!-- x -->
-<div class="alter-success" id="message">
-    <a class="close" data-dismiss="alter" href="#">&times;</a>
-</div>
+
 
 <div id="userInformation">
     <table class="table">

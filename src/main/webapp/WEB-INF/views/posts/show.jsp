@@ -45,7 +45,10 @@
  }
  #textarea{
    background:#fff;
-
+ }
+ #operations{
+  text-align:center;
+    background:#eee;
  }
 </style>
 
@@ -69,16 +72,31 @@
             </a>
                &nbsp Create Time:
                <B><c:out value="${post.createTimeString}"/></B>
-               &nbsp Delete:
-               <B><c:if test="${not empty isAuthor}">
-                  <a href="javascript:void(0);" onclick="show_confirm('${post.postId}');">X</a>
-               </c:if></B>
+               <c:if test="${post.parentId==0}">
+                    &nbsp Like <B>${post.likedTimes}</B> times
+               </c:if>
           </div>
               </br>
            <div id="postContent">
                <c:out value="${post.content}"/>
            </div>
-
+                <div id="operations">
+                    &nbsp Operations:
+                             <c:if test="${post.parentId==0}">
+                                        <c:if test="${row.index==0}">
+                                             <c:if test="${not empty liked}">
+                                                    <c:if test="${not liked}">
+                                                        <B><a href='javascript:alert("you like this post");location.href="like/${post.postId};"'>Like</a></B>
+                                                    </c:if>
+                                             </c:if>
+                                        </c:if>
+                             </c:if>
+                           <B>
+                              <c:if test="${not empty isAuthor}">
+                                <a href="javascript:void(0);" onclick="show_confirm('${post.postId}');">X</a>
+                             </c:if>
+                          </B>
+                 </div>
     </c:forEach>
   </div>
 

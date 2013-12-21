@@ -2,10 +2,27 @@
 <c:set var="pageTitle" scope="request" value="Home"/>
 
 <%@ include file="header.jsp" %>
+<style>
+    body{
+        margin:0 auto;
+        background:#EEEEEE;
+        width:100%;
+        max-width:800px;
+    }
+    .navbar ul li a:hover{
+        background:#DDDDDD;
+    }
+    table .darkgrey{
+        background:#DDDDDD;
+    }
+    table .white{
+        background:#FFFFFF;
+    }
+</style>
 
-<table class="table table-striped">
+<table class="table">
     <thead>
-    <tr>
+    <tr class="darkgrey">
         <th>Title</th>
         <th>Author</th>
         <th>Publish Time</th>
@@ -13,8 +30,8 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="post" items="${postsWithLiked}" varStatus="row">
-        <tr>
+    <c:forEach var="post" items="${postsWithLiked}" varStatus="row" >
+        <tr class="white">
             <td>
                 <a href="<c:url value='/posts/${post.key.postId}' />">
                     <c:out value="${post.key.title}"/>
