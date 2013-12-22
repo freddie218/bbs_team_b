@@ -8,8 +8,8 @@
 
         <div class="control-group">
             <label class="control-label" for="old password">Old Password</label>
-            <div>
-                <input type="password" class="form-control" placeholder="old password" id="old password" name="old password" />
+            <div class="controls">
+                <input type="password" placeholder="old password" id="old password" name="old password" />
             </div>
             <div class='info'>Input your password here.</div>
         </div>
