@@ -1,115 +1,266 @@
 * {
-    margin: 0px;
-    padding: 0px;
-    font-family: Helvetica;
+  margin: 0px;
+  padding: 0px;
+  font-family: Helvetica;
 }
 
 body {
-    padding: 20px;
+  padding: 20px;
 }
 
 .brand {
-    display: inline-block;
-    font-size: 14pt;
+  display: inline-block;
+  font-size: 14pt;
 }
 
 .nav {
-    display: inline-block;
-    float: right;
+  display: inline-block;
+  float: right;
 }
 
 .nav li {
-    list-style: none;
-    text-decoration: none;
-    float: left;
-    margin-right: 10px;
+  list-style: none;
+  text-decoration: none;
+  float: left;
+  margin-right: 10px;
 }
 
 .navbar {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 a { text-decoration: none; }
 a:link { color: black; }
 a:visited { color: black; }
 a:hover {
-          color: gray;
-          background-color:#DDDDDD;
+  color: gray;
+  background-color:#DDDDDD;
 }
 a:active { color: gray; }
 
 .navbar-text {
-    color: lightskyblue;
+  color: lightskyblue;
 }
 
 .page-action {
-    font-size: 16pt;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    text-align:center;
+  font-size: 16pt;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  text-align:center;
 }
 
 .error {
-    background-color: indianred;
+  background-color: indianred;
 }
 
 
 form label {
-    display: inline-block;
-    width: 10em;
+  display: inline-block;
+  width: 10em;
 }
 
 .controls {
-    display: block;
-    margin-bottom: 10px;
+  display: block;
+  margin-bottom: 10px;
 }
 
 form input[type=text],[type=password] {
-    padding: 4px;
-    width: 14em;
-    font-size: 12pt;
+  padding: 4px;
+  width: 14em;
+  font-size: 12pt;
 }
 
 select {
-    border: 1px solid gray;
-    padding: 2px;
-    font-size: 12pt;
+  border: 1px solid gray;
+  padding: 2px;
+  font-size: 12pt;
 }
 
 button {
-    font-size: 12pt;
-    padding: 5px;
-}
-
-table th {
-    width: 100px;
-    text-align: left;
-}
-
-table {
-    border-spacing: 8px;
-    border-collapse: separate;
+  font-size: 12pt;
+  padding: 5px;
 }
 
 .text-error {
-    color: indianred;
+  color: indianred;
 }
 
 .messageInfo {
-    color: white;
-    background-color: green;
-    font-size: 16pt;
-    padding: 5px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+  color: white;
+  background-color: green;
+  font-size: 16pt;
+  padding: 5px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
 
 }
 
 .messageError {
-    color: white;
-    background-color: red;
-    font-size: 16pt;
-    padding: 5px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+  color: white;
+  background-color: red;
+  font-size: 16pt;
+  padding: 5px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+body{
+  background:#eee;
+  margin:0 auto;
+  width:100%;
+  max-width:800px;
+}
+#content{
+  margin-left:auto;
+  margin-right:auto;
+}
+.navbar ul li a:hover{
+  background:#ddd;
+}
+#userInformation{
+  width:240px;
+  display:block;
+}
+
+#userInformation table{
+  width:240px;
+}
+#userInformation  table thead{
+  background:#ddd;
+}
+#userInformation  table tr th{
+  border-left:1px #fff solid;
+}
+#userInformation  table tr th:first-child{
+  border-left:0;
+}
+#userInformation table tr td{
+  background:#f9f9f9;
+  overflow:visible;
+}
+#userInformation table tr td:first-child {
+  background:#ddd;
+  width:100px;
+  border-bottom:1px #fff solid;
+}
+
+#userInformation .changefield {
+  margin:0px;
+  list-style-type:none;
+  overflow:hidden;
+  width:240px;
+}
+#userInformation .changefield a{
+  font-size: 14px;
+  display:inline;
+  padding-left: 7px;
+  margin-left: 7px;
+  border-left: 1px #000 solid; /*Vertical dividing line*/
+}
+#userInformation .changefield .first{
+  padding-left: 0px;
+  margin-left: 0px;
+  border-left: 0;
+}
+#userInformationPage thead{
+  background: #ddd;
+}
+#userInformationPage tbody{
+  background: #fff;
+}
+#postinfo{
+  overflow:hidden;
+  margin-top:50px;
+  height: auto;
+  width:600px;
+}
+#postinfo h2{
+  font-size:24px;
+}
+#postinfo table tr td{
+  background:#f9f9f9;
+  max-width:100px;
+}
+#postinfo table tr:first-child{
+  background:#ddd;
+}
+#postinfo table tr th{
+  border-left:1px #fff solid;
+}
+#postinfo table tr th:first-child{
+  border-left:0;
+}
+#content .form-horizontal{
+ background:#DDDDDD;
+ max-width:400px;
+ margin:auto;
+ padding:10px 10px 20px 25px;
+}
+#changePasswordPanel{
+ max-width:650px;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+#changePasswordPanel .title{
+ font-size: 20px;
+ padding:5px 0px 5px 0px;
+}
+
+
+#changePasswordPanel .form-horizontal{
+ background:#DDDDDD;
+ padding:20px 20px 20px 20px;
+}
+
+#changePasswordPanel .control-group {
+ padding:5px 0px 5px 0px;
+}
+#changePasswordPanel .control-group div{
+ display:inline ;
+}
+#changePasswordPanel .control-group .info{
+  color: blue ;
+}
+
+#createPanel{
+  width:760px;
+  margin:0 auto;
+}
+
+.navbar ul li a:hover{
+ background:#ddd;
+}
+#postTable{
+ background:#eee;
+
+}
+#postTitle{
+  text-align:center;
+  background:#eee;
+
+}
+#postTitleRe{
+ background:#eee;
+ text-align:center;
+}
+#postContent{
+  background:#ddd;
+}
+#postInFo{
+  background:#eee;
+  margin:0 auto;
+  text-align:center;
+}
+#textarea{
+ background:#fff;
+}
+#operations{
+  text-align:center;
+  background:#eee;
+}
+footer{
+  position:fixed;
+  bottom: 0;
+  margin-bottom: 0;
+  border-width: 1px 0 0;
 }

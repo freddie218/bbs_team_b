@@ -2,20 +2,6 @@
 <c:set var="pageTitle" scope="request" value="Login"/>
 
 <%@ include file="header.jsp" %>
-<style type="text/css">
-    body{
-         margin:0 auto;
-         background:#EEEEEE;
-         width:100%;
-         max-width:800px;
-    }
-    #content .form-horizontal{
-         background:#DDDDDD;
-         max-width:400px;
-         margin:auto;
-         padding:10px 10px 20px 25px;
-    }
-</style>
   <div id="content" align="centre">
     <c:choose>
         <c:when test="${not empty error}">

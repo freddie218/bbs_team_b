@@ -4,16 +4,17 @@
 <%@ include file="../header.jsp" %>
 
 
-<div id="userInformation">
-    <table class="table">
+<div id="userInformationPage">
+    <table class="table table-striped">
+        <thead>
         <tr>
             <th>Name</th>
             <th>Enable</th>
             <th>Disable</th>
             <th>Role</th>
         </tr>
-
-
+        </thead>
+        <tbody>
         <c:forEach var="user" items="${users}" varStatus="row">
             <tr>
                 <td><a href="<c:url value='/user/users/${user.userName}' />">
@@ -35,12 +36,9 @@
                </td>
             </tr>
         </c:forEach>
-
-
+        </tbody>
     </table>
-
 </div>
-
 
 <%@ include file="../footer.jsp" %>
 

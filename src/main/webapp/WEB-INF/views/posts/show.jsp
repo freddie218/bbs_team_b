@@ -3,55 +3,6 @@
 
 <%@ include file="../header.jsp" %>
 
- <style>
- body{
-    background:#eee;
-    margin:0 auto;
-    width:800px;
- }
- #createPanel{
-    width:760px;
-    margin:0 auto;
- }
- #content{
-   background:#eee;
-   margin:0 auto;
-   width:800px;
-   width:80%;
- }
- .navbar ul li a:hover{
-   background:#ddd;
- }
- #postTable{
-   background:#eee;
-
- }
- #postTitle{
-  text-align:center;
-  background:#eee;
-
- }
- #postTitleRe{
-   background:#eee;
-   text-align:center;
-  }
- #postContent{
-  background:#ddd;
- }
- #postInFo{
-  background:#eee;
-  margin:0 auto;
-  text-align:center;
- }
- #textarea{
-   background:#fff;
- }
- #operations{
-  text-align:center;
-    background:#eee;
- }
-</style>
-
 <div id="content">
   <div id="postTable">
     <c:forEach var="post" items="${posts}" varStatus="row">

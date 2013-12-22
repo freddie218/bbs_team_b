@@ -35,13 +35,13 @@
         <div class="control-group">
             <label class="control-label" for="title">Title</label>
             <div class="controls">
-                <input type="text" placeholder="post title" id="title" name="title" />
+                <input type="text" class="form-control" placeholder="post title" id="title" name="title" />
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="content">Content</label>
             <div class="controls">
-                <textarea placeholder="post content" id="content" name="content" cols="100" rows="6"></textarea>
+                <textarea class="form-control" placeholder="post content" id="content" name="content" cols="100" rows="6"></textarea>
             </div>
         </div>
         <div class="control-group">

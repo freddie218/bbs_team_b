@@ -22,87 +22,8 @@
             </div>
     </c:when>
 </c:choose>
-<style>
-body{
-  background:#eee;
-  margin:0 auto;
-  width:100%;
-  max-width:800px;
-}
-#content{
-  margin-left:auto;
-  margin-right:auto;
-}
-.navbar ul li a:hover{
-  background:#ddd;
-}
-#userInformation{
-  width:240px;
-  display:block;
-}
-#userInformation table{
-  width:240px;
-}
-#userInformation table tr td{
-  background:#f9f9f9;
-  overflow:visible;
-}
-#userInformation table tr td:first-child {
-  background:#ddd;
-  width:100px;
-  border-bottom:1px #fff solid;
-}
 
-#userInformation .changefield {
-  margin:0px;
-  list-style-type:none;
-  overflow:hidden;
-  width:240px;
-}
-#userInformation .changefield a{
-  font-size: 14px;
-  display:inline;
-  padding-left: 7px;
-  margin-left: 7px;
-  border-left: 1px #000 solid; /*Vertical dividing line*/
-}
-#userInformation .changefield .first{
-padding-left: 0px;
-margin-left: 0px;
-border-left: 0;
-}
-#postinfo{
-  overflow:hidden;
-  margin-top:50px;
-  height: auto;
-  width:600px;
-}
-#postinfo h2{
-  font-size:24px;
-}
-#postinfo table tr td{
-  background:#f9f9f9;
-  max-width:100px;
-}
-#postinfo table tr:first-child{
-  background:#ddd;
-}
-#postinfo table tr th{
-  border-left:1px #fff solid;
-}
-#postinfo table tr th:first-child{
-  border-left:0;
-}
-footer{        /* from bootstrap navbar-fixed-bottom */
-    position: fixed; 
-    left: 10px;
-    bottom: 10px;
-    z-index: 1030;
-}
-</style>
 <div id="content">
-<!-- x -->
-
 
 <div id="userInformation">
     <table class="table">
