@@ -3,16 +3,6 @@
 
 <%@ include file="../header.jsp" %>
 
-<style type="text/css">
-    div #createPost-tip{
-        padding-left:143px;
-        padding-bottom:10px;
-        height=30px;
-        color:red;
-        display:none;
-    }
-</style>
-
 <script type="text/javascript" >
     function checkPostValid(){
         var otitle= createPost.title.value;
