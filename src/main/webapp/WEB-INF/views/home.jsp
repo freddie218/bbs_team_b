@@ -39,7 +39,7 @@
 
 <div class="searchField" >
 <div class="title">Please fill search condition</div>
-<form id="sandbox" class="form-horizontal form row" name="createPost" action="<c:url value='/' />" method="get" >
+<form id="searchPost" class="form-horizontal form row" name="createPost" action="<c:url value='/' />" method="get" >
     <div class="form-inline">
         <div class="input-group col-lg-6">
             <label class="control-label" for="title">Title</label><br/>
@@ -64,7 +64,7 @@
     <div class="form-inline">
         <div class="input-group col-lg-6">
             <label class="control-label" for="title">Author</label><br/>
-            <input type="text" class="form-control" id="author" id="author" name="author">
+            <input type="text" class="form-control" id="author" name="author">
         </div>
         <div class="input-group col-lg-6">
             <br/>
@@ -79,13 +79,13 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-    $('#sandbox  #dp1').datepicker({
+    $('#searchPost  #dp1').datepicker({
         daysOfWeekDisabled: "1",
         calendarWeeks: true,
         autoclose: true,
         todayHighlight: true
     });
-    $('#sandbox #dp2').datepicker({
+    $('#searchPost #dp2').datepicker({
         daysOfWeekDisabled: "1",
         calendarWeeks: true,
         autoclose: true,
