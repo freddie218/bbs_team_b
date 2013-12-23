@@ -29,7 +29,7 @@ public interface PostMapper {
                     "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
                     "FROM post "
     )
-    List<Post> getAll();
+    List<Post> findAllPost();
 
     @Select(
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
@@ -57,7 +57,7 @@ public interface PostMapper {
                     "WHERE parent_id = 0 " +
                     "ORDER BY create_time desc"
     )
-    List<Post> findAllPost();
+    List<Post> findAllMainPost();
 
     @Update(
         "UPDATE post " +

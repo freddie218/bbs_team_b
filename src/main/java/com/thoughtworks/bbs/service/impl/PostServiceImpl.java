@@ -70,7 +70,7 @@ public class PostServiceImpl implements PostService {
 
         try {
             PostMapper postMapper = session.getMapper(PostMapper.class);
-            posts = postMapper.findAllPost();
+            posts = postMapper.findAllMainPost();
         } finally {
             session.close();
         }

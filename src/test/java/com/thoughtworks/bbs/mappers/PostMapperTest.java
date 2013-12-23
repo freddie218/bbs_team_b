@@ -24,11 +24,11 @@ public class PostMapperTest extends MapperTestBase {
 
     @Test
     public void shouldInsertANewPost() {
-        int before = postMapper.getAll().size();
+        int before = postMapper.findAllPost().size();
 
         postMapper.insert(post);
 
-        assertThat(postMapper.getAll().size(), is(before + 1));
+        assertThat(postMapper.findAllPost().size(), is(before + 1));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class PostMapperTest extends MapperTestBase {
 
     @Test
     public void shouldFindAllPost() {
-        int before = postMapper.findAllPost().size();
+        int before = postMapper.findAllMainPost().size();
 
         Post post1 = new Post().setAuthorName("longkai").setTitle("I am a post").setContent("content").setCreateTime(new Date())
                 .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(11).setLikedTimes(0);
@@ -85,7 +85,7 @@ public class PostMapperTest extends MapperTestBase {
         postMapper.insert(post3);
         postMapper.insert(post4);
 
-        List<Post> resultList = postMapper.findAllPost();
+        List<Post> resultList = postMapper.findAllMainPost();
 
         assertThat(resultList.size(), is(before + 2));
     }
@@ -116,7 +116,7 @@ public class PostMapperTest extends MapperTestBase {
     @Test
     public void should_add_liked_times() {
         postMapper.insert(post);  //  fake one for empty
-        List<Post> pl=postMapper.findAllPost();
+        List<Post> pl=postMapper.findAllMainPost();
 
         Long id=pl.get(0).getPostId();
         Post p = postMapper.get(id);
