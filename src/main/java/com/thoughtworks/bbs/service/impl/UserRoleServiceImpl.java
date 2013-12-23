@@ -68,4 +68,17 @@ public class UserRoleServiceImpl implements UserRoleService {
             session.close();
         }
     }
+
+    @Override
+    public boolean isAdmin(long userId) {
+        UserRole userRole = new UserRole();
+        SqlSession session = factory.openSession();
+        try{
+            UserRoleMapper mapper = session.getMapper(UserRoleMapper.class);
+            userRole = mapper.get(userId);
+        } finally {
+            session.close();
+        }
+        return "ROLE_ADMIN".equals(userRole.getRoleName());
+    }
 }

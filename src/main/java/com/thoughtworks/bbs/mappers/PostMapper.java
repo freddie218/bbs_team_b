@@ -62,7 +62,7 @@ public interface PostMapper {
     @Update(
         "UPDATE post " +
         "SET parent_id=#{parentId}, author_name=#{authorName}, title=#{title}, content=#{content}, create_time=#{createTime}," +
-                " modify_time=#{modifyTime}, creator_id=#{creatorId}, modifier_id=#{modifierId}, liked_times=#{likedTimes} " +
+                " modify_time=#{modifyTime}, creator_id=#{creatorId}, modifier_id=#{modifierId}, liked_times=#{likedTimes}, is_topped=#{isTopped} " +
         "WHERE id=#{postId}"
     )
     void update(Post post);

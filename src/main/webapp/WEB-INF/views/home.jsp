@@ -32,7 +32,12 @@
                     <a href='javascript:alert("you like this post");location.href="posts/like/${post.key.postId}";'>Like</a>
                 </c:if>
                 <c:if test="${post.key.isTopped}">
+                    Topped
+                </c:if>
+                <c:if test="${isAdmin}">
+                <c:if test="${not post.key.isTopped}">
                     <a href='javascript:alert("you want to top this post");location.href="posts/top/${post.key.postId}";'>Top</a>
+                </c:if>
                 </c:if>
             </td>
         </tr>

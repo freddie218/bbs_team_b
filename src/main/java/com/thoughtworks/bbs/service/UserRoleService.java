@@ -18,4 +18,6 @@ public interface UserRoleService {
     UserRole getByUserId(Long userId);
 
     void authoriseRoleName(UserRole userRole);
+
+    boolean isAdmin(long userId);
 }

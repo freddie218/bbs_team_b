@@ -150,5 +150,4 @@ public class UserServiceImplTest {
         userService.setUsersIsRegular(userList,usersNotAdmin);
         assertEquals(expected,user_admin.getUserRole());
     }
-
 }

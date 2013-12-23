@@ -83,4 +83,22 @@ public class UserRoleServiceImplTest {
         userRoleService.authoriseRoleName(userRole_regular1);
         verify(mapper).authoriseUserRole(userRole_regular1);
     }
+
+    @Test
+    public void shouldReturnTrueWhenUserIsAdmin() throws Exception {
+        UserRole userRole = new UserRole();
+        userRole.setRoleName("ROLE_ADMIN");
+        when(mapper.get(1L)).thenReturn(userRole);
+
+        assertEquals(true, userRoleService.isAdmin(1L));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenUserIsNotAdmin() throws Exception {
+        UserRole userRole = new UserRole();
+        userRole.setRoleName("ROLE_REGULAR");
+        when(mapper.get(1L)).thenReturn(userRole);
+
+        assertEquals(false, userRoleService.isAdmin(1L));
+    }
 }
