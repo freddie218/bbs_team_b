@@ -1,1 +1,1 @@
-mysql -uroot -p < db/baseline_liked.sql
+mysql -uroot -p < db/baseline_teamb.sql

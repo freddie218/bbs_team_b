@@ -16,6 +16,7 @@ public class Post {
     private Long modifierId;
     private String createTimeString;
     private Long likedTimes;
+    private boolean isTopped;
 
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -115,6 +116,15 @@ public class Post {
 
     public Long getLikedTimes(){
         return likedTimes;
+    }
+
+    public boolean getIsTopped(){
+        return isTopped;
+    }
+
+    public Post setIsTopped(boolean isTopped){
+        this.isTopped = isTopped;
+        return this;
     }
 
 

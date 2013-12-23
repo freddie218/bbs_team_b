@@ -31,6 +31,9 @@
                 <c:if test="${not post.value}">
                     <a href='javascript:alert("you like this post");location.href="posts/like/${post.key.postId}";'>Like</a>
                 </c:if>
+                <c:if test="${post.key.isTopped}">
+                    <a href='javascript:alert("you want to top this post");location.href="posts/top/${post.key.postId}";'>Top</a>
+                </c:if>
             </td>
         </tr>
     </c:forEach>

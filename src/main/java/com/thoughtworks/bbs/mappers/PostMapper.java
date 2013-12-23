@@ -11,8 +11,8 @@ import java.util.List;
 public interface PostMapper {
 
     @Insert(
-        "INSERT INTO post(parent_id, author_name, title, content, create_time, modify_time, creator_id, modifier_id, liked_times) " +
-        "VALUES (#{parentId}, #{authorName}, #{title}, #{content}, #{createTime}, #{modifyTime}, #{creatorId}, #{modifierId}, #{likedTimes})"
+        "INSERT INTO post(parent_id, author_name, title, content, create_time, modify_time, creator_id, modifier_id, liked_times, is_topped) " +
+        "VALUES (#{parentId}, #{authorName}, #{title}, #{content}, #{createTime}, #{modifyTime}, #{creatorId}, #{modifierId}, #{likedTimes}, #{isTopped})"
     )
     void insert(Post item);
 
@@ -52,7 +52,7 @@ public interface PostMapper {
 
     @Select(
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
-                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
+                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes, is_topped as isTopped " +
                     "FROM post " +
                     "WHERE parent_id = 0 " +
                     "ORDER BY create_time desc"
