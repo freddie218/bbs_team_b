@@ -56,6 +56,7 @@ public class HomeController {
             postsWithLiked.put(post, liked);
         }
         model.addAttribute("postsWithLiked",postsWithLiked);
+        model.addAttribute("isAdmin", userRoleService.isAdmin(userService.getByUsername(principal.getName()).getId()));
         return "home";
     }
 
