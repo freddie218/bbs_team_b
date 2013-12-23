@@ -8,6 +8,7 @@ import com.thoughtworks.bbs.service.ServiceResult;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,20 @@ public class PostServiceImpl implements PostService {
         try {
             PostMapper postMapper = session.getMapper(PostMapper.class);
             posts = postMapper.findAllMainPost();
+        } finally {
+            session.close();
+        }
+
+        return posts;
+    }
+    @Override
+    public List<Post> findRestrictedPost(String title, String content, String author, Date timeLeft, Date timeRight) {
+        SqlSession session = factory.openSession();
+        List<Post> posts = new LinkedList<Post>();
+
+        try {
+            PostMapper postMapper = session.getMapper(PostMapper.class);
+            posts = postMapper.findRestrictedPost(title, content, author);
         } finally {
             session.close();
         }

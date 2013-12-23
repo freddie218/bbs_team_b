@@ -2,6 +2,7 @@ package com.thoughtworks.bbs.service;
 
 import com.thoughtworks.bbs.model.Post;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PostService {
@@ -19,6 +20,8 @@ public interface PostService {
     List<Post> findAllPostByMainPost(Long postId);
 
     List<Post> findAllPost();
+
+    List<Post> findRestrictedPost(String title, String content, String author, Date timeLeft, Date timeRight);
 
     int updateAllPostsAuthorByUserName(String user, String new_user);
 

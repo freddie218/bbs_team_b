@@ -16,7 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +38,41 @@ public class HomeController {
         }
 
         List<Post> posts=postService.findAllPost();
+
+        Long uid = userService.getByUsername(principal.getName()).getId();
+
+        Map<Post,Boolean> postsWithLiked= new LinkedHashMap<Post, Boolean>();
+
+        List<Like> likes = likeService.findLikeByUserId(uid);
+        for (Post post : posts) {
+            Long pid=post.getPostId();
+            Boolean liked=false;
+            for (Like like : likes) {
+                Long like_pid=like.getPostId();
+                if(pid==like_pid){
+                    liked=true;
+                }
+            }
+            postsWithLiked.put(post, liked);
+        }
+        model.addAttribute("postsWithLiked",postsWithLiked);
+        return "home";
+    }
+
+@RequestMapping(method = RequestMethod.POST)
+    public String searchPost(HttpServletRequest request, Model model, Principal principal) {
+        if (null == principal) {
+            return "login";
+        }
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String author = request.getParameter("author");
+        Date timeLeft = new Date();
+        Date timeRight = new Date();
+        //Date timeLeft = new Date(request.getParameter("dp1"));
+        //Date timeRight = new Date(request.getParameter("dp2"));
+
+        List<Post> posts=postService.findRestrictedPost(title, content, author, timeLeft, timeRight);
 
         Long uid = userService.getByUsername(principal.getName()).getId();
 
