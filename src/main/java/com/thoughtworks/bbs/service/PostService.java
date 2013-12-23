@@ -25,4 +25,10 @@ public interface PostService {
     void add1LikedTime(Long l);
 
     void deleteAllPostsByMainPost(long postId);
+
+    Post findPostByPostId(long postId);
+
+    Post topPost(long postId);
+
+    Post updatePost(Post post);
 }

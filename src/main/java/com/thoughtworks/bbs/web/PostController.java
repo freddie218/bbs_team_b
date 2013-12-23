@@ -13,23 +13,17 @@ import com.thoughtworks.bbs.util.LikeBuilder;
 import com.thoughtworks.bbs.util.MyBatisUtil;
 import com.thoughtworks.bbs.util.PostBuilder;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.*;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/posts")
@@ -160,5 +154,12 @@ public class PostController {
         postService.add1LikedTime(postId);
 
         return "redirect:"+ referer;
+    }
+
+    @RequestMapping(value = {"/top/{postId}"}, method = RequestMethod.GET)
+    public String processTopPost(@PathVariable("postId") Long postId, Principal principal) {
+        postService.topPost(postId);
+
+        return "redirect:/";
     }
 }

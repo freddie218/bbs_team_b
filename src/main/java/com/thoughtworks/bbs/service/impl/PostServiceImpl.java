@@ -119,6 +119,40 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Override
+    public Post findPostByPostId(long postId) {
+        Post post = new Post();
+        SqlSession session = factory.openSession();
+        try {
+            PostMapper postMapper = session.getMapper(PostMapper.class);
+            post = postMapper.get(postId);
+        } finally {
+            session.close();
+        }
+        return post;
+    }
+
+    @Override
+    public Post topPost(long postId) {
+        Post post = findPostByPostId(postId);
+        post.setIsTopped(true);
+        updatePost(post);
+        return post;
+    }
+
+    @Override
+    public Post updatePost(Post post) {
+        SqlSession session = factory.openSession();
+        try {
+            PostMapper postMapper = session.getMapper(PostMapper.class);
+            postMapper.update(post);
+            session.commit();
+        } finally {
+            session.close();
+        }
+        return post;
+    }
+
 
     @Override
     public ServiceResult<Post> save(Post post) {

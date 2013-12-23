@@ -122,4 +122,11 @@ public class PostControllerTest {
         String result = postController.processDeleteReplyPost(request,model);
         assertThat(result, is("redirect:1"));
     }
+
+    @Test
+    public void shouldTopPostWhenTopPost() throws Exception {
+        Post post = new Post().setPostId(1L);
+        postController.processTopPost(1L, principal);
+        verify(postService).topPost(1L);
+    }
 }

@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -113,6 +114,29 @@ public class PostServiceImplTest {
     public void should_add_liked_times(){
         postService.add1LikedTime(1L);
         verify(mapper).add1LikedTime(1L);
+    }
+
+    @Test
+    public void shouldFindPostByPostId() throws Exception {
+        postService.findPostByPostId(1L);
+        verify(mapper).get(1L);
+    }
+
+    @Test
+    public void shouldUpdatePostWhenUpdatePost() throws Exception {
+        Post post = new Post();
+        postService.updatePost(post);
+        verify(mapper).update(post);
+    }
+
+    @Test
+    public void shouldTopPostWhenTopPost() throws Exception {
+        Post post = new Post().setPostId(1L).setIsTopped(false);
+        when(mapper.get(1L)).thenReturn(post);
+        postService.topPost(1L);
+
+        assertEquals(true, post.getIsTopped());
+        verify(mapper).update(post);
     }
 }
 
