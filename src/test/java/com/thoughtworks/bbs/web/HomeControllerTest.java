@@ -6,15 +6,12 @@ import com.thoughtworks.bbs.service.impl.LikeServiceImpl;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Matchers;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.*;
-import java.util.regex.Matcher;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -74,5 +71,13 @@ public class HomeControllerTest {
         verify(postService,times(1)).findAllPost();
         verify(likeService,times(1)).findLikeByUserId(1L);
         assertThat(ret, is("home"));
+    }
+
+    @Test
+    public void should_write_a_lot_of_test_here_T_T() {
+        //oh, no.
+        //so many method need to reload in HttpServletRequest
+        //need an anonymous-inner-class to make it over
+        //String ret = homeController.searchPost(new_HttpServletRequest_T_T,model,principal);
     }
 }

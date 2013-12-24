@@ -85,6 +85,10 @@ button {
   color: indianred;
 }
 
+.text-hint {
+   color: blue;
+}
+
 .messageInfo {
   color: white;
   background-color: green;

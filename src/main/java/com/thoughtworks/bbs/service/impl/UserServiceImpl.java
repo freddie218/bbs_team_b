@@ -125,29 +125,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean verifyPassword(String username, String password) {
         User user = getByUsername(username);
-        if(null == user)
-            return false;
-        else if(password.equals(user.getPasswordHash()))
-            return true;
-        else
-            return false;
+        return null != user && password.equals(user.getPasswordHash());
     }
 
     @Override
     public boolean verifyUsername(String username) {
-        return (null == getByUsername(username)) ? true : false;
+        return (null == getByUsername(username));
     }
 
     @Override
     public List<User> setUsersIsRegular(List<User> users,List<Long> usersNotAdmin){
-        for (int index=0;index<users.size();index++){
-            if(usersNotAdmin.contains(users.get(index).getId())) {
-                users.get(index).setIsRegular(true);
-                users.get(index).setUserRole("User");
-            }
-            else {
-                users.get(index).setIsRegular(false);
-                users.get(index).setUserRole("Administrator");
+        for (User user : users) {
+            if (usersNotAdmin.contains(user.getId())) {
+                user.setIsRegular(true);
+                user.setUserRole("User");
+            } else {
+                user.setIsRegular(false);
+                user.setUserRole("Administrator");
             }
         }
         return  users;

@@ -22,6 +22,7 @@ public interface UserService {
     boolean verifyPassword(String username, String password);
 
     boolean verifyUsername(String username);
+
     List<User> setUsersIsRegular(List<User> users,List<Long> usersNotAdmin);
 
 }

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,10 +44,10 @@ public class HomeController {
 
         List<Like> likes = likeService.findLikeByUserId(uid);
         for (Post post : posts) {
-            Long pid=post.getPostId();
+            long pid=post.getPostId();
             Boolean liked=false;
             for (Like like : likes) {
-                Long like_pid=like.getPostId();
+                long like_pid=like.getPostId();
                 if(pid==like_pid){
                     liked=true;
                 }
@@ -60,18 +59,17 @@ public class HomeController {
         return "home";
     }
 
-@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String searchPost(HttpServletRequest request, Model model, Principal principal) {
         if (null == principal) {
             return "login";
         }
+        long postsFountCount = 0;
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String author = request.getParameter("author");
         String timeLeft = request.getParameter("dp1");
         String timeRight = request.getParameter("dp2");
-        //Date timeLeft = new Date(request.getParameter("dp1"));
-        //Date timeRight = new Date(request.getParameter("dp2"));
 
         List<Post> posts=postService.findRestrictedPost(title, content, author, timeLeft, timeRight);
 
@@ -81,22 +79,25 @@ public class HomeController {
 
         List<Like> likes = likeService.findLikeByUserId(uid);
         for (Post post : posts) {
-            Long pid=post.getPostId();
+            postsFountCount++;
+            long pid=post.getPostId();
             Boolean liked=false;
             for (Like like : likes) {
-                Long like_pid=like.getPostId();
+                long like_pid=like.getPostId();
                 if(pid==like_pid){
                     liked=true;
                 }
             }
             postsWithLiked.put(post, liked);
         }
+        model.addAttribute("postsFountCount", postsFountCount);
 
         model.addAttribute("title", title);
         model.addAttribute("content", content);
         model.addAttribute("author", author);
         model.addAttribute("timeLeft", timeLeft);
         model.addAttribute("timeRight", timeRight);
+
         model.addAttribute("postsWithLiked",postsWithLiked);
         model.addAttribute("isAdmin", userRoleService.isAdmin(userService.getByUsername(principal.getName()).getId()));
         return "home";
