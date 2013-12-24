@@ -82,15 +82,18 @@ public class PostServiceImpl implements PostService {
     public List<Post> findRestrictedPost(String title, String content, String author, Date timeLeft, Date timeRight) {
         SqlSession session = factory.openSession();
         List<Post> posts = new LinkedList<Post>();
-
         try {
             PostMapper postMapper = session.getMapper(PostMapper.class);
-            posts = postMapper.findRestrictedPost(title, content, author);
+            posts = postMapper.findRestrictedPost(filterlize(title), filterlize(content), filterlize(author));
         } finally {
             session.close();
         }
 
         return posts;
+    }
+
+    private String filterlize(String inStr) {
+        return "%" + inStr + "%";
     }
 
     @Override

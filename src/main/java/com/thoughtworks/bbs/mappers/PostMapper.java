@@ -1,10 +1,7 @@
 package com.thoughtworks.bbs.mappers;
 
 import com.thoughtworks.bbs.model.Post;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -63,11 +60,13 @@ public interface PostMapper {
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
                     "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
                     "FROM post " +
-                    "WHERE parent_id = 0 " +
-                    //"and title LIKE '%#{titleFilter}%' and content LIKE '%#{contentFilter}%' and author_name LIKE '%#{authorFilter}%'" +
+                    "WHERE (parent_id = 0 " +
+                    "and title LIKE #{titleFilter} and content LIKE #{contentFilter} and author_name LIKE #{authorFilter})" +
                     "ORDER BY create_time desc"
     )
-    List<Post> findRestrictedPost(String titleFilter,String contentFilter,String authorFilter);
+    List<Post> findRestrictedPost(@Param(value="titleFilter")String titleFilter,
+                                  @Param(value="contentFilter")String contentFilter,
+                                  @Param(value="authorFilter")String authorFilter);
 
     @Update(
         "UPDATE post " +
