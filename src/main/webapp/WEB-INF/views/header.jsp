@@ -17,6 +17,7 @@
 
    <script type="text/javascript" src="<c:url value='/scripts/jquery-1.10.2.js' />"></script>
    <script type="text/javascript" src="<c:url value='/scripts/bootstrap.js' />"></script>
+   <script type="text/javascript" src="<c:url value='/scripts/share.js' />"></script>
 </head>
 <body>
     <div class="navbar">
