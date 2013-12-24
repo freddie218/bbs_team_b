@@ -1,8 +1,8 @@
 function dbShareClick(title,content){
         var r='http://www.douban.com/share/service?href='+
                encodeURIComponent(document.location.href)+
-              '&title='+
-               encodeURIComponent(decodeURI(title))+
+              '&name='+
+               encodeURIComponent(title)+
               '&text='+
                encodeURIComponent(content),
             w=450,
