@@ -21,7 +21,7 @@ public interface PostService {
 
     List<Post> findAllPost();
 
-    List<Post> findRestrictedPost(String title, String content, String author, Date timeLeft, Date timeRight);
+    List<Post> findRestrictedPost(String title, String content, String author, String timeLeft, String timeRight);
 
     int updateAllPostsAuthorByUserName(String user, String new_user);
 

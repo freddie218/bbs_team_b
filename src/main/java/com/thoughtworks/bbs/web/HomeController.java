@@ -68,8 +68,8 @@ public class HomeController {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String author = request.getParameter("author");
-        Date timeLeft = new Date();
-        Date timeRight = new Date();
+        String timeLeft = request.getParameter("dp1");
+        String timeRight = request.getParameter("dp2");
         //Date timeLeft = new Date(request.getParameter("dp1"));
         //Date timeRight = new Date(request.getParameter("dp2"));
 
@@ -91,6 +91,12 @@ public class HomeController {
             }
             postsWithLiked.put(post, liked);
         }
+
+        model.addAttribute("title", title);
+        model.addAttribute("content", content);
+        model.addAttribute("author", author);
+        model.addAttribute("timeLeft", timeLeft);
+        model.addAttribute("timeRight", timeRight);
         model.addAttribute("postsWithLiked",postsWithLiked);
         model.addAttribute("isAdmin", userRoleService.isAdmin(userService.getByUsername(principal.getName()).getId()));
         return "home";

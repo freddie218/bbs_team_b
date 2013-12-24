@@ -79,12 +79,19 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
     @Override
-    public List<Post> findRestrictedPost(String title, String content, String author, Date timeLeft, Date timeRight) {
+    public List<Post> findRestrictedPost(String title, String content, String author, String timeLeft, String timeRight) {
         SqlSession session = factory.openSession();
         List<Post> posts = new LinkedList<Post>();
+        int timeRightLength = timeRight.length();
+        if(timeRightLength == 0)
+            timeRight = "9999-12-31";
+        else
+            //merge the date "+1" bug
+            timeRight = timeRight.substring(0, timeRightLength-1) + (char)(timeRight.charAt(timeRightLength-1) + 1);
         try {
             PostMapper postMapper = session.getMapper(PostMapper.class);
-            posts = postMapper.findRestrictedPost(filterlize(title), filterlize(content), filterlize(author));
+            posts = postMapper.findRestrictedPost(filterlize(title), filterlize(content), filterlize(author),
+                    timeLeft, timeRight);
         } finally {
             session.close();
         }

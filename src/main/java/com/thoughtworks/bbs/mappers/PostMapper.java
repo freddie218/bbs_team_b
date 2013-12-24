@@ -61,12 +61,15 @@ public interface PostMapper {
                     "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
                     "FROM post " +
                     "WHERE (parent_id = 0 " +
-                    "and title LIKE #{titleFilter} and content LIKE #{contentFilter} and author_name LIKE #{authorFilter})" +
+                    "and title LIKE #{titleFilter} and content LIKE #{contentFilter} and author_name LIKE #{authorFilter}) " +
+                    "and create_time >= #{timeLeft} and create_time <= #{timeRight} " +
                     "ORDER BY create_time desc"
     )
     List<Post> findRestrictedPost(@Param(value="titleFilter")String titleFilter,
                                   @Param(value="contentFilter")String contentFilter,
-                                  @Param(value="authorFilter")String authorFilter);
+                                  @Param(value="authorFilter")String authorFilter,
+                                  @Param(value="timeLeft")String timeLeft,
+                                  @Param(value="timeRight")String timeRight);
 
     @Update(
         "UPDATE post " +
