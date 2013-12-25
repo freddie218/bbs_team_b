@@ -126,4 +126,32 @@ public class PostMapperTest extends MapperTestBase {
         }
         assertThat(postMapper.get(id).getLikedTimes(),is(before+5));
     }
+    @Test
+     public void shouldReturnSearchResult(){
+        List<Post> beforeList = postMapper.findRestrictedPost("%title%", "%content%",   "%yang%",     "2013-12-13","9999-12-31");
+
+        Post post1 = new Post().setAuthorName("yang").setTitle("I am a title").setContent("conten2").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0L).setLikedTimes(0);
+        Post post2 = new Post().setAuthorName("yang").setTitle("I am a title 2").setContent("this is the content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0L).setLikedTimes(0);
+        Post parentId2Post = new Post().setAuthorName("yang").setTitle("I am a title2").setContent("this is the content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(2L).setLikedTimes(0);
+
+        postMapper.insert(post1);
+        postMapper.insert(post2);
+        postMapper.insert(parentId2Post);
+
+        List<Post> afterList    = postMapper.findRestrictedPost("%title%", "%content%",   "%yang%",     "2013-12-13","9999-12-31");
+        List<Post> afterList2   = postMapper.findRestrictedPost("%title%", "%conten%",    "%ya%",       "2013-12-13","9999-12-31");
+        List<Post> errorcontent = postMapper.findRestrictedPost("%title%", "%notconten%", "%ya%",       "2013-12-13","9999-12-31");
+        List<Post> errortitle   = postMapper.findRestrictedPost("%no%",    "%content%",   "%ya%",       "2013-12-13","9999-12-31");
+        List<Post> errorauthor  = postMapper.findRestrictedPost("%title%", "%conten%",    "%longkai%",  "2013-12-13","9999-12-31");
+
+
+        assertThat(afterList.size(),   is(beforeList.size() + 1));
+        assertThat(afterList2.size(),  is(beforeList.size() + 2));
+        assertThat(errorcontent.size(),is(beforeList.size() + 0));
+        assertThat(errortitle.size(),  is(beforeList.size() + 0));
+        assertThat(errorauthor.size(), is(beforeList.size() + 0));
+    }
 }

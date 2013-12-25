@@ -11,11 +11,13 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Date;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.*;
 
 public class PostServiceImplTest {
     private PostServiceImpl postService;
@@ -90,7 +92,7 @@ public class PostServiceImplTest {
 
         List<Post> expectedPostList = new ArrayList();
         expectedPostList.add(new Post());
-        when((mapper.findAllPostByMainPost(id))).thenReturn(expectedPostList);
+        when(mapper.findAllPostByMainPost(id)).thenReturn(expectedPostList);
 
         List<Post> returnedPostList = postService.findAllPostByMainPost(id);
         verify(mapper).findAllPostByMainPost(id);
@@ -137,6 +139,22 @@ public class PostServiceImplTest {
 
         assertEquals(true, post.getIsTopped());
         verify(mapper).update(post);
+    }
+
+    @Test
+    public void shouldReturnSearchResult() throws Exception {
+ 
+        List<Post> expectedPostList = new ArrayList<Post>();
+        Post post1=new Post().setAuthorName("juntao").setTitle("title").setContent("content").setCreateTime(new Date())
+                .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0L).setLikedTimes(0);
+        expectedPostList.add(post1);
+
+        when(mapper.findRestrictedPost("%title%","%content%","%juntao%","2013-12-13","9999-12-31")).thenReturn(expectedPostList);
+        List<Post> returnedPostList = postService.findRestrictedPost("title","content","juntao","2013-12-13","9999-12-30");
+
+        verify(mapper).findRestrictedPost("%title%","%content%","%juntao%","2013-12-13","9999-12-31");
+        assertThat(returnedPostList, is(expectedPostList));
+
     }
 }
 
