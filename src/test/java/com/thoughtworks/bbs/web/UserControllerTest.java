@@ -102,7 +102,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnChangePasswordPageWhenClickChangePassword(){
-        assertThat(userController.changePassword(), equalTo("user/changePassword"));
+        assertThat(userController.changePassword(principal), equalTo("user/changePassword"));
     }
 
     @Test

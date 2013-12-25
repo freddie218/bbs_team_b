@@ -96,7 +96,9 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/changePassword"}, method = RequestMethod.GET)
-    public String changePassword() {
+    public String changePassword(Principal principal) {
+        if(null == principal)
+            return "redirect:/login";
         return "user/changePassword";
     }
 
