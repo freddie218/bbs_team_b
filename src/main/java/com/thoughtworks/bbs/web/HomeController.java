@@ -37,6 +37,7 @@ public class HomeController {
         }
 
         List<Post> posts=postService.findAllPost();
+        postService.sortByTopped(posts);
 
         Long uid = userService.getByUsername(principal.getName()).getId();
 

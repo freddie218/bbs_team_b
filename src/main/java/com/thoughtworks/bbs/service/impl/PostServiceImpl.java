@@ -178,6 +178,18 @@ public class PostServiceImpl implements PostService {
         return post;
     }
 
+    @Override
+    public List<Post> sortByTopped(List<Post> postList) {
+        int i = 0;
+        for(int j=0; j<postList.size(); j++){
+            if(postList.get(j).getIsTopped()){
+                postList.add(i++, postList.remove(j));
+            }
+        }
+
+        return postList;
+    }
+
 
     @Override
     public ServiceResult<Post> save(Post post) {

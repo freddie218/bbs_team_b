@@ -154,7 +154,22 @@ public class PostServiceImplTest {
 
         verify(mapper).findRestrictedPost("%title%","%content%","%juntao%","2013-12-13","9999-12-31");
         assertThat(returnedPostList, is(expectedPostList));
+    }
 
+    @Test
+    public void shouldSortPostsByTopped() throws Exception {
+        List<Post> postList = new LinkedList<Post>();
+        postList.add(new Post().setIsTopped(false).setPostId(1L));
+        postList.add(new Post().setIsTopped(true).setPostId(2L));
+        postList.add(new Post().setIsTopped(false).setPostId(3L));
+        postList.add(new Post().setIsTopped(true).setPostId(4L));
+
+        postService.sortByTopped(postList);
+
+        assertThat(postList.get(2).getPostId(), is(1L));
+        assertThat(postList.get(0).getPostId(), is(2L));
+        assertThat(postList.get(3).getPostId(), is(3L));
+        assertThat(postList.get(1).getPostId(), is(4L));
     }
 }
 

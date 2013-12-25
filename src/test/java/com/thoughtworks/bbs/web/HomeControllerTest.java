@@ -9,9 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -79,5 +79,13 @@ public class HomeControllerTest {
         //so many method need to reload in HttpServletRequest
         //need an anonymous-inner-class to make it over
         //String ret = homeController.searchPost(new_HttpServletRequest_T_T,model,principal);
+    }
+
+    @Test
+    public void shouldSortAllPostsByToppedWhenGoToHome() throws Exception {
+        List<Post> postList = new LinkedList<Post>();
+        when(postService.findAllPost()).thenReturn(postList);
+        homeController.home(model, principal);
+        verify(postService, times(1)).sortByTopped(postList);
     }
 }

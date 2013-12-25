@@ -34,4 +34,6 @@ public interface PostService {
     Post topPost(long postId);
 
     Post updatePost(Post post);
+
+    List<Post> sortByTopped(List<Post> postList);
 }
