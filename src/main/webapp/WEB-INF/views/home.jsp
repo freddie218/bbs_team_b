@@ -35,6 +35,11 @@
                         <c:if test="${isAdmin}">
                         |
                         </c:if>
+                        <c:if test="${not isAdmin}">
+                           <c:if test="${post.key.isTopped}">
+                           |
+                           </c:if>
+                        </c:if>
                     </c:if>
                     <c:if test="${post.key.isTopped}">
                         Topped
