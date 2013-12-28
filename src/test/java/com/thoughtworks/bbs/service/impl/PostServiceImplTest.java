@@ -148,10 +148,10 @@ public class PostServiceImplTest {
                 .setModifyTime(new Date()).setCreatorId(1L).setModifierId(1L).setParentId(0L).setLikedTimes(0);
         expectedPostList.add(post1);
 
-        when(mapper.findRestrictedPost("%title%","%content%","%juntao%","2013-12-13","9999-12-31")).thenReturn(expectedPostList);
-        List<Post> returnedPostList = postService.findRestrictedPost("title","content","juntao","2013-12-13","9999-12-30");
+        when(mapper.findRestrictedPost("%title%","%content%","%juntao%","2013-12-13","2013-12-30")).thenReturn(expectedPostList);
+        List<Post> returnedPostList = postService.findRestrictedPost("title","content","juntao","2013-12-13","2013-12-29");
 
-        verify(mapper).findRestrictedPost("%title%","%content%","%juntao%","2013-12-13","9999-12-31");
+        verify(mapper).findRestrictedPost("%title%","%content%","%juntao%","2013-12-13","2013-12-30");
         assertThat(returnedPostList, is(expectedPostList));
     }
 

@@ -73,6 +73,7 @@ public class HomeController {
         String timeRight = request.getParameter("dp2");
 
         List<Post> posts=postService.findRestrictedPost(title, content, author, timeLeft, timeRight);
+        postService.sortByTopped(posts);
 
         Long uid = userService.getByUsername(principal.getName()).getId();
 

@@ -84,10 +84,10 @@ public class PostServiceImpl implements PostService {
         List<Post> posts = new LinkedList<Post>();
         int timeRightLength = timeRight.length();
         if(timeRightLength == 0)
-            timeRight = "9999-12-31";
+            timeRight = "9999-99-99";
         else
             //merge the date "+1" bug
-            timeRight = timeRight.substring(0, timeRightLength-1) + (char)(timeRight.charAt(timeRightLength-1) + 1);
+            timeRight = dateIncrementer(timeRight);
         try {
             PostMapper postMapper = session.getMapper(PostMapper.class);
             posts = postMapper.findRestrictedPost(filterlize(title), filterlize(content), filterlize(author),
@@ -98,9 +98,15 @@ public class PostServiceImpl implements PostService {
 
         return posts;
     }
-
-    private String filterlize(String inStr) {
+    static private String filterlize(String inStr) {
         return "%" + inStr + "%";
+    }
+    static private String dateIncrementer(String inStr) {
+        int length = inStr.length();
+        if(inStr.charAt(length-1) == '9')
+            return inStr.substring(0, length-2) + (char)(inStr.charAt(length-2) + 1) + "0";
+        else
+            return inStr.substring(0, length-1) + (char)(inStr.charAt(length-1) + 1);
     }
 
     @Override
