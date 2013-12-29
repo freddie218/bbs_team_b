@@ -62,16 +62,20 @@
     <br/>
     <c:choose>
         <c:when test="${not empty failed}">
-            <div id="createPostFailed" class="page-action createPost-failed">
-                <i class="messageError">Content cannot be empty!</i>
+            <div id="replyPostError" class="page-action create-error">
+                <i>Content cannot be empty!</i>
             </div>
          </c:when>
     </c:choose>
+    <div id="replyCreateHint" class="page-action">
+
+    </div>
     <div id="createPanel">
-        <form action="<c:url value='/posts/${postId}' />" method="post">
+        <form action="<c:url value='/posts/${postId}' />" method="post"
+            onsubmit='return contentLegal(["Recontent"], "replyCreateHint", VIOLATIONS_WARNING);' >
             <input type="hidden" id="parentId" name="parentId" value="${mainPost.postId}" />
             <input type="hidden" id="title" name="title" value="Re: ${fn:escapeXml(mainPost.title)}" />
-            <textarea style="background:white" name="content" id="content"  placeholder="post content" cols="100" rows="6"></textarea>
+            <textarea style="background:white" name="content" id="Recontent"  placeholder="post content" cols="100" rows="6"></textarea>
             <br/>
             <br/>
             <button type="submit" class="btn">Create</button>
@@ -91,4 +95,5 @@
     </form>
     <br/>
 </div>
+<script type="text/javascript" src="<c:url value='/scripts/bannedWords.js' />"></script>
 <%@ include file="../footer.jsp" %>

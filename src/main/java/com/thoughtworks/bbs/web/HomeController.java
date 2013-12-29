@@ -66,7 +66,7 @@ public class HomeController {
     private void showHomepage(Model model, Principal principal, List<Post> posts) {
         postService.sortByTopped(posts);
         Long uid = userService.getByUsername(principal.getName()).getId();
-        Map<Post,Boolean> postsWithLiked= new LinkedHashMap<>();
+        Map<Post,Boolean> postsWithLiked= new LinkedHashMap<Post,Boolean>();
         List<Like> likes = likeService.findLikeByUserId(uid);
 
         for (Post post : posts) {

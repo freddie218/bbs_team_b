@@ -99,13 +99,24 @@ button {
 
 }
 
-.messageError {
-  color: white;
-  background-color: red;
-  font-size: 16pt;
-  padding: 5px 15px;
-  margin-bottom: 10px;
-  border-radius: 5px;
+.create-error {
+    text-align: left;
+    margin-left: 10%;
+    background: #9E2020;
+    color: white;
+}
+
+#replyPostError {
+    width: 280px;
+    background: #9E2020;
+    color: white;
+    margin-left:20%;
+}
+
+#replyCreateHint {
+    text-align: center;
+    width: 475px;
+    margin-left:20%;
 }
 body{
   background:#eee;

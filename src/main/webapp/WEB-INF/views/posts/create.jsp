@@ -2,7 +2,6 @@
 <c:set var="pageTitle" scope="request" value="createPost"/>
 
 <%@ include file="../header.jsp" %>
-
 <script type="text/javascript" >
     function checkPostValid(){
         var otitle= createPost.title.value;
@@ -15,9 +14,14 @@
         return(true);
     }
  </script>
+ <div id="replyCreateHint" class="page-action">
+
+ </div>
 <div id="createPanel">
-    <form class="form-horizontal" name="createPost" action="<c:url value='/posts/create' />"
-        method="post" onsubmit="return checkPostValid();">
+   <!-- <form class="form-horizontal" name="createPost" action="<c:url value='/posts/create' />"
+        method="post" onsubmit="return checkPostValid();" >    -->
+        <form class="form-horizontal" name="createPost" action="<c:url value='/posts/create' />"
+                method="post" onsubmit='return contentLegal(["title", "content"], "replyCreateHint", VIOLATIONS_WARNING);' >
         <!-- 帖子标题和内容不能为空，否则消息提示-->
         <div id="createPost-tip">
               <span >Title or content cannot be empty! </span>
@@ -41,5 +45,5 @@
         </div>
     </form>
 </div>
-
+<script type="text/javascript" src="<c:url value='/scripts/bannedWords.js' />"></script>
 <%@ include file="../footer.jsp" %>
