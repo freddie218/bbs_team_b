@@ -76,7 +76,7 @@ public class HomeControllerTest {
     @Test
     public void should_write_a_lot_of_test_here_T_T() {
         //oh, no.
-        //so many method need to reload in HttpServletRequest
+        //so many methods need to reload in HttpServletRequest
         //need an anonymous-inner-class to make it over
         //String ret = homeController.searchPost(new_HttpServletRequest_T_T,model,principal);
     }

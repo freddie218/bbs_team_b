@@ -35,16 +35,20 @@ public class HomeController {
         if (null == principal) {
             return "login";
         }
-
         List<Post> posts=postService.findAllPost();
+        showHomepage(model, principal, posts);
+        return "home";
+    }
+
+    private long showHomepage(Model model, Principal principal, List<Post> posts) {
         postService.sortByTopped(posts);
-
         Long uid = userService.getByUsername(principal.getName()).getId();
-
         Map<Post,Boolean> postsWithLiked= new LinkedHashMap<Post, Boolean>();
-
         List<Like> likes = likeService.findLikeByUserId(uid);
+
+        long postsCount = 0;
         for (Post post : posts) {
+            postsCount++;
             long pid=post.getPostId();
             Boolean liked=false;
             for (Like like : likes) {
@@ -57,7 +61,7 @@ public class HomeController {
         }
         model.addAttribute("postsWithLiked",postsWithLiked);
         model.addAttribute("isAdmin", userRoleService.isAdmin(userService.getByUsername(principal.getName()).getId()));
-        return "home";
+        return postsCount;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -65,7 +69,6 @@ public class HomeController {
         if (null == principal) {
             return "login";
         }
-        long postsFountCount = 0;
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String author = request.getParameter("author");
@@ -73,35 +76,14 @@ public class HomeController {
         String timeRight = request.getParameter("dp2");
 
         List<Post> posts=postService.findRestrictedPost(title, content, author, timeLeft, timeRight);
-        postService.sortByTopped(posts);
+        long postsCount=showHomepage(model, principal, posts);
 
-        Long uid = userService.getByUsername(principal.getName()).getId();
-
-        Map<Post,Boolean> postsWithLiked= new LinkedHashMap<Post, Boolean>();
-
-        List<Like> likes = likeService.findLikeByUserId(uid);
-        for (Post post : posts) {
-            postsFountCount++;
-            long pid=post.getPostId();
-            Boolean liked=false;
-            for (Like like : likes) {
-                long like_pid=like.getPostId();
-                if(pid==like_pid){
-                    liked=true;
-                }
-            }
-            postsWithLiked.put(post, liked);
-        }
-        model.addAttribute("postsFountCount", postsFountCount);
-
+        model.addAttribute("postsFountCount", postsCount);
         model.addAttribute("title", title);
         model.addAttribute("content", content);
         model.addAttribute("author", author);
         model.addAttribute("timeLeft", timeLeft);
         model.addAttribute("timeRight", timeRight);
-
-        model.addAttribute("postsWithLiked",postsWithLiked);
-        model.addAttribute("isAdmin", userRoleService.isAdmin(userService.getByUsername(principal.getName()).getId()));
         return "home";
     }
 
