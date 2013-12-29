@@ -89,22 +89,22 @@
         <div class="form-inline">
             <div class="input-group col-lg-6">
                 <label class="control-label" for="title">Title</label><br/>
-                <input type="text" class="form-control input-large" placeholder="${title}" id="title" name="title" />
+                <input type="text" class="form-control input-large" id="title" name="title" />
             </div>
             <div class="input-group col-lg-6">
                 <label class="control-label" for="title">Content:</label><br/>
-                <input type="text" class="form-control" placeholder="${content}" id="${content}" name="content" />
+                <input type="text" class="form-control" id="content" name="content" />
             </div>
         </div>
 
         <div class="form-inline">
             <div class="input-group col-lg-6">
                 <label class="control-label" for="title">Publish Time From</label><br/>
-                <input type="text" class="span4 form-control" id="dp1" placeholder="${timeLeft}" id="dp1" name="dp1">
+                <input type="text" class="span4 form-control" id="dp1" id="dp1" name="dp1">
             </div>
             <div class="input-group col-lg-6">
                 <label class="control-label" for="title">Publish Time To</label><br/>
-                <input type="text" class="span4 form-control" id="dp2" placeholder="${timeRight}" id="dp2" name="dp2">
+                <input type="text" class="span4 form-control" id="dp2" id="dp2" name="dp2">
             </div>
         </div>
         <div class="form-inline">
@@ -138,6 +138,11 @@ $(document).ready(function(){
         todayHighlight: true,
         format: 'yyyy-mm-dd'
     });
+    $("#title").val("${title}");
+    $("#content").val("${content}");
+    $("#author").val("${author}");
+    $("#dp1").val("${timeLeft}");
+    $("#dp2").val("${timeRight}");
 });
 </script>
 
