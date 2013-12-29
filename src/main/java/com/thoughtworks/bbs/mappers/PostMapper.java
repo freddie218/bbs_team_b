@@ -58,7 +58,7 @@ public interface PostMapper {
 
     @Select(
             "SELECT id as postId, parent_id as parentId, author_name as authorName, title, content, create_time as createTime, " +
-                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes " +
+                    "modify_time as modifyTime, creator_id as creatorId, modifier_id as modifierId, liked_times as likedTimes, is_topped as isTopped " +
                     "FROM post " +
                     "WHERE (parent_id = 0 " +
                     "and title LIKE #{titleFilter} and content LIKE #{contentFilter} and author_name LIKE #{authorFilter}) " +

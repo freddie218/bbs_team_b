@@ -40,30 +40,6 @@ public class HomeController {
         return "home";
     }
 
-    private long showHomepage(Model model, Principal principal, List<Post> posts) {
-        postService.sortByTopped(posts);
-        Long uid = userService.getByUsername(principal.getName()).getId();
-        Map<Post,Boolean> postsWithLiked= new LinkedHashMap<Post, Boolean>();
-        List<Like> likes = likeService.findLikeByUserId(uid);
-
-        long postsCount = 0;
-        for (Post post : posts) {
-            postsCount++;
-            long pid=post.getPostId();
-            Boolean liked=false;
-            for (Like like : likes) {
-                long like_pid=like.getPostId();
-                if(pid==like_pid){
-                    liked=true;
-                }
-            }
-            postsWithLiked.put(post, liked);
-        }
-        model.addAttribute("postsWithLiked",postsWithLiked);
-        model.addAttribute("isAdmin", userRoleService.isAdmin(userService.getByUsername(principal.getName()).getId()));
-        return postsCount;
-    }
-
     @RequestMapping(method = RequestMethod.POST)
     public String searchPost(HttpServletRequest request, Model model, Principal principal) {
         if (null == principal) {
@@ -76,15 +52,36 @@ public class HomeController {
         String timeRight = request.getParameter("dp2");
 
         List<Post> posts=postService.findRestrictedPost(title, content, author, timeLeft, timeRight);
-        long postsCount=showHomepage(model, principal, posts);
+        showHomepage(model, principal, posts);
 
-        model.addAttribute("postsFountCount", postsCount);
+        model.addAttribute("postsFountCount", posts.size());
         model.addAttribute("title", title);
         model.addAttribute("content", content);
         model.addAttribute("author", author);
         model.addAttribute("timeLeft", timeLeft);
         model.addAttribute("timeRight", timeRight);
         return "home";
+    }
+
+    private void showHomepage(Model model, Principal principal, List<Post> posts) {
+        postService.sortByTopped(posts);
+        Long uid = userService.getByUsername(principal.getName()).getId();
+        Map<Post,Boolean> postsWithLiked= new LinkedHashMap<>();
+        List<Like> likes = likeService.findLikeByUserId(uid);
+
+        for (Post post : posts) {
+            long pid=post.getPostId();
+            Boolean liked=false;
+            for (Like like : likes) {
+                long like_pid=like.getPostId();
+                if(pid==like_pid){
+                    liked=true;
+                }
+            }
+            postsWithLiked.put(post, liked);
+        }
+        model.addAttribute("postsWithLiked",postsWithLiked);
+        model.addAttribute("isAdmin", userRoleService.isAdmin(userService.getByUsername(principal.getName()).getId()));
     }
 
     public void rstPostService(PostService service){
