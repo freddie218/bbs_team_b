@@ -86,13 +86,12 @@ public class PostController {
 
         Long parentIdLong = 0L;
 
-        if(StringUtils.isEmpty(content)){
+        if(StringUtils.isBlank(content)){
 
             model.addFlashAttribute("failed", "content is empty");
 //            JOptionPane.showMessageDialog(null,"in if");
-
         }
-        if (!StringUtils.isEmpty(parentId)) {
+        if (!StringUtils.isBlank(parentId)) {
             parentIdLong = Long.parseLong(parentId);
         }
 
@@ -101,9 +100,7 @@ public class PostController {
         PostBuilder builder = new PostBuilder();
         builder.title(title).content(content).author(currentUser.getUserName()).parentId(parentIdLong).creatorId(currentUser.getId())
                 .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date()).likedTimes(0L);
-
         postService.save(builder.build());
-
         return "redirect:" + postId;
 
     }
@@ -119,12 +116,12 @@ public class PostController {
         String content = request.getParameter("content");
         String parentId = request.getParameter("parentId");
 
-        if(StringUtils.isEmpty(title) || StringUtils.isEmpty(content)){
+        if(StringUtils.isBlank(title) || StringUtils.isBlank(content)){
             model.addAttribute("failed", "content is empty");
             return "posts/create" ;
         }
         Long parentIdLong = 0L;
-        if (!StringUtils.isEmpty(parentId)) {
+        if (!StringUtils.isBlank(parentId)) {
             parentIdLong = Long.parseLong(parentId);
         }
         User currentUser = userService.getByUsername(principal.getName());

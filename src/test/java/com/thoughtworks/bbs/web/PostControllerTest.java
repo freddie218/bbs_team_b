@@ -83,7 +83,6 @@ public class PostControllerTest {
         when(request.getParameter("content")).thenReturn("content");
         String expected_page = "redirect:/";
         String result_page = postController.processCreate(request,principal,redirectAttributesModelMap);
-//        assertEquals("page should redirect to home",expected_redirect.getBeanName(),result_redirect.getBeanName());
         assertEquals("page should redirect to home",expected_page,result_page);
     }
 
