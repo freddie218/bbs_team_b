@@ -39,6 +39,7 @@
             <br/>
             <div id="postContent">
                <c:out value="${post.content}"/>
+<<<<<<< Updated upstream
             </div>
             <div id="operations">
                 <span style="margin-left:10px;"> Operations: </span>

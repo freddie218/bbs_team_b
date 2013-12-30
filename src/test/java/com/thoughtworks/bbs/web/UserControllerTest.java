@@ -237,6 +237,7 @@ public class UserControllerTest {
         when(userService.getAll()).thenReturn(userList);
         when(userRoleService.getAllNotAdmin()).thenReturn(usersNotAdmin);
         ModelAndView modelAndView = userController.listUsers(model);
+
         verify(userService).setUsersIsRegular(userList,usersNotAdmin);
 
     }

@@ -87,8 +87,10 @@ public class PostController {
         Long parentIdLong = 0L;
 
         if(StringUtils.isEmpty(content)){
+
             model.addFlashAttribute("failed", "content is empty");
 //            JOptionPane.showMessageDialog(null,"in if");
+
         }
         if (!StringUtils.isEmpty(parentId)) {
             parentIdLong = Long.parseLong(parentId);
@@ -101,8 +103,9 @@ public class PostController {
                 .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date()).likedTimes(0L);
 
         postService.save(builder.build());
-//        return "redirect:" + postId;
+
         return "redirect:" + postId;
+
     }
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
