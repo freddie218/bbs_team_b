@@ -18,7 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -79,7 +79,7 @@ public class PostController {
     }
 
     @RequestMapping(value = {"/{postId}"}, method = RequestMethod.POST)
-    public String postShow(HttpServletRequest request, Principal principal,Model model,@PathVariable("postId") Long postId) {
+    public String postShow(HttpServletRequest request, Principal principal,RedirectAttributesModelMap model,@PathVariable("postId") Long postId) {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String parentId = request.getParameter("parentId");
@@ -87,9 +87,8 @@ public class PostController {
         Long parentIdLong = 0L;
 
         if(StringUtils.isEmpty(content)){
-         model.addAttribute("failed", "content is empty");
+            model.addFlashAttribute("failed", "content is empty");
 //            JOptionPane.showMessageDialog(null,"in if");
-
         }
         if (!StringUtils.isEmpty(parentId)) {
             parentIdLong = Long.parseLong(parentId);
@@ -102,6 +101,7 @@ public class PostController {
                 .modifierId(currentUser.getId()).createTime(new Date()).modifyTime(new Date()).likedTimes(0L);
 
         postService.save(builder.build());
+//        return "redirect:" + postId;
         return "redirect:" + postId;
     }
 
@@ -111,11 +111,15 @@ public class PostController {
     }
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
-    public RedirectView processCreate(HttpServletRequest request, Principal principal) throws IOException {
+    public String processCreate(HttpServletRequest request, Principal principal,Model model) throws IOException {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String parentId = request.getParameter("parentId");
 
+        if(StringUtils.isEmpty(title) || StringUtils.isEmpty(content)){
+            model.addAttribute("failed", "content is empty");
+            return "posts/create" ;
+        }
         Long parentIdLong = 0L;
         if (!StringUtils.isEmpty(parentId)) {
             parentIdLong = Long.parseLong(parentId);
@@ -129,7 +133,7 @@ public class PostController {
         postService.save(builder.build());
             // return new ModelAndView("posts/createSuccess");
             //return new ModelAndView("home", "posts", postService.findMainPostByAuthorName(principal.getName()));
-        return new RedirectView("../");
+           return "redirect:/";
         }
     @RequestMapping(value = {"/like/{postId}"}, method = RequestMethod.GET)
     public String add1LikedTime(@PathVariable("postId") Long postId,@RequestHeader("Referer") String referer, Principal principal) {

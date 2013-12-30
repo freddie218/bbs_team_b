@@ -107,9 +107,8 @@ button {
 }
 
 #replyPostError {
-    width: 280px;
-    background: #9E2020;
-    color: white;
+    width: 320px;
+    text-align: center;
     margin-left:20%;
 }
 

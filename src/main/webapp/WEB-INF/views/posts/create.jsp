@@ -6,26 +6,36 @@
     function checkPostValid(){
         var otitle= createPost.title.value;
         var ocontent=createPost.content.value;
-        if(otitle=="" || ocontent==""){
-            document.getElementById("createPost-tip").style.display="block";
+        var reg =/^[\s]{0,}$/ ;
+        if(reg.test(otitle) || reg.test(ocontent)){
+            var postError = document.getElementById("replyPostError");
+            postError.className="page-action create-error";
+            postError.innerHTML="Title or content cannot be empty";
             document.getElementById("title").focus();
             return(false);
         }
         return(true);
     }
  </script>
- <div id="replyCreateHint" class="page-action">
+ <br/>
+ <c:choose>
+     <c:when test="${not empty failed}">
+         <div id="replyPostError" class="page-action create-error">
+             <i>Title or content cannot be empty!</i>
+         </div>
+      </c:when>
+      <c:otherwise>
+          <div id="replyCreateHint" class="page-action">
 
- </div>
+          </div>
+      </c:otherwise>
+ </c:choose>
+
 <div id="createPanel">
    <!-- <form class="form-horizontal" name="createPost" action="<c:url value='/posts/create' />"
         method="post" onsubmit="return checkPostValid();" >    -->
-        <form class="form-horizontal" name="createPost" action="<c:url value='/posts/create' />"
-                method="post" onsubmit='return contentLegal(["title", "content"], "replyCreateHint", VIOLATIONS_WARNING);' >
-        <!-- 帖子标题和内容不能为空，否则消息提示-->
-        <div id="createPost-tip">
-              <span >Title or content cannot be empty! </span>
-        </div>
+        <form class="form-horizontal" name="createPost" action="<c:url value='/posts/create' />" method="post"
+         onsubmit='return contentLegal(["title", "content"], "replyCreateHint", VIOLATIONS_WARNING);' >
         <div class="control-group">
             <label class="control-label" for="title">Title</label>
             <div class="controls">

@@ -63,13 +63,16 @@
     <c:choose>
         <c:when test="${not empty failed}">
             <div id="replyPostError" class="page-action create-error">
-                <i>Content cannot be empty!</i>
+                <i>Content cannot be empty !</i>
             </div>
          </c:when>
-    </c:choose>
-    <div id="replyCreateHint" class="page-action">
+         <c:otherwise>
+             <div id="replyCreateHint" class="page-action">
 
-    </div>
+             </div>
+         </c:otherwise>
+    </c:choose>
+
     <div id="createPanel">
         <form action="<c:url value='/posts/${postId}' />" method="post"
             onsubmit='return contentLegal(["Recontent"], "replyCreateHint", VIOLATIONS_WARNING);' >
