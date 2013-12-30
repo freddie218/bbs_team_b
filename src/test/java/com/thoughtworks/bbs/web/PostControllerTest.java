@@ -52,6 +52,7 @@ public class PostControllerTest {
         likeService = mock(LikeServiceImpl.class);
         request = mock(HttpServletRequest.class);
         modelMap = mock(ModelMap.class);
+        redirectAttributesModelMap = mock(RedirectAttributesModelMap.class);
 
         user = new User();
         user.setUserName("name");
@@ -86,11 +87,11 @@ public class PostControllerTest {
         assertEquals("page should redirect to home",expected_page,result_page);
     }
 
-//    @Test
-//    public void shouldAddMessageWhenPostContentBlank(){
-//        postController.postShow(request,principal,redirectAttributesModelMap,PostId);
-//        verify(model).addAttribute("posts",redirectAttributesModelMap.addFlashAttribute("failed", "content is empty")) ;
-//    }
+    @Test
+    public void shouldAddMessageWhenPostContentBlank(){
+        postController.postShow(request,principal,redirectAttributesModelMap,PostId);
+        verify(model).addAttribute("posts",redirectAttributesModelMap.addFlashAttribute("failed", "content is empty")) ;
+    }
 
     @Test
     public void shouldReturnToTheCurrentPost(){
