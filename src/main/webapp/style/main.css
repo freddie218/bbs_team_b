@@ -99,6 +99,16 @@ button {
 
 }
 
+.messageError {
+  color: white;
+  background-color: red;
+  font-size: 16pt;
+  padding: 5px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+}
+
 .create-error {
     text-align: left;
     margin-left: 10%;

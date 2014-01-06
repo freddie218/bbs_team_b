@@ -123,6 +123,7 @@ public class UserController {
             model.addAttribute("failed", "true");
 
         model.addAttribute("posts", postService.getMainPostByAuthorName(principal.getName()));
+        model.addAttribute("isMyself", true);
         Map<String, User> map = new HashMap<String, User>();
         map.put("user", user);
 
