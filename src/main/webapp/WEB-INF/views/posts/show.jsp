@@ -38,7 +38,7 @@
             </div>
             <br/>
             <div id="postContent">
-               <c:out value="${post.content}"/>
+               <p class="form-for-post-content">${post.content}</p>
             </div>
             <div id="operations">
                 <span style="margin-left:10px;"> Operations: </span>

@@ -315,3 +315,10 @@ div #createPost-tip{
   margin:0;
   padding-bottom: 15px;
 }
+
+.form-for-post-content{
+    background-color:#DDDDDD;
+    text-align:left;
+    padding: 5px;
+    word-wrap: break-word;
+}
