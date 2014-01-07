@@ -185,8 +185,13 @@ public class UserController {
             userService.update(user);
             postService.updateAllPostsAuthorByUserName(oldUsername, newUsername);
             isAltered =true;
-            Authentication newToken = new UsernamePasswordAuthenticationToken(newUsername,user.getPasswordHash());
-            SecurityContextHolder.getContext().setAuthentication(newToken);
+            Authentication oldAuthentication = SecurityContextHolder.getContext().getAuthentication();
+            Authentication newAuthentication = null;
+            if(oldAuthentication == null)
+                newAuthentication = new UsernamePasswordAuthenticationToken(newUsername, user.getPasswordHash());
+            else
+                newAuthentication = new UsernamePasswordAuthenticationToken(newUsername, user.getPasswordHash(), oldAuthentication.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuthentication);
             model.addAttribute("updateProfileSuccess", "true");
         }
         else{
