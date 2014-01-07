@@ -7,12 +7,14 @@ import com.thoughtworks.bbs.service.ServiceResult;
 import com.thoughtworks.bbs.service.impl.PostServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserRoleServiceImpl;
 import com.thoughtworks.bbs.service.impl.UserServiceImpl;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -260,6 +262,16 @@ public class UserControllerTest {
         when(userService.getByUserId(user.getId())).thenReturn(user);
         userController.disableUser(user.getId(), principal);
         assertThat(user.isEnabled(), is(false));
+    }
+
+    @Test
+    public void CreateUserShouldNotSuccessWhenUsernameIsExist() throws IOException {
+        String username = "user";
+        when(userService.getByUsername(user.getUserName())).thenReturn(user);
+        when(request.getParameter("username")).thenReturn(username);
+        ModelAndView expectation= new ModelAndView("user/register");
+        userController.processCreate(request,model);
+        verify(model).addAttribute("failed", "user is already exist");
     }
 }
 

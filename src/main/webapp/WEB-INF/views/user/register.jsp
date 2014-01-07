@@ -4,6 +4,11 @@
 <%@ include file="../header.jsp" %>
 
 <div id="registerPanel">
+<c:choose>
+     <c:when test="${not empty failed}">
+         <i class="messageError">user is already exist,please use another name!</i>
+     </c:when>
+</c:choose>
     <form class="form-horizontal" action="<c:url value='/user/create' />" method="post">
         <div class="control-group">
             <label class="control-label" for="username">Username</label>

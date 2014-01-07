@@ -79,10 +79,13 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
-    public ModelAndView processCreate(HttpServletRequest request) throws IOException {
+    public ModelAndView processCreate(HttpServletRequest request,ModelMap model) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
+        if(userService.getByUsername(username)!=null){
+            model.addAttribute("failed", "user is already exist");
+            return new ModelAndView("user/register");
+        }
         UserBuilder builder = new UserBuilder();
         builder.userName(username).password(password).enable(true);
 
