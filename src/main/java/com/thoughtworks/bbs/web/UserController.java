@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -193,13 +194,12 @@ public class UserController {
         }
 
         model.addAttribute("posts", postService.getMainPostByAuthorName(user.getUserName()));   //altered
-
-        Map<String, User> map = new HashMap<String, User>();
-        map.put("user", user);
+        model.addAttribute("user", user);
+        model.addAttribute("isMyself", true);
         if(isAltered)
-            return new ModelAndView("user/profile",map);
+            return new ModelAndView("user/profile");
         else
-            return new ModelAndView("user/updateProfile",map);
+            return new ModelAndView("user/updateProfile");
 
     }
 
