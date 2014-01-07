@@ -109,8 +109,8 @@ public class PostController {
     public ModelAndView createPostForm(ModelMap model, Principal principal) {
 
         if(principal==null){
-            model.addAttribute("failed", "user not login");
-            return new ModelAndView("login");
+
+            return new ModelAndView("errorMessage");
         }
         return new ModelAndView("posts/create");
     }
