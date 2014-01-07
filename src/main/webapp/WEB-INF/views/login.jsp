@@ -2,6 +2,11 @@
 <c:set var="pageTitle" scope="request" value="Login"/>
 
 <%@ include file="header.jsp" %>
+<c:choose>
+     <c:when test="${not empty failed}">
+         <i class="messageError">please login!</i>
+     </c:when>
+</c:choose>
   <div id="content" align="centre">
     <c:choose>
         <c:when test="${not empty error}">
