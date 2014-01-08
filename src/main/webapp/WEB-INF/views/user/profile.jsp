@@ -70,7 +70,13 @@
             <td><c:out value="${post.createTimeString}"/></td>
             <c:if test = "${not empty isMyself}">
             <td>
-            <a href='javascript:if(confirm("Are you sure to delete this post?(post title:${fn:escapeXml(post.title)})")){location.href="del/${post.postId}"}'>X</a>
+            <c:set var="search" value="\'" />
+            <c:set var="replace" value="\\\'" />
+            <c:set var="title_fixed" value="${fn:replace(post.title, search, replace)}"/>
+            <c:set var="search" value="\"" />
+            <c:set var="replace" value="\\\"" />
+            <c:set var="title_fixed" value="${fn:replace(title_fixed, search, replace)}"/>
+            <a href='javascript:if(confirm("Are you sure to delete this post?(post title:${fn:escapeXml(title_fixed)})")){location.href="del/${post.postId}"}'>X</a>
             </td>
             </c:if>
         </tr>
