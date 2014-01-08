@@ -26,14 +26,24 @@
                 <span style="margin-left:10px;"> Create Time: </span>
                 <B><c:out value="${post.createTimeString}"/></B>
                 <c:if test="${post.parentId==0}">
+                    <c:set var="search" value="\'" />
+                    <c:set var="replace" value="\\\'" />
+                    <c:set var="title_fixed" value="${fn:replace(post.title, search, replace)}"/>
+                    <c:set var="search" value="\"" />
+                    <c:set var="replace" value="\\\"" />
+                    <c:set var="title_fixed" value="${fn:replace(title_fixed, search, replace)}"/>
+                    <% request.setAttribute("vr", "\r");%>
+                    <% request.setAttribute("vn", "\n");%>
+                    <c:set var="content_fixed" value="${fn:replace(post.content, vr, ' ')}"/>
+                    <c:set var="content_fixed" value="${fn:replace(content_fixed, vn, ' ')}"/>
                     <span style="margin-left:10px;"> Like </span>
                     <B>${post.likedTimes}</B>
                     <span> times </span>
-                    <a name="db_share" onclick='dbShareClick("${fn:escapeXml(post.title)}","${fn:escapeXml(post.content)}")' href="javascript:;">
+                    <a name="db_share" onclick='dbShareClick("${fn:escapeXml(title_fixed)}","${content_fixed}")' href="javascript:;">
                         <img src="http://img2.douban.com/pics/fw2douban_s.png" alt="推荐到豆瓣" />
                     </a>
                     <script type="text/javascript" src="http://widget.renren.com/js/rrshare.js"></script>
-                    <a name="xn_share" onclick='rrShareClick("${fn:escapeXml(post.title)}","${fn:escapeXml(post.content)}")' type="icon_small" href="javascript:;" style="position:absolute;margin:3px 0 0 3px;"></a>
+                    <a name="xn_share" onclick='rrShareClick("${fn:escapeXml(title_fixed)}","${fn:escapeXml(content_fixed)}")' type="icon_small" href="javascript:;" style="position:absolute;margin:3px 0 0 3px;"></a>
                 </c:if>
             </div>
             <br/>
