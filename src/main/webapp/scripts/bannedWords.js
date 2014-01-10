@@ -1,12 +1,11 @@
 /*
 Put violations vocabulary here.
 */
-
 var vocabulary = {"low": [["法轮功", ""],["江泽民", ""],["邱俊涛", ""],["64", ""],["六四", ""],
 ["天安门事件", ""],["sex", ""],["胡凯", ""], ["刘尧", ""],["尧姐", ""],["HK", ""],["hk", ""],
 ["高莉", ""]],  "medium":[],  "high": []
 }
-var VIOLATIONS_WARNING = "根据国家相关法律和政策，您的帖子不能发布。"
+var VIOLATIONS_WARNING = "根据国家相关法律和政策，您的帖子不能发布!"
 
  function getById(id) {
     return document.getElementById(id);
@@ -41,6 +40,8 @@ var VIOLATIONS_WARNING = "根据国家相关法律和政策，您的帖子不能
     if(!ret){
         getById(messageBar).className="page-action create-error";
         getById(messageBar).innerHTML=message;
+        getById(messageBar).style.width="475px";
     }
     return ret;
  }
+

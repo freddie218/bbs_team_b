@@ -25,17 +25,16 @@
          </div>
       </c:when>
       <c:otherwise>
-          <div id="replyCreateHint" class="page-action">
+          <div id="replyPostError" class="page-action">
 
           </div>
       </c:otherwise>
  </c:choose>
-
 <div id="createPanel">
    <!-- <form class="form-horizontal" name="createPost" action="<c:url value='/posts/create' />"
         method="post" onsubmit="return checkPostValid();" >    -->
         <form class="form-horizontal" name="createPost" action="<c:url value='/posts/create' />" method="post"
-         onsubmit='return contentLegal(["title", "content"], "replyCreateHint", VIOLATIONS_WARNING);' >
+         onsubmit='return contentLegal(["title", "content"], "replyPostError", VIOLATIONS_WARNING);' >
         <div class="control-group">
             <label class="control-label" for="title">Title</label>
             <div class="controls">

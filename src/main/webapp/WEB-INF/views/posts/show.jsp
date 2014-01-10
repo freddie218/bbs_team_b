@@ -77,7 +77,7 @@
             </div>
          </c:when>
          <c:otherwise>
-             <div id="replyCreateHint" class="page-action">
+             <div id="replyPostError" class="page-action">
 
              </div>
          </c:otherwise>
@@ -85,7 +85,7 @@
 
     <div id="createPanel">
         <form action="<c:url value='/posts/${postId}' />" method="post"
-            onsubmit='return contentLegal(["Recontent"], "replyCreateHint", VIOLATIONS_WARNING);' >
+            onsubmit='return contentLegal(["Recontent"], "replyPostError", VIOLATIONS_WARNING);' >
             <input type="hidden" id="parentId" name="parentId" value="${mainPost.postId}" />
             <input type="hidden" id="title" name="title" value="Re: ${fn:escapeXml(mainPost.title)}" />
             <textarea style="background:white" name="content" id="Recontent"  placeholder="post content" cols="100" rows="6"></textarea>
