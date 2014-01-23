@@ -43,6 +43,9 @@ public class PostController {
     }
     @RequestMapping(value = {"/{postId}"}, method = RequestMethod.GET)
     public String get(@PathVariable("postId") Long postId, Model model, @ModelAttribute Post post, Principal principal) {
+        if (null == principal) {
+            return "login";
+        }
         if (postService.get(postId).getAuthorName().equals(principal.getName()))
         {
             model.addAttribute("isAuthor", "Yes");

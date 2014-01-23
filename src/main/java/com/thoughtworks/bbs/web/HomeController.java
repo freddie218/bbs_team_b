@@ -33,11 +33,24 @@ public class HomeController {
     @RequestMapping(method = RequestMethod.GET)
     public String home(Model model, Principal principal) {
         if (null == principal) {
-            return "login";
+            List<Post> posts=postService.findAllPost();
+            showHomepageNoPrincipal(model, posts);
+            return "home";
         }
         List<Post> posts=postService.findAllPost();
         showHomepage(model, principal, posts);
         return "home";
+    }
+
+    private void showHomepageNoPrincipal(Model model, List<Post> posts) {
+        postService.sortByTopped(posts);
+        Map<Post,Boolean> postsWithLiked= new LinkedHashMap<Post,Boolean>();
+
+        for (Post post : posts) {
+            long pid=post.getPostId();
+            postsWithLiked.put(post,Boolean.TRUE);
+        }
+        model.addAttribute("postsWithLiked",postsWithLiked);
     }
 
     @RequestMapping(method = RequestMethod.POST)

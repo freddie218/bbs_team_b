@@ -9,7 +9,10 @@
 <html>
 <head>
    <meta charset="utf-8">
-   <title>${pageTitle}</title>
+   <title> ThoughtWorks BBS ${pageTitle}</title>
+   <meta name="viewport" content="width=device-width">
+   <meta name="keywords" content="ThoughtWorks BBS,ThoughtWorks,ThoughtWorksBBS,TWBBS">
+   <meta name="description" content="ThoughtWorks BBS,A no-powerful bbs by ThoughtWorks Fifth ZhengDaYeXiao's BBS TEAM">
    <link rel="stylesheet" href="<c:url value='/style/bootstrap.css' />" type="text/css" />
    <link rel="stylesheet" href="<c:url value='/style/bootstrap-theme.css' />" type="text/css" />
    <link rel="stylesheet" href="<c:url value='/style/datepicker.css' />" type="text/css" />
@@ -19,7 +22,7 @@
    <script type="text/javascript" src="<c:url value='/scripts/bootstrap.js' />"></script>
    <script type="text/javascript" src="<c:url value='/scripts/share.js' />"></script>
 </head>
-<body>
+<body itemscope itemtype="http://schema.org/WebPage">
     <div class="navbar">
         <div class="navbar-inner">
             <a class="brand" href="<c:url value='/' />" class="nav_link">
